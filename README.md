@@ -30,6 +30,12 @@ along with a very brief caption:**
 ![](https://media.giphy.com/media/XIqCQx02E1U9W/giphy.gif)
 
 
+## Paper Prototype
+
+**[Add images/photos that show paper prototype (maximum 4)](https://stackoverflow.com/questions/10189356/how-to-add-screenshot-to-readmes-in-github-repository)
+![](https://media.giphy.com/media/3oEdv1EbS2Ss1NvrUc/giphy.gif)
+
+
 ## External Dependencies
 
 **Document integrations with 3rd Party code or services here.
