@@ -32,7 +32,7 @@ along with a very brief caption:**
 
 ## Paper Prototype
 
-**[Add images/photos that show paper prototype (maximum 4)](https://stackoverflow.com/questions/10189356/how-to-add-screenshot-to-readmes-in-github-repository) along with a very brief caption:**
+**[Add images/photos that show your paper prototype (maximum 4)](https://stackoverflow.com/questions/10189356/how-to-add-screenshot-to-readmes-in-github-repository) along with a very brief caption:**
 
 ![](https://media.giphy.com/media/3oEdv1EbS2Ss1NvrUc/giphy.gif)
 
