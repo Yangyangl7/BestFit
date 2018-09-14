@@ -1,6 +1,6 @@
 # Module 2 Group Assignment: Generation Station
 
-CSCI 5117, Fall 2017, [assignment description](https://docs.google.com/document/d/1HhB-96IZ-u5VlfBfdsy9-pkB59zzAapvW1MNsgvQq6M/edit)
+CSCI 5117, Fall 2018, [assignment description](https://docs.google.com/document/d/1HhB-96IZ-u5VlfBfdsy9-pkB59zzAapvW1MNsgvQq6M/edit)
 
 ## App Info:
 
