@@ -4,14 +4,17 @@ CSCI 5117, Fall 2018, [assignment description](https://docs.google.com/document/
 
 ## App Info:
 
-* Team Name: TODO
-* App Name: TODO
+* Team Name: Mooncake
+* App Name: 
 * App Link: <https://TODO.herokuapp.com/>
 
 ### Students
 
-* First Last, x500@umn.edu
-* ...
+* William Batu
+* Yuhao Li
+* Yangyang Luo
+* Wenjing Chen
+* Chen Chen
 
 
 ## Key Features
