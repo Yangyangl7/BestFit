@@ -5,7 +5,7 @@ CSCI 5117, Fall 2018, [assignment description](https://docs.google.com/document/
 ## App Info:
 
 * Team Name: Mooncake
-* App Name: 
+* App Name: Bestfit
 * App Link: <https://TODO.herokuapp.com/>
 
 ### Students
