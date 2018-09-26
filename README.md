@@ -41,9 +41,16 @@ along with a very brief caption:**
 
 **Here are the user flow and wireframe of our website:**
 
+***User Flow***
 ![User Flow](/webDesign/1_userFlow.png?raw=true "User Flow")
+
+***Home Page***
 ![Home Page](/webDesign/2_homePage.png?raw=true "Home Page")
+
+***Search Result Page***
 ![Search Result Page](/webDesign/3_searchResult.png?raw=true "Search Result Page")
+
+***Post Info Page***
 ![Post Info Page](/webDesign/4_postInfoPage.png?raw=true "Post Info Page")
 
 
