@@ -10,11 +10,11 @@ CSCI 5117, Fall 2018, [assignment description](https://docs.google.com/document/
 
 ### Students
 
-* William Batu
-* Yuhao Li
-* Yangyang Luo
-* Wenjing Chen
-* Chen Chen
+* William Batu (batux002)
+* Yuhao Li (Lixx4793)
+* Yangyang Luo (luo00130)
+* Wenjing Chen (chen5431)
+* Chen Chen (chen4625)
 
 
 ## Key Features
@@ -35,9 +35,18 @@ along with a very brief caption:**
 
 ## Paper Prototype
 
-**[Add images/photos that show your paper prototype (maximum 4)](https://stackoverflow.com/questions/10189356/how-to-add-screenshot-to-readmes-in-github-repository) along with a very brief caption:**
+<!-- **[Add images/photos that show your paper prototype (maximum 4)](https://stackoverflow.com/questions/10189356/how-to-add-screenshot-to-readmes-in-github-repository) along with a very brief caption:**
 
-![](https://media.giphy.com/media/3oEdv1EbS2Ss1NvrUc/giphy.gif)
+![](https://media.giphy.com/media/3oEdv1EbS2Ss1NvrUc/giphy.gif) -->
+
+** Here are the user flow and wireframe of our website:
+
+![](/webDesign/1_userFlow.png?raw=true "User Flow")
+![](/webDesign/2_homePage.png?raw=true "Home Page")
+![](/webDesign/3_searchResult.png?raw=true "Search Result Page")
+![](/webDesign/4_postInfoPage.png?raw=true "Post Info Page")
+
+
 
 
 ## External Dependencies
