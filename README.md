@@ -11,7 +11,7 @@ CSCI 5117, Fall 2018, [assignment description](https://docs.google.com/document/
 ### Students
 
 * William Batu (batux002)
-* Yuhao Li (Lixx4793)
+* Yuhao Li (lixx4793)
 * Yangyang Luo (luo00130)
 * Wenjing Chen (chen5431)
 * Chen Chen (chen4625)
