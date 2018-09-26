@@ -39,12 +39,12 @@ along with a very brief caption:**
 
 ![](https://media.giphy.com/media/3oEdv1EbS2Ss1NvrUc/giphy.gif) -->
 
-** Here are the user flow and wireframe of our website:
+**Here are the user flow and wireframe of our website:**
 
-![](/webDesign/1_userFlow.png?raw=true "User Flow")
-![](/webDesign/2_homePage.png?raw=true "Home Page")
-![](/webDesign/3_searchResult.png?raw=true "Search Result Page")
-![](/webDesign/4_postInfoPage.png?raw=true "Post Info Page")
+![User Flow](/webDesign/1_userFlow.png?raw=true "User Flow")
+![Home Page](/webDesign/2_homePage.png?raw=true "Home Page")
+![Search Result Page](/webDesign/3_searchResult.png?raw=true "Search Result Page")
+![Post Info Page](/webDesign/4_postInfoPage.png?raw=true "Post Info Page")
 
 
 
