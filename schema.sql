@@ -1,5 +1,5 @@
-CREATE TABLE "user" (
-	user_id SERIAL PRIMARY KEY,
+CREATE TABLE register (
+	id SERIAL PRIMARY KEY,
 	email varchar(100),
     name varchar(20),
     avator varchar(255),
@@ -10,7 +10,7 @@ CREATE TABLE "user" (
 
 create table tag(
 	tag_id SERIAL PRIMARY KEY,
-	user_id int references user,
+	register_id int references user,
 	name varchar(255),
 	type varchar(100)
 );
@@ -37,7 +37,7 @@ create table review(
 
 create table picture(
 	picture_id SERIAL PRIMARY KEY,
-	user_id int references user,
+	register_id int references user,
 	post_id int references post,
 	url text
 );
