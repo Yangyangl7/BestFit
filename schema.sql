@@ -1,3 +1,5 @@
+drop table register;
+
 create table register (
 	id SERIAL PRIMARY KEY,
 	email varchar(100),
