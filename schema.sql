@@ -1,8 +1,8 @@
-drop table register;
-drop table tag;
-drop table post;
-drop table picture;
-drop table review;
+drop table IF EXISTS register CASCADE;
+drop table IF EXISTS tag CASCADE;
+drop table IF EXISTS post CASCADE;
+drop table IF EXISTS picture CASCADE;
+drop table IF EXISTS review CASCADE;
 
 create table register (
 	id SERIAL PRIMARY KEY,
