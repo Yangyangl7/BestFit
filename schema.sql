@@ -1,4 +1,8 @@
 drop table register;
+drop table tag;
+drop table post;
+drop table picture;
+drop table review;
 
 create table register (
 	id SERIAL PRIMARY KEY,
@@ -31,8 +35,8 @@ create table post(
 
 create table review(
 	review_id SERIAL PRIMARY KEY,
-	company_id references register,
-	reviewer_id references register,
+	company_id int references register,
+	reviewer_id int references register,
 	rate int NOT NULL,
 	comment text
 );
