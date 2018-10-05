@@ -1,4 +1,4 @@
-CREATE TABLE user(
+create table user(
 	user_id SERIAL PRIMARY KEY,
 	email varchar(100),
     name varchar(20),
@@ -8,14 +8,14 @@ CREATE TABLE user(
     isDesigner boolean NOT NULL
 );
 
-CREATE TABLE tag(
+create table tag(
 	tag_id SERIAL PRIMARY KEY,
 	user_id int references user,
 	name varchar(255),
 	type varchar(100)
 );
 
-CREATE TABLE post(
+create table post(
 	post_id SERIAL PRIMARY KEY,
 	publisher_id int references user,
 	content text,
@@ -27,7 +27,7 @@ CREATE TABLE post(
 	tag_id int references tag
 );
 
-CREATE TABLE review(
+create table review(
 	review_id SERIAL PRIMARY KEY,
 	company_id references user,
 	reviewer_id references user,
@@ -35,8 +35,9 @@ CREATE TABLE review(
 	comment text
 );
 
-CREATE TABLE picture(
+create table picture(
 	picture_id SERIAL PRIMARY KEY,
+	user_id int references user,
 	post_id int references post,
 	url text
 );
