@@ -1,4 +1,4 @@
-CREATE TABLE register (
+create table register (
 	id SERIAL PRIMARY KEY,
 	email varchar(100),
     name varchar(20),
@@ -41,3 +41,5 @@ create table picture(
 	post_id int references post,
 	url text
 );
+
+insert into register (name, isdesigner) values ('test1', TRUE);
