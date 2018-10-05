@@ -12,17 +12,17 @@ create table register (
 
 create table tag(
 	tag_id SERIAL PRIMARY KEY,
-	register_id int references user,
+	register_id int references register,
 	name varchar(255),
 	type varchar(100)
 );
 
 create table post(
 	post_id SERIAL PRIMARY KEY,
-	publisher_id int references user,
+	publisher_id int references register,
 	content text,
 	status int,
-	dealer_id int references user,
+	dealer_id int references register,
 	location varchar(255) NOT NULL,
 	budget int,
 	area text,
@@ -31,15 +31,15 @@ create table post(
 
 create table review(
 	review_id SERIAL PRIMARY KEY,
-	company_id references user,
-	reviewer_id references user,
+	company_id references register,
+	reviewer_id references register,
 	rate int NOT NULL,
 	comment text
 );
 
 create table picture(
 	picture_id SERIAL PRIMARY KEY,
-	register_id int references user,
+	register_id int references register,
 	post_id int references post,
 	url text
 );
