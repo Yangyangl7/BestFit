@@ -24,6 +24,8 @@ create table tag(
 create table post(
 	post_id SERIAL PRIMARY KEY,
 	publisher_id int references register,
+	title varchar(255) NOT NULL,
+	time varchar(255),
 	content text,
 	status int,
 	dealer_id int references register,
