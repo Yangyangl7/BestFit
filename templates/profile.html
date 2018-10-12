@@ -1,6 +1,20 @@
+
+
+<div id="postCreater"
+ style="height:500px; width: 80%;position: absolute; z-index:10000;left:10%;">
+
+</div>
+
+
+
+</div>
+
 <div class = "profileBody">
-  <div >
+  <div id = "scrim"
+    style = "height: 100%; width:100%;background-color:black;
+     position: absolute; z-index: 9999;opacity:0.65;display:none">
   </div>
+
   <div style = "width: 90%; margin:auto">
     <div class = "profileTop" style = "height:220px; margin: 0">
       <div class = "backGroud" style = "height: 180px;background-position: bottom;
@@ -66,11 +80,25 @@
     <div style="width:38%;height:2px;background-color:#ddd;display:inline-block;margin-top:3px;z-index: 50;margin-bottom:10px;margin-left:-1px"></div> -->
     <!--  TODO check cookies if it's user-->
     <div>
+
+
+
       <div id = createPost
       style="margin: 2%;max-width: 320px;display:inline-block; width: 28%; height: 200px;border-radius:5px; background-color:#ddd">
       <div style="width:90px; margin:auto; margin-top:55px; cursor: pointer" onclick = "alert('open post')">
-      <img src = "https://cdn1.iconfinder.com/data/icons/basic-ui-elements-color-round/3/30-512.png" style = "height: 90px;">
+      <img
+        src = "https://cdn1.iconfinder.com/data/icons/basic-ui-elements-color-round/3/30-512.png" style = "height: 90px;"
+          class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" >
       </div>
+
+      <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            ...
+          </div>
+        </div>
+      </div>
+
   		</div>
       <div style= "margin: 2%; margin-top:0;font-size: 18px; font-family:sans-serif; font-weight: bolder"> Create Post </div>
     </div>
