@@ -25,7 +25,9 @@ def close_db(error):
 
 @app.route('/')
 def home():
-    return render_template("homepage.html")
+    return render_template("home.html")
+
+
 
 @app.route('/user/<int:user_id>')
 def show_post(user_id):
