@@ -61,6 +61,14 @@ $(function () {
 
 
 /* ====================================
+              Search Box
+======================================= */
+$('#dropdown-items li').on('click', function () {
+  $('#dropdown_title').html($(this).find('a').html());
+});
+
+
+/* ====================================
               Animation
 ======================================= */
 // animation when scroll
