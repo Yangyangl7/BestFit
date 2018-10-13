@@ -62,10 +62,18 @@ def callback_handling():
     }
     return redirect('/')
 
+# Profile Page
+@app.route('/profile')
+@requires_auth
+def profile():
+    return render_template('profile.html',
+                           userinfo=session['profile'],
+                           userinfo_pretty=json.dumps(session['jwt_payload'], indent=4))
+
 # Auth0 Login
 @app.route('/login')
 def login():
-    return auth0.authorize_redirect(redirect_uri='', audience=os.environ['AUTH0_DOMAIN']+'/userinfo')
+    return auth0.authorize_redirect(redirect_uri='https://enigmatic-citadel-11799.herokuapp.com/callback', audience=os.environ['AUTH0_DOMAIN']+'/userinfo')
 
 # Auth0 Logout
 @app.route('/logout')
