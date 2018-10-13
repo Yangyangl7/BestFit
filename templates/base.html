@@ -64,7 +64,8 @@
                                 <li><a class="smooth-scroll" href="">FIND TEAMS</a></li>
                                 <li><a class="smooth-scroll" href="www.google.com">FIND CLIENTS</a></li>
                                 <li><a class="smooth-scroll" href="{{ url_for("login") }}">LOG IN</a></li>
-                                <li><a class="smooth-scroll" href="{{ url_for("show_post(1234)") }}">LOG Profile</a></li>
+                                <li><a class="smooth-scroll" href="{{ url_for("show_post", user_id=1234) }}">LOG
+                                        Profile</a></li>
                                 <li><a class="smooth-scroll" href="{{ url_for("home") }}">LOG Home</a></li>
                                 <li><a class="smooth-scroll" href="{{ url_for("logout") }}">LOG OUT</a></li>
                                 <li><a class="smooth-scroll" href="{{ url_for("login") }}" id="sign-up">SIGN UP</a></li>
@@ -78,7 +79,7 @@
     <!-- Header Ends-->
 
     {% block header %}{% endblock %}
-    <div id="content" style="">{% block content %}{% endblock %}</div>
+    <div id="content">{% block content %}{% endblock %}</div>
 
     <!-- Footer -->
     <footer class="text-center">
