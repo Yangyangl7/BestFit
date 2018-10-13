@@ -1,13 +1,13 @@
 /* ====================================
     Default Theme
     -----------------------------------
-    Fonts: 
+    Fonts:
     font-family: 'Leckerli One', cursive;
     font-family: 'Lato', sans-serif;
     font-family: 'Raleway', sans-serif;
     font-family: 'Open Sans', sans-serif;
     -----------------------------------
-    Colors: 
+    Colors:
            Broom:         #eac71f
            Shuttle Grey:  #61686e
            Nero:          #1b1b1b
@@ -252,6 +252,7 @@ footer {
   text-decoration: none;
 }
 
+
 .footer-nav ul li:not(:first-child) a:hover,
 .footer-nav ul li:not(:first-child) a:focus {
   color: #eac71f;
@@ -271,9 +272,6 @@ footer {
 }
 
 
-/* ====================================
-              Home Page
-======================================= */
 
 .page-banner {
   text-align: center;
@@ -349,4 +347,39 @@ footer {
 
 .home-page {
   padding: 80px 80px;
+}
+
+.postLabel {
+  height: 2.25em;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: .5em .6em;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-shadow: inset 0 1px 3px #ddd;
+  border-radius: 4px;
+  vertical-align: middle;
+  box-sizing: border-box;
+  width: 13%;
+  margin-right: 7%;
+  text-align: center;
+  font-weight: bold;
+  font-family: monospace;
+
+}
+
+.postInput {
+  height: 2.25em;
+  border: 1px solid #ccc;
+  padding: .5em .6em;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-shadow: inset 0 1px 3px #ddd;
+  border-radius: 4px;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.postContainer {
+  margin-bottom: 3%;
 }

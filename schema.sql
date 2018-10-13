@@ -8,7 +8,7 @@ create table register (
 	id SERIAL PRIMARY KEY,
 	email varchar(100),
     name varchar(20),
-    avator varchar(255),
+    avator varchar(255) DEFAULT 'https://vignette.wikia.nocookie.net/pkmnshuffle/images/3/32/Psyduck.png/revision/latest?cb=20170407192426',
     description varchar(255),
     phone varchar(30),
     isDesigner boolean NOT NULL
@@ -32,7 +32,7 @@ create table post(
 	location varchar(255) NOT NULL,
 	budget int,
 	area text,
-	tag_id int references tag
+	tag_id int references tag,
 );
 
 create table review(
