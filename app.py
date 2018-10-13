@@ -48,7 +48,7 @@ def home():
 # Auth0 Login
 @app.route('/login')
 def login():
-    return auth0.authorize_redirect(redirect_uri='http://localhost:5000/callback', audience=os.environ['AUTH0_DOMAIN']+'/userinfo')
+    return auth0.authorize_redirect(redirect_uri='https://enigmatic-citadel-11799.herokuapp.com/', audience=os.environ['AUTH0_DOMAIN']+'/userinfo')
 
 # Auth0 Logout
 @app.route('/logout')
