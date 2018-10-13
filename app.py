@@ -86,7 +86,7 @@ def logout():
     return redirect(auth0.api_base_url + '/v2/logout?' + urlencode(params))
 
 @app.route('/user/<int:user_id>')
-@requires_auth
+# @requires_auth
 def show_post(user_id):
     # show the post with the given id, the id is an integer
     # sql
