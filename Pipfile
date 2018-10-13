@@ -9,6 +9,8 @@ gunicorn = "*"
 "psycopg2-binary" = "*"
 six = "*"
 authlib = "*"
+python-dotenv = "*"
+requests = "*"
 
 [dev-packages]
 
