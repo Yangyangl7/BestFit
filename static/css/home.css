@@ -271,7 +271,9 @@ footer {
   margin-bottom: 13px;
 }
 
-
+/* ====================================
+                Home
+======================================= */
 
 .page-banner {
   text-align: center;
@@ -281,7 +283,7 @@ footer {
 }
 
 .page-banner-wraper {
-  padding: 250px 250px;
+  padding: 220px 250px;
 }
 
 .home-title {
@@ -299,7 +301,6 @@ footer {
   font-family: 'Open Sans', sans-serif;
   padding: 10px 80px;
   line-height: 1.8;
-
 }
 
 #drop-box button {
@@ -345,9 +346,40 @@ footer {
   text-align: center;
 }
 
+
 .home-page {
-  padding: 80px 80px;
+  padding: 100px 80px;
 }
+
+.scrolling-post li {
+  display: inline-block;
+  font-family: 'Raleway', sans-serif;
+}
+
+.scrolling-post li p {
+  display: inline-block;
+}
+
+.thumbnail {
+  padding: 0;
+}
+
+.thumbnail:hover,
+.thumbnail:focus {
+  box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.1);
+}
+
+
+.thumbnail .caption {
+  padding: 11px;
+}
+
+
+
+
+/* ====================================
+                Profile
+======================================= */
 
 .postLabel {
   height: 2.25em;
