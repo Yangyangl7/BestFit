@@ -9,7 +9,9 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Merriweather:300,400,700,900" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css"
+      integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w"
+      crossorigin="anonymous">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -25,6 +27,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/static/css/home.css" />
 
+
     <!-- Meta-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -32,7 +35,7 @@
     <title>{% block title %}{% endblock %} | project 1</title>
 
     <!-- Favicon -->
-    <!-- <link rel="shortcut icon" href="/static/image/logo.png"> -->
+    <link rel="shortcut icon" href="/static/img/logo/logo-original.png">
 
 </head>
 
@@ -61,13 +64,12 @@
                                 <li><a class="smooth-scroll" href="#howItWorks">HOW IT WORKS</a></li>
                                 <li><a class="smooth-scroll" href="">FIND TEAMS</a></li>
                                 <li><a class="smooth-scroll" href="">FIND CLIENTS</a></li>
-                                <li><a class="smooth-scroll" href="">LOG IN</a></li>
-                                <li><a class="smooth-scroll" href="">SIGN UP</a></li>
+                                <li><a class="smooth-scroll" href="{{ url_for("login") }}">LOG IN</a></li>
+                                <li><a class="smooth-scroll" href="{{ url_for("logout") }}">LOG OUT</a></li>
+                                <li><a class="smooth-scroll" href="{{ url_for("login") }}" id="sign-up">SIGN UP</a></li>
                             </ul>
                         </div>
-
                     </div>
-
                 </div>
             </div>
         </nav>
@@ -157,6 +159,9 @@
 
     <script type=text/javascript src="{{
     url_for('static', filename='js/script.js') }}"></script>
+    <script type=text/javascript src="{{
+    url_for('static', filename='js/yuhao.js') }}"></script>
+
 </body>
 
 </html>
