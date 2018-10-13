@@ -73,7 +73,7 @@ def profile():
 # Auth0 Login
 @app.route('/login')
 def login():
-    return auth0.authorize_redirect(redirect_uri='https://enigmatic-citadel-11799.herokuapp.com/callback', audience=os.environ['AUTH0_DOMAIN']+'/userinfo')
+    return auth0.authorize_redirect(redirect_uri=os.environ['AUTH0_CALLBACK_URL'], audience=os.environ['AUTH0_DOMAIN']+'/userinfo')
 
 # Auth0 Logout
 @app.route('/logout')
@@ -81,7 +81,7 @@ def logout():
     # Clear session stored data
     session.clear()
     # Redirect user to logout endpoint
-    params = {'returnTo': url_for('home', _external=True), 'client_id': os.environ['CLIENT_ID']}
+    params = {'returnTo': url_for('home', _external=True), 'client_id': os.environ['AUTH0_CLIENT_ID']}
     app.logger.info(auth0.api_base_url + '/v2/logout?' + urlencode(params))
     return redirect(auth0.api_base_url + '/v2/logout?' + urlencode(params))
 
