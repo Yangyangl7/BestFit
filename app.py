@@ -45,10 +45,27 @@ def requires_auth(f):
 def home():
     return render_template("home.html")
 
+# Auth0 callback after login
+@app.route('/callback')
+def callback_handling():
+    # Handles response from token endpoint
+    auth0.authorize_access_token()
+    resp = auth0.get('userinfo')
+    userinfo = resp.json()
+
+    # Store the user information in flask session.
+    session['jwt_payload'] = userinfo
+    session['profile'] = {
+        'user_id': userinfo['sub'],
+        'name': userinfo['name'],
+        'picture': userinfo['picture']
+    }
+    return redirect('/')
+
 # Auth0 Login
 @app.route('/login')
 def login():
-    return auth0.authorize_redirect(redirect_uri='https://enigmatic-citadel-11799.herokuapp.com/', audience=os.environ['AUTH0_DOMAIN']+'/userinfo')
+    return auth0.authorize_redirect(redirect_uri='https://enigmatic-citadel-11799.herokuapp.com/callback', audience=os.environ['AUTH0_DOMAIN']+'/userinfo')
 
 # Auth0 Logout
 @app.route('/logout')
