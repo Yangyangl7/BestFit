@@ -32,9 +32,10 @@ def home():
 @app.route('/user/<int:user_id>')
 def show_post(user_id):
     # show the post with the given id, the id is an integer
-    # sql
 
-    # name email avator id, post lists
+    # TODO:next mileStone change status value to see which status of post the page is rendering
+
+    # need data name email avator id, all information for the post for this user
     return render_template("profile.html")
 
 
@@ -44,6 +45,8 @@ def allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1].lower() in ['png', 'jpg']
 
+
+# TODO For BATU, create upload to handle our form in profile html
 @app.route('/upload', methods=['POST'])
 def upload():
     if 'file' not in request.files:

@@ -17,3 +17,10 @@ function hidePost() {
   $('#postCreater').css('top', '-100%');
   $('#scrim').css('display', 'none');
 }
+
+function submitForm(status) {
+
+  $('#formStatus').val(status);
+  $('#subButton').click();
+
+}
