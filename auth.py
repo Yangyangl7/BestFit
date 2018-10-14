@@ -6,9 +6,8 @@ import app
 
 def setup():
     # Initializing OAuth
-    secret_key = app.id_generator()
     oauth = OAuth(current_app)
-    current_app.secret_key = secret_key
+    current_app.secret_key = 'random_string'
 
     global auth0
     auth0 = oauth.register(
