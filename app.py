@@ -54,21 +54,21 @@ def callback_handling():
     userinfo = resp.json()
 
     # Store the user information in flask session.
-    session['jwt_payload'] = userinfo
-    session['profile'] = {
-        'user_id': userinfo['sub'],
-        'name': userinfo['name'],
-        'picture': userinfo['picture']
-    }
+    # session['jwt_payload'] = userinfo
+    # session['profile'] = {
+    #     'user_id': userinfo['sub'],
+    #     'name': userinfo['name'],
+    #     'picture': userinfo['picture']
+    # }
     return redirect('/')
 
-# Profile Page
-@app.route('/profile')
-@requires_auth
-def profile():
-    return render_template('profile.html',
-                           userinfo=session['profile'],
-                           userinfo_pretty=json.dumps(session['jwt_payload'], indent=4))
+# Auth0 tutorial profile page
+# @app.route('/profile')
+# @requires_auth
+# def profile():
+#     return render_template('profile.html',
+#                            userinfo=session['profile'],
+#                            userinfo_pretty=json.dumps(session['jwt_payload'], indent=4))
 
 # Auth0 Login
 @app.route('/login')
