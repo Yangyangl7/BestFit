@@ -62,6 +62,7 @@ def callback_handling():
     # }
     return redirect('/')
 
+<<<<<<< HEAD
 # Auth0 tutorial profile page
 # @app.route('/profile')
 # @requires_auth
@@ -69,6 +70,13 @@ def callback_handling():
 #     return render_template('profile.html',
 #                            userinfo=session['profile'],
 #                            userinfo_pretty=json.dumps(session['jwt_payload'], indent=4))
+=======
+# Profile Page
+@app.route('/profile')
+#@requires_auth
+def profile():
+    return render_template('profile.html', indent=4)
+>>>>>>> 882c998f9d9df820b2467e7f764f53ec6226e99c
 
 # Auth0 Login
 @app.route('/login')
