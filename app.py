@@ -66,7 +66,7 @@ def callback_handling():
 @app.route('/profile')
 #@requires_auth
 def profile():
-    return render_template('profile.html', indent=4))
+    return render_template('profile.html', indent=4)
 
 # Auth0 Login
 @app.route('/login')
