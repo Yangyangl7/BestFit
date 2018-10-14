@@ -53,28 +53,14 @@ def callback_handling():
     resp = auth0.get('userinfo')
     userinfo = resp.json()
 
-    # Store the user information in flask session.
-    # session['jwt_payload'] = userinfo
-    # session['profile'] = {
-    #     'user_id': userinfo['sub'],
-    #     'name': userinfo['name'],
-    #     'picture': userinfo['picture']
-    # }
+    Store the user information in flask session.
+    session['jwt_payload'] = userinfo
+    session['profile'] = {
+        'user_id': userinfo['sub'],
+        'name': userinfo['name'],
+        'picture': userinfo['picture']
+    }
     return redirect('/')
-
-# Auth0 tutorial profile page
-# @app.route('/profile')
-# @requires_auth
-# def profile():
-#     return render_template('profile.html',
-#                            userinfo=session['profile'],
-#                            userinfo_pretty=json.dumps(session['jwt_payload'], indent=4))
-
-# Profile Page
-@app.route('/profile')
-#@requires_auth
-def profile():
-    return render_template('profile.html', indent=4)
 
 # Auth0 Login
 @app.route('/login')
@@ -90,6 +76,12 @@ def logout():
     params = {'returnTo': url_for('home', _external=True), 'client_id': os.environ['AUTH0_CLIENT_ID']}
     app.logger.info(auth0.api_base_url + '/v2/logout?' + urlencode(params))
     return redirect(auth0.api_base_url + '/v2/logout?' + urlencode(params))
+
+# Profile Page
+@app.route('/profile')
+#@requires_auth
+def profile():
+    return render_template('profile.html', indent=4)
 
 @app.route('/user/<int:user_id>')
 # @requires_auth
