@@ -64,10 +64,10 @@
                                 <li><a href="#">FIND TEAMS</a></li>
                                 <li><a href="#" target="_blank">FIND CLIENTS</a></li>
                                 {% if session['profile'] is defined %}
-                                    <a class="pure-button" href="{{ url_for("logout") }}">LOGOUT</a>
-                                    <a href="{{ url_for("profile") }}">Profile</a>
+                                    <li><a class="pure-button" href="{{ url_for("logout") }}">LOGOUT</a></li>
+                                    <li><a href="{{ url_for("profile") }}">Profile</a></li>
                                 {% else %}
-                                    <a class="pure-button" href="{{ url_for("login") }}">SIGN UP/LOG IN</a>
+                                    <li><a class="pure-button" href="{{ url_for("login") }}">SIGN UP/LOG IN</a><li>
                                 {% endif %}
                             </ul>
                         </div>
