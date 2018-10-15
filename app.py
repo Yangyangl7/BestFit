@@ -64,10 +64,12 @@ def callback_handling():
         'picture': userinfo['picture']
     }
     with db.get_db_cursor(commit=True) as cur:
-            cur.execute("SELECT id FROM register where user_id=%s;",(session.get('profile').get('user_id'),))
-            user_id_res=[record["id"] for record in cur]
-            #if  user_id_res==None:
-            cur.execute("""insert into register (name,user_id,avator) values (%s,%s,%s)""", (userinfo['name'],userinfo['sub'],userinfo['picture']))
+            cur.execute("SELECT user_id FROM register where user_id=%s;",(session.get('profile').get('user_id'),))
+            user_id_res=[record["user_id"] for record in cur]
+            if  user_id_res==session.get('profile').get('user_id'):
+                return redirect('/')
+            else :
+                cur.execute("""insert into register (name,user_id,avator) values (%s,%s,%s)""", (userinfo['name'],userinfo['sub'],userinfo['picture']))
     return redirect('/')
 
 # Auth0 Login
