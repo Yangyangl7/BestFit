@@ -1129,21 +1129,22 @@ a.scrolling-post-content {
 
 .postContainer {
   margin-bottom: 3%;
-<<<<<<< HEAD
 }
 
 
 .button-success {
   color: white;
   font-weight: bolder;
-  background: rgb(28, 184, 65); /* this is a green */
+  background: rgb(28, 184, 65);
+  /* this is a green */
 }
 
 .button-warning {
   color: white;
   font-weight: bolder;
-  background: rgb(223, 117, 20); /* this is an orange */
-  }
+  background: rgb(223, 117, 20);
+  /* this is an orange */
+}
 
 .cancel {
   position: absolute;
@@ -1152,22 +1153,27 @@ a.scrolling-post-content {
   height: 25px;
   top: -22px;
   cursor: pointer;
-  }
-
-  .postImgFrame {
-    max-width: 320px;display:inline-block; width: 100%; height: 200px;border-radius:5px
-  }
-
-  .postTitle {
-    margin: 2%; margin-top:0;font-size: 18px; font-family:sans-serif; font-weight: bolder
-  }
-
-
-  .postList {
-    width: 30%;
-    margin: 1.5%;
-    display: inline-block;
-  }
-=======
 }
->>>>>>> master
+
+.postImgFrame {
+  max-width: 320px;
+  display: inline-block;
+  width: 100%;
+  height: 200px;
+  border-radius: 5px
+}
+
+.postTitle {
+  margin: 2%;
+  margin-top: 0;
+  font-size: 18px;
+  font-family: sans-serif;
+  font-weight: bolder
+}
+
+
+.postList {
+  width: 30%;
+  margin: 1.5%;
+  display: inline-block;
+}

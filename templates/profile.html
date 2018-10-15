@@ -5,115 +5,112 @@
 
 {% block content %}
 
-<div id="postCreater"
- style="height:550px; width: 70%;position: absolute; z-index:10000;left:15%; top: -100%;
+<div id="postCreater" style="height:550px; width: 70%;position: absolute; z-index:10000;left:15%; top: -100%;
    transition: 500ms; background-color: aliceblue;border-radius:5px">
 
-     <img src = "https://png.pngtree.com/svg/20170706/cancel_1222816.png" class="cancel" onclick="hidePost()">
+  <img src="https://png.pngtree.com/svg/20170706/cancel_1222816.png" class="cancel" onclick="hidePost()">
 
-  <div style = "height: 90%;overflow-y: scroll;width:100%; border-bottom: 2px solid #ddd; padding:5%;box-sizing:border-box">
+  <div style="height: 90%;overflow-y: scroll;width:100%; border-bottom: 2px solid #ddd; padding:5%;box-sizing:border-box">
 
 
     <!--  TODO:  create /upload handle the for m-->
     <!-- NOTE:  Save button save post with  status = 2, Submit save post with status = 1-->
 
-    <form class="pure-form pure-form-stacked"
-          action="/upload" method="post" enctype="multipart/form-data">
-      <div class = "postContainer">
-        <span class = "postLabel"> Title </span>
-          <input type = "input" name = "title" class = "postInput" placeholder="Enter Your Title ..." required="required">
+    <form class="pure-form pure-form-stacked" action="/upload" method="post" enctype="multipart/form-data">
+      <div class="postContainer">
+        <span class="postLabel"> Title </span>
+        <input type="input" name="title" class="postInput" placeholder="Enter Your Title ..." required="required">
       </div>
 
-      <div class = "postContainer" >
+      <div class="postContainer">
         <!-- NOTE: ignore this count for now  -->
-      <input  type = "input" name = "count" style="display:none" value = 1 id = imageTracker>
+        <input type="input" name="count" style="display:none" value=1 id=imageTracker>
 
-      <!-- NOTE 'status' store the post status 1 = active post, 2 = saved -->
-      <input type="input" name = "status" id = formStatus style = "display: none" value = 1 >
+        <!-- NOTE 'status' store the post status 1 = active post, 2 = saved -->
+        <input type="input" name="status" id=formStatus style="display: none" value=1>
 
-      <span class = "postLabel"> Upload Image</span>
-      <input type="file"  style = "display:inline-block" name="file" accept=".png, .jpg, .jpeg">
+        <span class="postLabel"> Upload Image</span>
+        <input type="file" style="display:inline-block" name="file" accept=".png, .jpg, .jpeg">
       </div>
 
-      <div class = "postContainer">
-        <span class = "postLabel"> State </span>
+      <div class="postContainer">
+        <span class="postLabel"> State </span>
 
-      <select name = "location" style="display:inline-block">
-      	<option value="AL">Alabama</option>
-      	<option value="AK">Alaska</option>
-      	<option value="AZ">Arizona</option>
-      	<option value="AR">Arkansas</option>
-      	<option value="CA">California</option>
-      	<option value="CO">Colorado</option>
-      	<option value="CT">Connecticut</option>
-      	<option value="DE">Delaware</option>
-      	<option value="DC">District Of Columbia</option>
-      	<option value="FL">Florida</option>
-      	<option value="GA">Georgia</option>
-      	<option value="HI">Hawaii</option>
-      	<option value="ID">Idaho</option>
-      	<option value="IL">Illinois</option>
-      	<option value="IN">Indiana</option>
-      	<option value="IA">Iowa</option>
-      	<option value="KS">Kansas</option>
-      	<option value="KY">Kentucky</option>
-      	<option value="LA">Louisiana</option>
-      	<option value="ME">Maine</option>
-      	<option value="MD">Maryland</option>
-      	<option value="MA">Massachusetts</option>
-      	<option value="MI">Michigan</option>
-      	<option value="MN">Minnesota</option>
-      	<option value="MS">Mississippi</option>
-      	<option value="MO">Missouri</option>
-      	<option value="MT">Montana</option>
-      	<option value="NE">Nebraska</option>
-      	<option value="NV">Nevada</option>
-      	<option value="NH">New Hampshire</option>
-      	<option value="NJ">New Jersey</option>
-      	<option value="NM">New Mexico</option>
-      	<option value="NY">New York</option>
-      	<option value="NC">North Carolina</option>
-      	<option value="ND">North Dakota</option>
-      	<option value="OH">Ohio</option>
-      	<option value="OK">Oklahoma</option>
-      	<option value="OR">Oregon</option>
-      	<option value="PA">Pennsylvania</option>
-      	<option value="RI">Rhode Island</option>
-      	<option value="SC">South Carolina</option>
-      	<option value="SD">South Dakota</option>
-      	<option value="TN">Tennessee</option>
-      	<option value="TX">Texas</option>
-      	<option value="UT">Utah</option>
-      	<option value="VT">Vermont</option>
-      	<option value="VA">Virginia</option>
-      	<option value="WA">Washington</option>
-      	<option value="WV">West Virginia</option>
-      	<option value="WI">Wisconsin</option>
-      	<option value="WY">Wyoming</option>
-      </select>
+        <select name="location" style="display:inline-block">
+          <option value="AL">Alabama</option>
+          <option value="AK">Alaska</option>
+          <option value="AZ">Arizona</option>
+          <option value="AR">Arkansas</option>
+          <option value="CA">California</option>
+          <option value="CO">Colorado</option>
+          <option value="CT">Connecticut</option>
+          <option value="DE">Delaware</option>
+          <option value="DC">District Of Columbia</option>
+          <option value="FL">Florida</option>
+          <option value="GA">Georgia</option>
+          <option value="HI">Hawaii</option>
+          <option value="ID">Idaho</option>
+          <option value="IL">Illinois</option>
+          <option value="IN">Indiana</option>
+          <option value="IA">Iowa</option>
+          <option value="KS">Kansas</option>
+          <option value="KY">Kentucky</option>
+          <option value="LA">Louisiana</option>
+          <option value="ME">Maine</option>
+          <option value="MD">Maryland</option>
+          <option value="MA">Massachusetts</option>
+          <option value="MI">Michigan</option>
+          <option value="MN">Minnesota</option>
+          <option value="MS">Mississippi</option>
+          <option value="MO">Missouri</option>
+          <option value="MT">Montana</option>
+          <option value="NE">Nebraska</option>
+          <option value="NV">Nevada</option>
+          <option value="NH">New Hampshire</option>
+          <option value="NJ">New Jersey</option>
+          <option value="NM">New Mexico</option>
+          <option value="NY">New York</option>
+          <option value="NC">North Carolina</option>
+          <option value="ND">North Dakota</option>
+          <option value="OH">Ohio</option>
+          <option value="OK">Oklahoma</option>
+          <option value="OR">Oregon</option>
+          <option value="PA">Pennsylvania</option>
+          <option value="RI">Rhode Island</option>
+          <option value="SC">South Carolina</option>
+          <option value="SD">South Dakota</option>
+          <option value="TN">Tennessee</option>
+          <option value="TX">Texas</option>
+          <option value="UT">Utah</option>
+          <option value="VT">Vermont</option>
+          <option value="VA">Virginia</option>
+          <option value="WA">Washington</option>
+          <option value="WV">West Virginia</option>
+          <option value="WI">Wisconsin</option>
+          <option value="WY">Wyoming</option>
+        </select>
       </div>
 
-      <div class = "postContainer">
-        <span class = "postLabel" > Budget</span>
-          <!--  TODO for Yuhao Li add form validation int only -->
-        <input class = "postInput" name = "budget" type = "input">
+      <div class="postContainer">
+        <span class="postLabel"> Budget</span>
+        <!--  TODO for Yuhao Li add form validation int only -->
+        <input class="postInput" name="budget" type="input">
       </div>
 
-      <div class = "postContainer">
-        <span class = "postLabel">Description </span><br>
-      <textarea rows="5" cols="55" name="text" class="postInput" placeholder="Tell us something about the project">
+      <div class="postContainer">
+        <span class="postLabel">Description </span><br>
+        <textarea rows="5" cols="55" name="text" class="postInput" placeholder="Tell us something about the project">
 
       </textarea>
-      <button type="submit" id = subButton style="display:none"></button>
+        <button type="submit" id=subButton style="display:none"></button>
       </div>
     </form>
   </div>
-  <div style ="height: 10%; width:100%; align-items: center">
-    <div style = "position: absolute;left: 30%;top: 92%;"
-    class = "button-success pure-button" onclick="submitForm(1)">Submit</div>
+  <div style="height: 10%; width:100%; align-items: center">
+    <div style="position: absolute;left: 30%;top: 92%;" class="button-success pure-button" onclick="submitForm(1)">Submit</div>
 
-    <div style = "position: absolute;left: 60%;top: 92%;"
-     class="button-warning pure-button" onclick="submitForm(2)"> Save </div>
+    <div style="position: absolute;left: 60%;top: 92%;" class="button-warning pure-button" onclick="submitForm(2)">
+      Save </div>
   </div>
 </div>
 
@@ -121,62 +118,55 @@
 
 </div>
 
-<div class = "profileBody" style = "border-bottom: 2px solid #ddd;padding-bottom:5%" >
-  <div id = "scrim" onclick="scrimTriger(1)"
-    style = "height: 300%; width:100%;background-color:black;
+<div class="profileBody" style="border-bottom: 2px solid #ddd;padding-bottom:5%">
+  <div id="scrim" onclick="scrimTriger(1)" style="height: 300%; width:100%;background-color:black;
      position: absolute; z-index: 9999;opacity:0.65;display:none">
   </div>
 
-  <div style = "width: 90%; margin:auto">
-    <div class = "profileTop" style = "height:320px; margin: 0">
-      <div class = "backGroud" style = "height: 280px;background-size:contain;
-       background-image: url({{ url_for('static', filename='img/bg2.jpg')}} );">
-        <div style="height:160px; position: relative; bottom: -140px;left:10px" >
+  <div style="width: 90%; margin:auto">
+    <div class="profileTop" style="height:320px; margin: 0">
+      <div class="backGroud" style="height: 280px;background-size:contain;
+       background-image: url({{ url_for('static', filename='img/bg7.jpg')}} );">
+        <div style="height:160px; position: relative; bottom: -140px;left:10px">
 
           <!--  TODO: change src to avator -->
-          <img
-            src = {{avator}}
-            style = "width: 160px; height: 160px; border: 1.5px solid white"
-          >
-          <div class = "info" style = "position: absolute; margin-left:20px;
+          <img src={{avator}} style="width: 160px; height: 160px; border: 1.5px solid white">
+          <div class="info" style="position: absolute; margin-left:20px;
           display: inline-block;">
 
-            <div style = "vertical-align:middle; height:35px; border: 1.5px solid white;
+            <div style="vertical-align:middle; height:35px; border: 1.5px solid white;
               color: white; margin-bottom: 20px;border-radius:5px;padding:5px;box-sizing:border-box;font-weight:bolder">
-              <img
-              src = "https://images.vexels.com/media/users/3/147752/isolated/preview/1fa075b761f0e6cd38181d9af310ff86-digital-camera-icon-by-vexels.png"
-              style = "height:20px; width: 20px;"
-              >
-              <div
-                style = "display:inline-block; vertical-align: middle;margin:5px;
+              <img src="https://images.vexels.com/media/users/3/147752/isolated/preview/1fa075b761f0e6cd38181d9af310ff86-digital-camera-icon-by-vexels.png"
+                style="height:20px; width: 20px;">
+              <div style="display:inline-block; vertical-align: middle;margin:5px;
                 margin-top:-0.5px;font-size:13px;cursor:pointer;">
                 Change Cover Photo
               </div><br>
-              </div>
+            </div>
 
 
 
-              <!-- TODO Repalce user name and eMail -->
+            <!-- TODO Repalce user name and eMail -->
 
-              <span style = "line-height:2; font-weight:bolder"> {{usr_name}} </br></span>
-             <!-- <span style = " font-weight:bolder">{{usr_email}}</span> -->
+            <span style="line-height:2; font-weight:bolder"> {{usr_name}} </br></span>
+            <!-- <span style = " font-weight:bolder">{{usr_email}}</span> -->
 
           </div>
         </div>
       </div>
-      <div class= "subLink" style="height: 40px; padding-left: 183px; border-bottom: 1.5px solid lightgray">
-        <div style = "display:inline-block; margin:10px;cursor: pointer ">
-           Current Post
+      <div class="subLink" style="height: 40px; padding-left: 183px; border-bottom: 1.5px solid lightgray">
+        <div style="display:inline-block; margin:10px;cursor: pointer ">
+          Current Post
         </div>
-        <div style = "display:inline-block; margin:10px;cursor: pointer ">
+        <div style="display:inline-block; margin:10px;cursor: pointer ">
           Saved Post
         </div>
 
-        <div style = "display:inline-block; margin:10px; cursor: pointer">
+        <div style="display:inline-block; margin:10px; cursor: pointer">
           Past Post
         </div>
 
-        <div style = "display:inline-block; margin:10px; cursor: pointer">
+        <div style="display:inline-block; margin:10px; cursor: pointer">
           Profile
         </div>
       </div>
@@ -186,8 +176,9 @@
 
 
 
-  <div class = "profilePost" style = "width:88%; margin:auto">
-    <div style = "font-size: 28px; font-family:sans-serif; font-weight: bolder;margin:2%;margin-bottom: 0"> Current List : </div>
+  <div class="profilePost" style="width:88%; margin:auto">
+    <div style="font-size: 28px; font-family:sans-serif; font-weight: bolder;margin:2%;margin-bottom: 0"> Current List
+      : </div>
 
 
     <!-- <div style="width:38%;height:2px;background-color:#ddd;display:inline-block;margin-top:3px;margin-bottom:10px"></div>
@@ -196,48 +187,44 @@
 
     <!--  TODO for Yuhao Li check cookies if it's owner-->
     <div class="postList">
-      <div id = createPost
-      style="background-color:#ddd" class = "postImgFrame">
-      <div style="width:90px; margin:auto; margin-top:55px; cursor: pointer" onClick = "showPost()">
-        <!-- TODO  REPLACE user posted Image-->
-      <img
-        src = "https://cdn1.iconfinder.com/data/icons/basic-ui-elements-color-round/3/30-512.png" style = "height: 90px;"
-          class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" >
-      </div>
+      <div id=createPost style="background-color:#ddd" class="postImgFrame">
+        <div style="width:90px; margin:auto; margin-top:55px; cursor: pointer" onClick="showPost()">
+          <!-- TODO  REPLACE user posted Image-->
+          <img src="https://cdn1.iconfinder.com/data/icons/basic-ui-elements-color-round/3/30-512.png" style="height: 90px;"
+            class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
+        </div>
 
-  		</div>
+      </div>
       <!--  TODO Replace usr post title-->
-      <div style= "margin: 2%; margin-top:0;font-size: 18px; font-family:sans-serif; font-weight: bolder"> Create Post </div>
+      <div style="margin: 2%; margin-top:0;font-size: 18px; font-family:sans-serif; font-weight: bolder"> Create Post
+      </div>
     </div>
 
     <!-- TODO: For loop render all post -->
     <div class="postList">
       <div class="postImgFrame" style="margin-bottom:0">
-        <img
-        src = "https://www.timeshighereducation.com/sites/default/files/styles/the_breaking_news_image_style/public/why-study-architecture_0.jpg?itok=yr8Uelyq"
-        class="postImage" style="width:100%;height:200px;">
+        <img src="https://www.timeshighereducation.com/sites/default/files/styles/the_breaking_news_image_style/public/why-study-architecture_0.jpg?itok=yr8Uelyq"
+          class="postImage" style="width:100%;height:200px;">
       </div>
-      <div class = "postTitle"> Draw Graph</div>
+      <div class="postTitle"> Draw Graph</div>
     </div>
 
 
-<!-- NOTE: delete the two below -->
+    <!-- NOTE: delete the two below -->
     <div class="postList">
       <div class="postImgFrame" style="margin-bottom:0">
-        <img
-        src = "https://www.timeshighereducation.com/sites/default/files/styles/the_breaking_news_image_style/public/why-study-architecture_0.jpg?itok=yr8Uelyq"
-        class="postImage" style="width:100%;height:200px;">
+        <img src="https://www.timeshighereducation.com/sites/default/files/styles/the_breaking_news_image_style/public/why-study-architecture_0.jpg?itok=yr8Uelyq"
+          class="postImage" style="width:100%;height:200px;">
       </div>
-      <div class = "postTitle"> Draw Graph</div>
+      <div class="postTitle"> Draw Graph</div>
     </div>
 
     <div class="postList">
       <div class="postImgFrame" style="margin-bottom:0">
-        <img
-        src = "https://www.timeshighereducation.com/sites/default/files/styles/the_breaking_news_image_style/public/why-study-architecture_0.jpg?itok=yr8Uelyq"
-        class="postImage" style="width:100%; height:200px;">
+        <img src="https://www.timeshighereducation.com/sites/default/files/styles/the_breaking_news_image_style/public/why-study-architecture_0.jpg?itok=yr8Uelyq"
+          class="postImage" style="width:100%; height:200px;">
       </div>
-      <div class = "postTitle"> Draw Graph</div>
+      <div class="postTitle"> Draw Graph</div>
     </div>
 
   </div>
