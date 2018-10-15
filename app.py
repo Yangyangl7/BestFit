@@ -58,8 +58,7 @@ def callback_handling():
     session['profile'] = {
         'user_id': userinfo['sub'],
         'name': userinfo['name'],
-        'picture': userinfo['picture'],
-        'email': userinfo['email']
+        'picture': userinfo['picture']
     }
     with db.get_db_cursor(commit=True) as cur:
             cur.execute("""insert into register (email,name,user_id,avator) values (%s,%s,%s,%s)""", (userinfo['email'],userinfo['name'],userinfo['user_id'],userinfo['picture']))
@@ -92,7 +91,7 @@ def profile():
 #             usr_name=[record["name"] for record in cur]
 #             usr_email=[record["email"] for record in cur]
             
-    return render_template('profile.html',usr_name=session.get('profile').get('name'),usr_email=session.get('profile').get('email'))
+    return render_template('profile.html',usr_name=session.get('profile').get('name'),usr_email=batux002@umn.edu)
 @app.route('/user/<int:user_id>')
 # @requires_auth
 def show_post(user_id):
