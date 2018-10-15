@@ -60,6 +60,7 @@ def callback_handling():
         'name': userinfo['name'],
         'picture': userinfo['picture']
     }
+
     return redirect('/')
 
 # Auth0 Login
