@@ -43,20 +43,20 @@ $(function () {
 });
 
 // Smooth Scrolling
-$(function () {
-  $("a.smooth-scroll").click(function (event) {
-    event.preventDefault();
+// $(function () {
+//   $("a.smooth-scroll").click(function (event) {
+//     event.preventDefault();
 
-    // get section id like #about, #menu etc.
-    var section_id = $(this).attr("href");
+//     // get section id like #about, #menu etc.
+//     var section_id = $(this).attr("href");
 
-    $("html, body").animate({
-      scrollTop: $(section_id).offset().top - 74
-    }, 1250);
+//     $("html, body").animate({
+//       scrollTop: $(section_id).offset().top - 74
+//     }, 1250);
 
-  });
+//   });
 
-});
+// });
 
 
 
@@ -87,3 +87,22 @@ $('#dropdown-items li').on('click', function () {
 //     $("#arrow-down i").addClass("animated fadeInDown infinite");
 
 // });
+
+/* ====================================
+                Home
+======================================= */
+$(document).ready(function () {
+  $('#myCarousel-client').carousel({
+    interval: false
+  })
+  $('#myCarousel-team').carousel({
+    interval: false
+  })
+
+  $('#myTestimonial').carousel({
+    interval: 3000
+  })
+
+
+
+});

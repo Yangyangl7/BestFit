@@ -45,10 +45,27 @@ def requires_auth(f):
 def home():
     return render_template("home.html")
 
+# Auth0 callback after login
+@app.route('/callback')
+def callback_handling():
+    # Handles response from token endpoint
+    auth0.authorize_access_token()
+    resp = auth0.get('userinfo')
+    userinfo = resp.json()
+
+    #Store the user information in flask session.
+    session['jwt_payload'] = userinfo
+    session['profile'] = {
+        'user_id': userinfo['sub'],
+        'name': userinfo['name'],
+        'picture': userinfo['picture']
+    }
+    return redirect('/')
+
 # Auth0 Login
 @app.route('/login')
 def login():
-    return auth0.authorize_redirect(redirect_uri='https://enigmatic-citadel-11799.herokuapp.com/', audience=os.environ['AUTH0_DOMAIN']+'/userinfo')
+    return auth0.authorize_redirect(redirect_uri=os.environ['AUTH0_CALLBACK_URL'], audience='https://' + os.environ['AUTH0_DOMAIN']+'/userinfo')
 
 # Auth0 Logout
 @app.route('/logout')
@@ -56,12 +73,18 @@ def logout():
     # Clear session stored data
     session.clear()
     # Redirect user to logout endpoint
-    params = {'returnTo': url_for('home', _external=True), 'client_id': os.environ['CLIENT_ID']}
+    params = {'returnTo': url_for('home', _external=True), 'client_id': os.environ['AUTH0_CLIENT_ID']}
     app.logger.info(auth0.api_base_url + '/v2/logout?' + urlencode(params))
     return redirect(auth0.api_base_url + '/v2/logout?' + urlencode(params))
 
+# Profile Page
+@app.route('/profile')
+#@requires_auth
+def profile():
+    return render_template('profile.html', indent=4)
+
 @app.route('/user/<int:user_id>')
-@requires_auth
+# @requires_auth
 def show_post(user_id):
     # show the post with the given id, the id is an integer
 
