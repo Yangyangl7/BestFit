@@ -152,7 +152,7 @@ def upload():
             cur.execute("SELECT MAX(post_id) AS maxid FROM post where publisher_id=%s;",(user_id_res[0],))
             post_id_res=[record["maxid"] for record in cur]
             cur.execute("insert into picture (register_id,post_id,img) values (%s,%s,%s)",
-                (user_id_res[0], post_id_res, data))
+                (user_id_res[0], post_id_res[0], data))
             
     return redirect(url_for("profile"))
 
