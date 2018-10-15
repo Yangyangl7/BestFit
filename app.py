@@ -66,12 +66,12 @@ def callback_handling():
     with db.get_db_cursor(commit=True) as cur:
             # cur.execute("""IF EXISTS (SELECT * FROM register where user_id=%s) BEGIN END 
             # ELSE BEGIN insert into register (name,user_id,avator) values (%s,%s,%s) END;""",(session.get('profile').get('user_id'),userinfo['name'],userinfo['sub'],userinfo['picture']))
-            cur.execute("INSERT INTO register (user_id,name,avator) values (%s,%s,%s) ON CONFLICT (did) DO NOTHING;",(userinfo['sub'],userinfo['name'],userinfo['picture']))
+            #cur.execute("INSERT INTO register (user_id,name,avator) values (%s,%s,%s) ON CONFLICT (did) DO NOTHING;",(userinfo['sub'],userinfo['name'],userinfo['picture']))
             # user_id_res=[record["user_id"] for record in cur]
             # if  user_id_res==session.get('profile').get('user_id'):
             #     return redirect('/')
             # else :
-            #     cur.execute("""insert into register (name,user_id,avator) values (%s,%s,%s)""", (userinfo['name'],userinfo['sub'],userinfo['picture']))
+            cur.execute("""insert into register (name,user_id,avator) values (%s,%s,%s)""", (userinfo['name'],userinfo['sub'],userinfo['picture']))
     return redirect('/')
 
 # Auth0 Login
