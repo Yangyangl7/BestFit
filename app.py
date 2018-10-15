@@ -1,4 +1,5 @@
 import os
+import io
 import string
 import random
 
@@ -6,8 +7,10 @@ import json
 from six.moves.urllib.request import urlopen
 from six.moves.urllib.parse import urlencode
 from functools import wraps
+from werkzeug.utils import secure_filename
+from datetime import datetime
 
-from flask import Flask, g, render_template, url_for, abort, jsonify, redirect, request, make_response, session
+from flask import Flask, g, flash, send_file, render_template, url_for, abort, jsonify, redirect, request, make_response, session
 import psycopg2
 
 import db
@@ -15,8 +18,8 @@ import auth
 
 app = Flask(__name__)
 
-def id_generator(size=13, chars=string.ascii_uppercase + string.digits):
-        return ''.join(random.SystemRandom().choice(chars) for _ in range(size))
+# def id_generator(size=13, chars=string.ascii_uppercase + string.digits):
+#         return ''.join(random.SystemRandom().choice(chars) for _ in range(size))
 
 @app.before_first_request
 def initialize():
@@ -60,7 +63,16 @@ def callback_handling():
         'name': userinfo['name'],
         'picture': userinfo['picture']
     }
-
+    
+    with db.get_db_cursor(commit=True) as cur:
+            # cur.execute("""IF EXISTS (SELECT * FROM register where user_id=%s) BEGIN END 
+            # ELSE BEGIN insert into register (name,user_id,avator) values (%s,%s,%s) END;""",(session.get('profile').get('user_id'),userinfo['name'],userinfo['sub'],userinfo['picture']))
+            cur.execute("INSERT INTO register (user_id,name,avator) values (%s,%s,%s) ON CONFLICT (user_id) DO NOTHING;",(userinfo['sub'],userinfo['name'],userinfo['picture']))
+            # user_id_res=[record["user_id"] for record in cur]
+            # if  user_id_res==session.get('profile').get('user_id'):
+            #     return redirect('/')
+            # else :
+            #cur.execute("""insert into register (name,user_id,avator) values (%s,%s,%s)""", (userinfo['name'],userinfo['sub'],userinfo['picture']))
     return redirect('/')
 
 # Auth0 Login
@@ -80,7 +92,7 @@ def logout():
 
 # Profile Page
 @app.route('/profile')
-# @requires_auth
+@requires_auth
 def profile():
 #     with db.get_db_cursor() as cur:
 
@@ -90,7 +102,7 @@ def profile():
 #             usr_name=[record["name"] for record in cur]
 #             usr_email=[record["email"] for record in cur]
             
-    return render_template('profile.html',usr_name="batu",usr_email="test@umn.edu")
+    return render_template('profile.html',usr_name=session.get('profile').get('name'),avator=session.get('profile').get('picture'))
 @app.route('/user/<int:user_id>')
 # @requires_auth
 def show_post(user_id):
@@ -110,6 +122,14 @@ def allowed_file(filename):
 # TODO For BATU, create upload to handle our form in profile html
 @app.route('/upload', methods=['POST'])
 def upload():
+    title_res = request.form.get("title")
+    status_res = request.form.get("status")
+    location_res = request.form.get("location")
+    budget_res = request.form.get("budget")
+    text_res = request.form.get("text")
+    dt = datetime.now()
+    
+    
     if 'file' not in request.files:
         flash("no file part")
         return redirect(request.url)
@@ -126,9 +146,29 @@ def upload():
         with db.get_db_cursor(commit=True) as cur:
             # we are storing the original filename for demo purposes
             # might be useful to also/instead save the file extension or mime type
-            cur.execute("insert into images (filename, img) values (%s, %s)",
-                (filename, data))
-    return redirect(url_for("home"))
+            cur.execute("SELECT * FROM register where user_id=%s;",(session.get('profile').get('user_id'),))
+            user_id_res=[record["id"] for record in cur]
+            cur.execute("insert into post (publisher_id,time,title, status,location,budget,content) values (%s,%s,%s,%s,%s,%s, %s)",
+                (user_id_res[0],dt, title_res, status_res,location_res,budget_res,text_res))
+            cur.execute("SELECT MAX(post_id) AS maxid FROM post where publisher_id=%s;",(user_id_res[0],))
+            post_id_res=[record["maxid"] for record in cur]
+            cur.execute("insert into picture (register_id,post_id,img) values (%s,%s,%s)",
+                (user_id_res[0], post_id_res[0], data))
+            
+    return redirect(url_for("profile"))
+
+@app.route('/img/<int:img_id>')
+def serve_img(img_id):
+    with db.get_db_cursor() as cur:
+        cur.execute("SELECT * FROM images where img_id=%s", (img_id,))
+        image_row = cur.fetchone()
+
+        # in memory binary stream
+        stream = io.BytesIO(image_row["img"])
+
+        return send_file(
+            stream,
+            attachment_filename=image_row["filename"])
 
 if __name__ == '__main__':
     app.run()

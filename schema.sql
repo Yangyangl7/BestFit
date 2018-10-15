@@ -8,10 +8,11 @@ create table register (
 	id SERIAL PRIMARY KEY,
 	email varchar(100),
     name varchar(20),
+	user_id varchar(255) UNIQUE,
     avator varchar(255) DEFAULT 'https://vignette.wikia.nocookie.net/pkmnshuffle/images/3/32/Psyduck.png/revision/latest?cb=20170407192426',
     description varchar(255),
     phone varchar(30),
-    isDesigner boolean NOT NULL
+    isDesigner boolean
 );
 
 create table tag(
@@ -25,14 +26,14 @@ create table post(
 	post_id SERIAL PRIMARY KEY,
 	publisher_id int references register,
 	title varchar(255) NOT NULL,
-	time varchar(255),
+	time timestamp,
 	content text,
 	status int,
 	dealer_id int references register,
 	location varchar(255) NOT NULL,
 	budget int,
 	area text,
-	tag_id int references tag,
+	tag_id int references tag
 );
 
 create table review(
@@ -47,7 +48,7 @@ create table picture(
 	picture_id SERIAL PRIMARY KEY,
 	register_id int references register,
 	post_id int references post,
-	url text
+	img bytea
 );
 
 insert into register (name, isdesigner) values ('test1', TRUE);
