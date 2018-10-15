@@ -91,7 +91,7 @@ def profile():
 #             usr_name=[record["name"] for record in cur]
 #             usr_email=[record["email"] for record in cur]
             
-    return render_template('profile.html',usr_name=session.get('profile').get('name'),usr_email="batux002@umn.edu")
+    return render_template('profile.html',usr_name=session.get('profile').get('name'),avator=session.get('profile').get('picture'))
 @app.route('/user/<int:user_id>')
 # @requires_auth
 def show_post(user_id):
