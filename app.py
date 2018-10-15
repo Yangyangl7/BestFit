@@ -79,16 +79,16 @@ def logout():
 
 # Profile Page
 @app.route('/profile')
-""" @requires_auth
-def profile():
-    with db.get_db_cursor() as cur:
+# @requires_auth
+# def profile():
+#     with db.get_db_cursor() as cur:
 
-            cur.execute("""select  name,email from register where id=%s;""",userinfo['sub']  )
+#             cur.execute("""select  name,email from register where id=%s;""",userinfo['sub']  )
 
             
-            usr_name=[record["name"] for record in cur]
-            usr_email=[record["email"] for record in cur]
-             """
+#             usr_name=[record["name"] for record in cur]
+#             usr_email=[record["email"] for record in cur]
+            
     return render_template('profile.html')
 @app.route('/user/<int:user_id>')
 # @requires_auth
