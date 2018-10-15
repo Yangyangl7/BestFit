@@ -79,9 +79,18 @@ def logout():
 
 # Profile Page
 @app.route('/profile')
-#@requires_auth
+@requires_auth
 def profile():
-    return render_template('profile.html', indent=4)
+    with db.get_db_cursor() as cur:
+
+            cur.execute("""select  name,email from register where id=%s;""",session['profile'].user_id   )
+
+            
+            usr_name=[record["name"] for record in cur]
+            usr_email=[record["email"] for record in cur]
+            
+    return render_template('profile.html',
+                           usr_name=usr_name,usr_email=usr_email)
 
 @app.route('/user/<int:user_id>')
 # @requires_auth
