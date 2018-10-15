@@ -33,7 +33,7 @@ create table post(
 	location varchar(255) NOT NULL,
 	budget int,
 	area text,
-	tag_id int references tag,
+	tag_id int references tag
 );
 
 create table review(
