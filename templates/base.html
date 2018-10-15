@@ -58,12 +58,17 @@
                     <div class="container" id="nav-menu">
                         <div class="collapse navbar-collapse">
                             <ul class="nav navbar-nav" id="nav-item">
-                                <li><a href="#headerHome">HOME</a></li>
-                                <li><a href="#howItWorks">HOW IT WORKS</a></li>
-                                <li><a href="">FIND TEAMS</a></li>
-                                <li><a href="">FIND CLIENTS</a></li>
-                                <li><a href="{{ url_for("logout") }}">LOG OUT</a></li>
-                                <li><a href="{{ url_for("login") }}" id="sign-up">LOG IN/SIGN UP</a></li>
+                                <li><a class="smooth-scroll" href="#headerHome">HOME</a></li>
+                                <li><a class="smooth-scroll" href="#howItWorks">HOW IT WORKS</a></li>
+                                <li><a class="smooth-scroll" href="#">FIND TEAMS</a></li>
+                                <li><a class="smooth-scroll" href="#" target="_blank">FIND CLIENTS</a></li>
+                                {% if session['profile'] is defined %}
+                                <li><a class="smooth-scroll" href="{{ url_for("logout") }}">LOGOUT</a></li>
+                                <li><a class="smooth-scroll" href="{{ url_for("profile") }}">Profile</a></li>
+                                {% else %}
+                                <li><a class="smooth-scroll" href="{{ url_for("login") }}">SIGN UP/LOG IN</a>
+                                <li>
+                                    {% endif %}
                             </ul>
                         </div>
                     </div>
