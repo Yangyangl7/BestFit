@@ -148,11 +148,11 @@ def upload():
             cur.execute("SELECT * FROM register where user_id=%s;",(session.get('profile').get('user_id'),))
             user_id_res=[record["id"] for record in cur]
             cur.execute("insert into post (publisher_id,time,title, status,location,budget,content) values (%s,%s,%s,%s,%s,%s, %s)",
-                (user_id_res,dt, title_res, status_res,location_res,budget_res,text_res))
-            cur.execute("SELECT MAX(post_id) AS maxid FROM post where publisher_id=%s;",(user_id_res,))
+                (user_id_res[0],dt, title_res, status_res,location_res,budget_res,text_res))
+            cur.execute("SELECT MAX(post_id) AS maxid FROM post where publisher_id=%s;",(user_id_res[0],))
             post_id_res=[record["maxid"] for record in cur]
             cur.execute("insert into picture (register_id,post_id,img) values (%s,%s,%s)",
-                (user_id_res, post_id_res, data))
+                (user_id_res[0], post_id_res, data))
             
     return redirect(url_for("profile"))
 
