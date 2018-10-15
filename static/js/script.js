@@ -87,3 +87,22 @@ $('#dropdown-items li').on('click', function () {
 //     $("#arrow-down i").addClass("animated fadeInDown infinite");
 
 // });
+
+/* ====================================
+                Home
+======================================= */
+$(document).ready(function () {
+  $('#myCarousel-client').carousel({
+    interval: false
+  })
+  $('#myCarousel-team').carousel({
+    interval: false
+  })
+
+  $('#myTestimonial').carousel({
+    interval: 3000
+  })
+
+
+
+});
