@@ -60,6 +60,8 @@ def callback_handling():
         'name': userinfo['name'],
         'picture': userinfo['picture']
     }
+    with db.get_db_cursor(commit=True) as cur:
+            cur.execute("""insert into register (email,name,user_id,avator) values (%s,%s,%s,%s)""", (userinfo['email'],userinfo['name'],userinfo['user_id'],userinfo['picture']))
     return redirect('/')
 
 # Auth0 Login
@@ -79,7 +81,7 @@ def logout():
 
 # Profile Page
 @app.route('/profile')
-# @requires_auth
+@requires_auth
 def profile():
 #     with db.get_db_cursor() as cur:
 
@@ -89,7 +91,7 @@ def profile():
 #             usr_name=[record["name"] for record in cur]
 #             usr_email=[record["email"] for record in cur]
             
-    return render_template('profile.html',usr_name="batu",usr_email="test@umn.edu")
+    return render_template('profile.html',usr_name=session.get('profile').get('name'),usr_email="test@umn.edu")
 @app.route('/user/<int:user_id>')
 # @requires_auth
 def show_post(user_id):
