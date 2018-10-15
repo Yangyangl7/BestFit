@@ -8,7 +8,7 @@ create table register (
 	id SERIAL PRIMARY KEY,
 	email varchar(100),
     name varchar(20),
-	user_id varchar(255),
+	user_id varchar(255) UNIQUE,
     avator varchar(255) DEFAULT 'https://vignette.wikia.nocookie.net/pkmnshuffle/images/3/32/Psyduck.png/revision/latest?cb=20170407192426',
     description varchar(255),
     phone varchar(30),
