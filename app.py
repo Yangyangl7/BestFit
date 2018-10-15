@@ -89,7 +89,7 @@ def logout():
 #             usr_name=[record["name"] for record in cur]
 #             usr_email=[record["email"] for record in cur]
             
-    return render_template('profile.html')
+    return render_template('profile.html',usr_name="batu",usr_email="test@umn.edu")
 @app.route('/user/<int:user_id>')
 # @requires_auth
 def show_post(user_id):
