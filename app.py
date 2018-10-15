@@ -101,6 +101,10 @@ def profile():
 #             usr_name=[record["name"] for record in cur]
 #             usr_email=[record["email"] for record in cur]
             
+    #return render_template('profile.html',usr_name=session.get('profile').get('name'),avator=session.get('profile').get('picture'))
+    # with db.get_db_cursor() as cur:
+    #     cur.execute("SELECT picture_id, filename FROM picture order by picture_id desc")
+    #     images = [record for record in cur]
     return render_template('profile.html',usr_name=session.get('profile').get('name'),avator=session.get('profile').get('picture'))
 @app.route('/user/<int:user_id>')
 # @requires_auth
@@ -159,15 +163,20 @@ def upload():
 @app.route('/img/<int:img_id>')
 def serve_img(img_id):
     with db.get_db_cursor() as cur:
-        cur.execute("SELECT * FROM images where img_id=%s", (img_id,))
+        #cur.execute("SELECT * FROM images where img_id=%s", (img_id,))
+        cur.execute("SELECT * FROM picture;")
         image_row = cur.fetchone()
 
         # in memory binary stream
         stream = io.BytesIO(image_row["img"])
+        
 
+        # return send_file(
+        #     stream,
+        #     attachment_filename=image_row["filename"])
         return send_file(
             stream,
-            attachment_filename=image_row["filename"])
+            attachment_filename="test")
 
 if __name__ == '__main__':
     app.run()
