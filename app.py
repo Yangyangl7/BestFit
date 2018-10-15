@@ -80,7 +80,7 @@ def logout():
 # Profile Page
 @app.route('/profile')
 # @requires_auth
-# def profile():
+def profile():
 #     with db.get_db_cursor() as cur:
 
 #             cur.execute("""select  name,email from register where id=%s;""",userinfo['sub']  )
