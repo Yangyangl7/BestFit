@@ -61,7 +61,7 @@ def callback_handling():
         'picture': userinfo['picture']
     }
     with db.get_db_cursor(commit=True) as cur:
-            cur.execute("""insert into register (email,name,user_id,avator) values (%s,%s,%s,%s)""", (userinfo['email'],userinfo['name'],userinfo['user_id'],userinfo['picture']))
+            cur.execute("""insert into register (name,user_id,avator) values (%s,%s,%s)""", (userinfo['name'],userinfo['sub'],userinfo['picture']))
     return redirect('/')
 
 # Auth0 Login
