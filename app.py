@@ -145,7 +145,7 @@ def upload():
         with db.get_db_cursor(commit=True) as cur:
             # we are storing the original filename for demo purposes
             # might be useful to also/instead save the file extension or mime type
-            cur.execute("SELECT id FROM register where user_id=%s;",(session.get('profile').get('user_id'),))
+            cur.execute("SELECT * FROM register where user_id=%s;",(session.get('profile').get('user_id'),))
             user_id_res=[record["id"] for record in cur]
             cur.execute("insert into post (publisher_id,time,title, status,location,budget,content) values (%s,%s,%s,%s,%s,%s, %s)",
                 (user_id_res,dt, title_res, status_res,location_res,budget_res,text_res))
