@@ -66,8 +66,8 @@ def callback_handling():
     with db.get_db_cursor(commit=True) as cur:
             cur.execute("SELECT id FROM register where user_id=%s;",(session.get('profile').get('user_id'),))
             user_id_res=[record["id"] for record in cur]
-            if  user_id_res==None:
-                cur.execute("""insert into register (name,user_id,avator) values (%s,%s,%s)""", (userinfo['name'],userinfo['sub'],userinfo['picture']))
+            #if  user_id_res==None:
+            cur.execute("""insert into register (name,user_id,avator) values (%s,%s,%s)""", (userinfo['name'],userinfo['sub'],userinfo['picture']))
     return redirect('/')
 
 # Auth0 Login
@@ -150,7 +150,7 @@ def upload():
             cur.execute("insert into picture (register_id,post_id,img) values (%s,%s,%s)",
                 (user_id_res, post_id_res, data))
             
-    return redirect(url_for("home"))
+    return redirect(url_for("profile"))
 
 @app.route('/img/<int:img_id>')
 def serve_img(img_id):
