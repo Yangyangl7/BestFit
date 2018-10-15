@@ -83,7 +83,7 @@ def logout():
 def profile():
     with db.get_db_cursor() as cur:
 
-            cur.execute("""select  name,email from register where id=%s;""",session['profile'].user_id   )
+            cur.execute("""select  name,email from register where id=%s;""",userinfo['sub']  )
 
             
             usr_name=[record["name"] for record in cur]
