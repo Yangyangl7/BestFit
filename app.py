@@ -64,7 +64,7 @@ def callback_handling():
         'picture': userinfo['picture']
     }
     with db.get_db_cursor(commit=True) as cur:
-            cur.execute("SELECT id FROM register where user_id=%s;",session.get('profile').get('user_id'))
+            cur.execute("SELECT id FROM register where user_id=%s;",(session.get('profile').get('user_id'),))
             user_id_res=[record["id"] for record in cur]
             if  user_id_res==None:
                 cur.execute("""insert into register (name,user_id,avator) values (%s,%s,%s)""", (userinfo['name'],userinfo['sub'],userinfo['picture']))
@@ -125,7 +125,7 @@ def upload():
     dt = datetime.now()
     
     with db.get_db_cursor(commit=True) as cur:
-            cur.execute("SELECT id FROM register where user_id=%s;",session.get('profile').get('user_id'))
+            cur.execute("SELECT id FROM register where user_id=%s;",(session.get('profile').get('user_id'),))
     user_id_res=[record["id"] for record in cur]
     if 'file' not in request.files:
         flash("no file part")
@@ -145,7 +145,7 @@ def upload():
             # might be useful to also/instead save the file extension or mime type
             cur.execute("insert into post (publisher_id,time,title, status,location,budget,content) values (%s,%s,%s,%s,%s,%s, %s)",
                 (user_id_res,dt, title_res, status_res,location_res,budget_res,text_res))
-            cur.execute("SELECT MAX(post_id) AS maxid FROM post where publisher_id=%s;",user_id_res)
+            cur.execute("SELECT MAX(post_id) AS maxid FROM post where publisher_id=%s;",(user_id_res,))
             post_id_res=[record["maxid"] for record in cur]
             cur.execute("insert into picture (register_id,post_id,img) values (%s,%s,%s)",
                 (user_id_res, post_id_res, data))
