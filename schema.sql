@@ -26,7 +26,7 @@ create table post(
 	post_id SERIAL PRIMARY KEY,
 	publisher_id int references register,
 	title varchar(255) NOT NULL,
-	time varchar(255),
+	time timestamp,
 	content text,
 	status int,
 	dealer_id int references register,
@@ -48,7 +48,7 @@ create table picture(
 	picture_id SERIAL PRIMARY KEY,
 	register_id int references register,
 	post_id int references post,
-	url text
+	img bytea
 );
 
 insert into register (name, isdesigner) values ('test1', TRUE);

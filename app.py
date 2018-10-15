@@ -1,4 +1,5 @@
 import os
+import io
 import string
 import random
 
@@ -6,8 +7,10 @@ import json
 from six.moves.urllib.request import urlopen
 from six.moves.urllib.parse import urlencode
 from functools import wraps
+from werkzeug.utils import secure_filename
+from datetime import datetime
 
-from flask import Flask, g, render_template, url_for, abort, jsonify, redirect, request, make_response, session
+from flask import Flask, g, flash, send_file, render_template, url_for, abort, jsonify, redirect, request, make_response, session
 import psycopg2
 
 import db
@@ -111,6 +114,16 @@ def allowed_file(filename):
 # TODO For BATU, create upload to handle our form in profile html
 @app.route('/upload', methods=['POST'])
 def upload():
+    title_res = request.form.get("title")
+    status_res = request.form.get("status")
+    location_res = request.form.get("location")
+    budget_res = request.form.get("budget")
+    text_res = request.form.get("text")
+    dt = datetime.now()
+    
+    with db.get_db_realDict_cursor() as cur:
+            cur.execute("SELECT id FROM register where user_id=%s;",session.get('profile').get('user_id'))
+    user_id_res=[record["id"] for record in cur]
     if 'file' not in request.files:
         flash("no file part")
         return redirect(request.url)
@@ -127,9 +140,23 @@ def upload():
         with db.get_db_cursor(commit=True) as cur:
             # we are storing the original filename for demo purposes
             # might be useful to also/instead save the file extension or mime type
-            cur.execute("insert into images (filename, img) values (%s, %s)",
-                (filename, data))
+            cur.execute("insert into post (publisher_id,time,title, status,location,budget,content) values (%s,%s,%s,%s,%s,%s, %s)",
+                (user_id_res,dt, title_res, status_res,location_res,budget_res,text_res))
+            
     return redirect(url_for("home"))
+
+@app.route('/img/<int:img_id>')
+def serve_img(img_id):
+    with db.get_db_cursor() as cur:
+        cur.execute("SELECT * FROM images where img_id=%s", (img_id,))
+        image_row = cur.fetchone()
+
+        # in memory binary stream
+        stream = io.BytesIO(image_row["img"])
+
+        return send_file(
+            stream,
+            attachment_filename=image_row["filename"])
 
 if __name__ == '__main__':
     app.run()
