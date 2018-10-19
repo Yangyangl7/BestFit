@@ -15,14 +15,25 @@ create table register (
     isDesigner boolean
 );
 
-create table tag(
+create table register_tag (
+	id SERIAL PRIMARY KEY,
+    register_id int references register,
+    tag_id int references tag
+)
+
+create table tag (
 	tag_id SERIAL PRIMARY KEY,
-	register_id int references register,
 	name varchar(255),
 	type varchar(100)
 );
 
-create table post(
+create table post_tag (
+    id SERIAL PRIMARY KEY,
+    post_id int references post,
+    tag_id int references tag
+);
+
+create table post (
 	post_id SERIAL PRIMARY KEY,
 	publisher_id int references register,
 	title varchar(255) NOT NULL,
@@ -36,7 +47,7 @@ create table post(
 	tag_id int references tag
 );
 
-create table review(
+create table review (
 	review_id SERIAL PRIMARY KEY,
 	company_id int references register,
 	reviewer_id int references register,
@@ -44,7 +55,7 @@ create table review(
 	comment text
 );
 
-create table picture(
+create table picture (
 	picture_id SERIAL PRIMARY KEY,
 	register_id int references register,
 	post_id int references post,
