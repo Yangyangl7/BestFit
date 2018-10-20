@@ -205,7 +205,7 @@ def search():
          # Not matching data logic
         if not data:
             with db.get_db_cursor() as cur:
-                cur.execute("SELECT register.name, register.avator, register.description, register.email, register.phone FROM register WHERE register.isDesginer;")
+                cur.execute("SELECT register.name, register.avator, register.description, register.email, register.phone FROM register WHERE register.isdesginer;")
                 for row in cur:
                     if row not in data:
                         data.append(row)
@@ -221,7 +221,7 @@ def search():
         # Not matching data logic
         if not data:
             with db.get_db_cursor() as cur:
-                cur.execute("SELECT register.name, register.avator, register.description, register.email FROM register WHERE NOT register.isDesginer;")
+                cur.execute("SELECT register.name, register.avator, register.description, register.email FROM register WHERE NOT register.isdesginer;")
                 for row in cur:
                     if row not in data:
                         data.append(row)
