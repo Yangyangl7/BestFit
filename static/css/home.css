@@ -304,9 +304,8 @@ footer {
   line-height: 1.8;
 }
 
-#drop-box button {
-  /* box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); */
-  height: 55px;
+#select-box {
+ height: 55px;
   margin-left: -320px;
   z-index: 2;
   border-radius: 0;
@@ -314,10 +313,21 @@ footer {
   border: 0.5px solid rgba(0, 0, 0, 0.1);
 }
 
-#drop-box button:hover,
+/* box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); */
+/*#drop-box button {
+  height: 55px;
+  margin-left: -320px;
+  z-index: 2;
+  border-radius: 0;
+  padding-right: 18px;
+  border: 0.5px solid rgba(0, 0, 0, 0.1);
+}
+*/
+
+/*#drop-box button:hover,
 #drop-box button:focus {
   background-color: #fff;
-}
+}*/
 
 
 #search-button button {
@@ -333,7 +343,7 @@ footer {
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.dropdown-menu-right {
+/*.dropdown-menu-right {
   right: 200px;
   left: -229px;
 }
@@ -346,7 +356,7 @@ footer {
   padding: 8px;
   text-align: center;
 }
-
+*/
 section {
   padding: 80px 80px;
 }
