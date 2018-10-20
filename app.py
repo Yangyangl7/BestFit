@@ -185,7 +185,7 @@ def search():
     type = request.form.get("type");
     input = request.form.get("input");
 
-    inputArr = re.split('(,|\.|;)+', input);
+    inputArr = re.split('[,|\.|;]+', input);
     data = [];
 
     if type == '0':
