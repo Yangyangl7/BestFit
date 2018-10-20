@@ -185,7 +185,7 @@ def search():
     type = request.form.get("type");
     input = request.form.get("input");
 
-    inputArr = re.split('\W', input);
+    inputArr = re.split(',|\.', input);
     data = [];
 
     if type == 0:
@@ -199,7 +199,7 @@ def search():
     if type == 1:
          for item in inputArr:
             with db.get_db_cursor() as cur:
-                cur.execute("SELECT register.name, register.avator, register.description, register.phone, register.email FROM tag INNER JOIN post ON tag.tag_id=post.tag_id INNER JOIN register ON post.publisher_id=register.id WHERE post.status == 0 and tag.name LIKE '%%%s%%';"
+                cur.execute("SELECT register.name, register.avator, register.description, register.phone, register.email FROM tag INNER JOIN post ON tag.tag_id=post.tag_id INNER JOIN register ON post.publisher_id=register.id WHERE post.status == '0' and tag.name LIKE '%%%s%%';"
                             % (item))
                 for row in cur:
                     if row not in data:
