@@ -8,7 +8,13 @@
 
 {% block content %}
 
-<p>{{data}}</p>
+{% for item in data%}
+
+<p>{{item[0]}}</p>
+<img src={{item[1]}}>
+
+{% endfor%}
+
 <p>{{type}}</p>
 
 {% endblock %}
