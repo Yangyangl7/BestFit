@@ -190,11 +190,10 @@ def search():
 
     for item in inputArr:
         with db.get_db_cursor() as cur:
-            cur.execute("SELECT register.name, register.avator, register.description, register.phone, register.email FROM register_tag INNER JOIN tag ON tag.tag_id=register_tag.tag_id INNER JOIN register ON register_tag.register_id=register.id WHERE tag.name LIKE '%'%s'%';"
+            cur.execute("SELECT register.name, register.avator, register.description, register.phone, register.email FROM register_tag INNER JOIN tag ON tag.tag_id=register_tag.tag_id INNER JOIN register ON register_tag.register_id=register.id WHERE tag.name LIKE '%%%s%%';"
                         , (item))
             rows = cur.fetchall()
         data.append(rows)
-
 
     return render_template("search.html", type=type, data=data)
 
