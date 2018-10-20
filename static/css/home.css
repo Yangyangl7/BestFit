@@ -305,7 +305,12 @@ footer {
 }
 
 #select-box {
-  background: red;
+ height: 55px;
+  margin-left: -320px;
+  z-index: 2;
+  border-radius: 0;
+  padding-right: 18px;
+  border: 0.5px solid rgba(0, 0, 0, 0.1);
 }
 
 /* box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); */
