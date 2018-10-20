@@ -179,5 +179,12 @@ def serve_img(img_id):
             stream,
             attachment_filename="test")
 
+@app.route('/search', methods=['POST'])
+def search():
+    type = request.form.get("type");
+    input = request.form.get("input");
+
+    return render_template("search.html", type=type, input=input)
+
 if __name__ == '__main__':
     app.run()
