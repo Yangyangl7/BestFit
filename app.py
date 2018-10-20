@@ -202,12 +202,26 @@ def search():
                 for row in cur:
                     if row not in data:
                         data.append(row)
-    # client search logic
-    if type == '1':
-         for item in inputArr:
+         # Not matching data logic
+        if not a:
             with db.get_db_cursor() as cur:
-                cur.execute("SELECT register.name, register.avator, register.description, register.phone, register.email FROM tag INNER JOIN post ON tag.tag_id=post.tag_id INNER JOIN register ON post.publisher_id=register.id WHERE post.status = '0' and LOWER(tag.name) LIKE LOWER('%%%s%%');"
+                cur.execute("SELECT register.name, register.avator, register.description, register.email, register.phone FROM register WHERE register.isDesginer;")
+                for row in cur:
+                    if row not in data:
+                        data.append(row)
+    # client search
+    if type == '1':
+        for item in inputArr:
+            with db.get_db_cursor() as cur:
+                cur.execute("SELECT register.name, register.avator, register.description, register.email FROM tag INNER JOIN post ON tag.tag_id=post.tag_id INNER JOIN register ON post.publisher_id=register.id WHERE post.status = '0' and LOWER(tag.name) LIKE LOWER('%%%s%%');"
                             % (item))
+                for row in cur:
+                    if row not in data:
+                        data.append(row)
+        # Not matching data logic
+        if not a:
+            with db.get_db_cursor() as cur:
+                cur.execute("SELECT register.name, register.avator, register.description, register.email FROM register WHERE NOT register.isDesginer;")
                 for row in cur:
                     if row not in data:
                         data.append(row)
