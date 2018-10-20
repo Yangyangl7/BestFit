@@ -199,7 +199,7 @@ def search():
     if type == 1:
          for item in inputArr:
             with db.get_db_cursor() as cur:
-                cur.execute("SELECT register.name, register.avator, register.description, register.phone, register.email FROM post_tag INNER JOIN tag ON tag.tag_id=post_tag.tag_id INNER JOIN post ON post_tag.post_id=post.post_id INNER JOIN register ON post.publisher_id=register.id WHERE tag.name LIKE '%%%s%%';"
+                cur.execute("SELECT register.name, register.avator, register.description, register.phone, register.email FROM tag INNER JOIN post ON tag.tag_id=post.tag_id INNER JOIN register ON post.publisher_id=register.id WHERE post.status == 0 and tag.name LIKE '%%%s%%';"
                             % (item))
                 for row in cur:
                     if row not in data:
