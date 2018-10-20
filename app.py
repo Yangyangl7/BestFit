@@ -182,12 +182,18 @@ def serve_img(img_id):
 
 @app.route('/search', methods=['POST'])
 def search():
+    # get search type, '0' for team search '1' for client search
     type = request.form.get("type");
+    # search text
     input = request.form.get("input");
 
+    # Next improvement '[(\s)*(,|\.|;)+(\s)*]+'
+    # Using regular expression to split search text
     inputArr = re.split('[,|\.|;|,\s|\.\s|;\s]+', input);
+    # store db query results
     data = [];
 
+    # team search logic
     if type == '0':
         for item in inputArr:
             with db.get_db_cursor() as cur:
@@ -196,6 +202,7 @@ def search():
                 for row in cur:
                     if row not in data:
                         data.append(row)
+    # client search logic
     if type == '1':
          for item in inputArr:
             with db.get_db_cursor() as cur:
