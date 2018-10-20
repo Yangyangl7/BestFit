@@ -185,13 +185,13 @@ def search():
     type = request.form.get("type");
     input = request.form.get("input");
 
-    inputArr = re.split('[,|\.|;]+', input);
+    inputArr = re.split('[,|\.|;|,\s|\.\s|;\s]+', input);
     data = [];
 
     if type == '0':
         for item in inputArr:
             with db.get_db_cursor() as cur:
-                cur.execute("SELECT register.name, register.avator, register.description, register.phone, register.email FROM register_tag INNER JOIN tag ON tag.tag_id=register_tag.tag_id INNER JOIN register ON register_tag.register_id=register.id WHERE tag.name LIKE '%%%s%%';"
+                cur.execute("SELECT register.name, register.avator, register.description, register.phone, register.email FROM register_tag INNER JOIN tag ON tag.tag_id=register_tag.tag_id INNER JOIN register ON register_tag.register_id=register.id WHERE LOWER(tag.name) LIKE LOWER('%%%s%%');"
                             % (item))
                 for row in cur:
                     if row not in data:
@@ -199,7 +199,7 @@ def search():
     if type == '1':
          for item in inputArr:
             with db.get_db_cursor() as cur:
-                cur.execute("SELECT register.name, register.avator, register.description, register.phone, register.email FROM tag INNER JOIN post ON tag.tag_id=post.tag_id INNER JOIN register ON post.publisher_id=register.id WHERE post.status = '0' and tag.name LIKE '%%%s%%';"
+                cur.execute("SELECT register.name, register.avator, register.description, register.phone, register.email FROM tag INNER JOIN post ON tag.tag_id=post.tag_id INNER JOIN register ON post.publisher_id=register.id WHERE post.status = '0' and LOWER(tag.name) LIKE LOWER('%%%s%%');"
                             % (item))
                 for row in cur:
                     if row not in data:
