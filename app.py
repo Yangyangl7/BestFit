@@ -2,6 +2,7 @@ import os
 import io
 import string
 import random
+import re
 
 import json
 from six.moves.urllib.request import urlopen
@@ -184,7 +185,9 @@ def search():
     type = request.form.get("type");
     input = request.form.get("input");
 
-    return render_template("search.html", type=type, input=input)
+    inputArr = re.split('\W', input);
+
+    return render_template("search.html", type=type, input=inputArr)
 
 if __name__ == '__main__':
     app.run()
