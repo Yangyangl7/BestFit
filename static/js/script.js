@@ -42,24 +42,6 @@ $(function () {
 
 });
 
-// Smooth Scrolling
-// $(function () {
-//   $("a.smooth-scroll").click(function (event) {
-//     event.preventDefault();
-
-//     // get section id like #about, #menu etc.
-//     var section_id = $(this).attr("href");
-
-//     $("html, body").animate({
-//       scrollTop: $(section_id).offset().top - 74
-//     }, 1250);
-
-//   });
-
-// });
-
-
-
 /* ====================================
               Search Box
 ======================================= */
@@ -92,17 +74,38 @@ $('#dropdown-items li').on('click', function () {
                 Home
 ======================================= */
 $(document).ready(function () {
+  // HomePage Carousel 
   $('#myCarousel-client').carousel({
     interval: false
   })
   $('#myCarousel-team').carousel({
     interval: false
   })
-
   $('#myTestimonial').carousel({
     interval: 3000
   })
 
+  // Add Smooth Scrolling
+  $("a.smooth-scroll").click(function (event) {
 
+    event.preventDefault();
+
+    var target = $(this).attr("href"); //Get the target
+    var scrollToPosition = $(target).offset().top
+
+    $('html').animate({
+      'scrollTop': scrollToPosition
+    }, 1250, function () {
+      window.location.hash = "" + target;
+      // Jump to the top of the div with same id
+      // Force page to back to the end of the animation
+      $('html').animate({
+        'scrollTop': scrollToPosition
+      }, 0);
+    });
+
+    $('body').append("called");
+
+  });
 
 });
