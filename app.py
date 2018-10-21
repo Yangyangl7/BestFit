@@ -228,5 +228,13 @@ def search():
 
     return render_template("search.html", type=type, data=data)
 
+@app.route('/post_info')
+def post_info():
+    return render_template("post_info.html")
+
+@app.route('/self_post_info')
+def self_post_info():
+    return render_template("self_post_info.html")
+
 if __name__ == '__main__':
     app.run()
