@@ -25,14 +25,14 @@ $(function () {
   function showHideNav() {
     if ($(window).scrollTop() > 50) {
       // show grey nav
-      $("nav").addClass("grey-nav-top");
+      $(".navbar").addClass("grey-nav-top");
       // show white logo
       $(".navbar-brand img").attr("src", "/static/img/logo/logo-original-name2.png");
       // show back to top
       $(".btn-back-to-top").fadeIn();
     } else {
       // hide grey nav
-      $("nav").removeClass("grey-nav-top");
+      $(".navbar").removeClass("grey-nav-top");
       // show logo
       $(".navbar-brand img").attr("src", "/static/img/logo/logo-original-name.png");
       // hide back to top
@@ -108,4 +108,74 @@ $(document).ready(function () {
 
   });
 
+});
+
+/* ====================================
+              Search Result
+======================================= */
+
+// Show & Hide List
+// Building Designer
+$('.open-list1').click(function () {
+  $('#building-designer-list').slideDown();
+  $('.close-list1').show();
+  $('.open-list1').hide();
+});
+
+$('.close-list1').click(function () {
+  $('#building-designer-list').slideUp();
+  $('.open-list1').show();
+  $('.close-list1').hide();
+});
+
+// Home Builder
+$('.open-list2').click(function () {
+  $('#home-builder-list').slideDown();
+  $('.close-list2').show();
+  $('.open-list2').hide();
+});
+
+$('.close-list2').click(function () {
+  $('#home-builder-list').slideUp();
+  $('.open-list2').show();
+  $('.close-list2').hide();
+});
+
+// Interior Decorator
+$('.open-list3').click(function () {
+  $('#interior-decorator-list').slideDown();
+  $('.close-list3').show();
+  $('.open-list3').hide();
+});
+
+$('.close-list3').click(function () {
+  $('#interior-decorator-list').slideUp();
+  $('.open-list3').show();
+  $('.close-list3').hide();
+});
+
+// Home Remodeler
+$('.open-list4').click(function () {
+  $('#home-remodeler-list').slideDown();
+  $('.close-list4').show();
+  $('.open-list4').hide();
+});
+
+$('.close-list4').click(function () {
+  $('#home-remodeler-list').slideUp();
+  $('.open-list4').show();
+  $('.close-list4').hide();
+});
+
+// Landscape Constractor
+$('.open-list5').click(function () {
+  $('#lanscape-list').slideDown();
+  $('.close-list5').show();
+  $('.open-list5').hide();
+});
+
+$('.close-list5').click(function () {
+  $('#lanscape-list').slideUp();
+  $('.open-list5').show();
+  $('.close-list5').hide();
 });
