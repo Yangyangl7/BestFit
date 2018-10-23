@@ -63,9 +63,9 @@ def callback_handling():
         'name': userinfo['name'],
         'picture': userinfo['picture']
     }
-    
+
     with db.get_db_cursor(commit=True) as cur:
-            # cur.execute("""IF EXISTS (SELECT * FROM register where user_id=%s) BEGIN END 
+            # cur.execute("""IF EXISTS (SELECT * FROM register where user_id=%s) BEGIN END
             # ELSE BEGIN insert into register (name,user_id,avator) values (%s,%s,%s) END;""",(session.get('profile').get('user_id'),userinfo['name'],userinfo['sub'],userinfo['picture']))
             cur.execute("INSERT INTO register (user_id,name,avator) values (%s,%s,%s) ON CONFLICT (user_id) DO NOTHING;",(userinfo['sub'],userinfo['name'],userinfo['picture']))
             # user_id_res=[record["user_id"] for record in cur]
@@ -98,21 +98,40 @@ def profile():
 
 #             cur.execute("""select  name,email from register where id=%s;""",userinfo['sub']  )
 
-            
+
 #             usr_name=[record["name"] for record in cur]
 #             usr_email=[record["email"] for record in cur]
-            
+
     #return render_template('profile.html',usr_name=session.get('profile').get('name'),avator=session.get('profile').get('picture'))
     # with db.get_db_cursor() as cur:
     #     cur.execute("SELECT picture_id, filename FROM picture order by picture_id desc")
     #     images = [record for record in cur]
+
+
     return render_template('profile.html',usr_name=session.get('profile').get('name'),avator=session.get('profile').get('picture'))
+
+
+
 @app.route('/user/<int:user_id>')
 # @requires_auth
 def show_post(user_id):
-    # show the post with the given id, the id is an integer
+    tagsql = "select * from tag limit 40";
+    with db.get_db_cursor() as cur:
+        tagsql = "select * from tag limit 40";
+        rev = request.args.get('status');
+        if not rev:
+            rev = 1;
+        try:
 
-    # TODO:next mileStone change status value to see which status of post the page is rendering
+            cur.execute(tagsql);
+            tagArray = [dict((cur.description[i][0], value) \
+               for i, value in enumerate(row)) for row in cur.fetchall()]
+            print(str(tagArray))
+
+
+        except (Exception, psycopg2.DatabaseError) as error:
+            print(error)
+
 
     # need data name email avator id, all information for the post for this user
     return render_template("profile.html")
@@ -132,8 +151,8 @@ def upload():
     budget_res = request.form.get("budget")
     text_res = request.form.get("text")
     dt = datetime.now()
-    
-    
+
+
     if 'file' not in request.files:
         flash("no file part")
         return redirect(request.url)
@@ -158,7 +177,7 @@ def upload():
             post_id_res=[record["maxid"] for record in cur]
             cur.execute("insert into picture (register_id,post_id,img) values (%s,%s,%s)",
                 (user_id_res[0], post_id_res[0], data))
-            
+
     return redirect(url_for("profile"))
 
 @app.route('/img/<int:img_id>')
@@ -170,7 +189,7 @@ def serve_img(img_id):
 
         # in memory binary stream
         stream = io.BytesIO(image_row["img"])
-        
+
 
         # return send_file(
         #     stream,

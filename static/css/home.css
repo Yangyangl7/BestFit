@@ -1173,7 +1173,11 @@ a.scrolling-post-content {
 
 
 .postList {
-  width: 30%;
-  margin: 1.5%;
+  width: 23%;
+  margin-top: 5px;
   display: inline-block;
+  position: relative;
+min-height: 1px;
+padding-right: 15px;
+padding-left: 15px;
 }
