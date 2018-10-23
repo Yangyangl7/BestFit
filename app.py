@@ -199,7 +199,7 @@ def serve_img(img_id):
             attachment_filename="test")
 
 
-@app.route('/search', methods=['POST'])
+@app.route('/search', methods=['POST', 'GET'])
 def search():
     # get search type, '0' for team search '1' for client search
     type = request.form.get("type")
@@ -208,7 +208,10 @@ def search():
 
     # Next improvement '[(\s)*(,|\.|;)+(\s)*]+'
     # Using regular expression to split search text
-    inputArr = re.split('[,|\.|;|,\s|\.\s|;\s]+', input)
+    if input == '':
+        inputArr = [""]
+    else:
+        inputArr = re.split('[,|\.|;|,\s|\.\s|;\s]+', input)
     # store db query results
     data = []
 

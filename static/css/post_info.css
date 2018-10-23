@@ -266,3 +266,12 @@
     background-color: #fff;
     font-size: 12px;
 }
+
+.aboutme .nav-tabs>li.active>a {
+    background-color: #fff;
+}
+
+.aboutme .nav-tabs>li a:hover,
+.aboutme .nav-tabs>li a:focus {
+    background-color: #fff;
+}
