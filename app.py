@@ -236,7 +236,7 @@ def serve_img(img_id):
         return send_file(
             stream,
             attachment_filename="test")
-
+        
 @app.route('/search', methods=['POST', 'GET'])
 def search():
     if request.method == 'POST':

@@ -1342,6 +1342,7 @@ nav.change-page {
   margin-bottom: 10px;
   padding: 0px;
   overflow: hidden;
+  padding-left: 15%;
 }
 
 #page-navi li {
