@@ -237,52 +237,70 @@ def serve_img(img_id):
             stream,
             attachment_filename="test")
 
-<<<<<<< HEAD
-@app.route('/search', methods=['POST'，'GET'])
-=======
-
-@app.route('/search', methods=['POST'])
->>>>>>> 81751ff396c650cf13be9b4b79ad126d88ca0edd
+@app.route('/search', methods=['POST', 'GET'])
 def search():
-    # get search type, '0' for team search '1' for client search
-    type = request.form.get("type")
-    # search text
-    input = request.form.get("input")
+    if request.method == 'POST':
+        # get search type, '0' for team search '1' for client search
+        type = request.form.get("type")
+        # search text
+        input = request.form.get("input")
 
-    # Next improvement '[(\s)*(,|\.|;)+(\s)*]+'
-    # Using regular expression to split search text
-    inputArr = re.split('[,|\.|;|,\s|\.\s|;\s]+', input)
-    # store db query results
-    data = []
+        # Next improvement '[(\s)*(,|\.|;)+(\s)*]+'
+        # Using regular expression to split search text
+        inputArr = re.split('[,|\.|;|,\s|\.\s|;\s]+', input)
+        
+        # store db query results
+        data = []
 
-    # team search logic
-    if type == '0':
-        for item in inputArr:
-            with db.get_db_cursor() as cur:
-                cur.execute("SELECT register.name, register.avator, register.description, register.phone, register.email FROM register_tag INNER JOIN tag ON tag.tag_id=register_tag.tag_id INNER JOIN register ON register_tag.register_id=register.id WHERE LOWER(tag.name) LIKE LOWER('%%%s%%');"
-                            % (item))
-                for row in cur:
-                    if row not in data:
-                        data.append(row)
-         # Not matching data logic
-        if not data:
+        # team search logic
+        if type == '0':
+            for item in inputArr:
+                with db.get_db_cursor() as cur:
+                    cur.execute("SELECT register.name, register.avator, register.description, register.phone, register.email FROM register_tag INNER JOIN tag ON tag.tag_id=register_tag.tag_id INNER JOIN register ON register_tag.register_id=register.id WHERE LOWER(tag.name) LIKE LOWER('%%%s%%');"
+                                % (item))
+                    for row in cur:
+                        if row not in data:
+                            data.append(row)
+             # Not matching data logic
+            if not data:
+                with db.get_db_cursor() as cur:
+                    cur.execute(
+                        "SELECT register.name, register.avator, register.description, register.email, register.phone FROM register WHERE register.isdesigner;")
+                    for row in cur:
+                        if row not in data:
+                            data.append(row)
+        # client search
+        if type == '1':
+            for item in inputArr:
+                with db.get_db_cursor() as cur:
+                    cur.execute("SELECT register.name, register.avator, register.description, register.email FROM tag INNER JOIN post ON tag.tag_id=post.tag_id INNER JOIN register ON post.publisher_id=register.id WHERE post.status = '0' and LOWER(tag.name) LIKE LOWER('%%%s%%');"
+                                % (item))
+                    for row in cur:
+                        if row not in data:
+                            data.append(row)
+            # Not matching data logic
+            if not data:
+                with db.get_db_cursor() as cur:
+                    cur.execute(
+                        "SELECT register.name, register.avator, register.description, register.email FROM register WHERE NOT register.isdesigner;")
+                    for row in cur:
+                        if row not in data:
+                            data.append(row)
+
+    else:
+        # store db query results
+        data = []
+
+        # team search logic
+        if type == '0':
             with db.get_db_cursor() as cur:
                 cur.execute(
                     "SELECT register.name, register.avator, register.description, register.email, register.phone FROM register WHERE register.isdesigner;")
                 for row in cur:
                     if row not in data:
                         data.append(row)
-    # client search
-    if type == '1':
-        for item in inputArr:
-            with db.get_db_cursor() as cur:
-                cur.execute("SELECT register.name, register.avator, register.description, register.email FROM tag INNER JOIN post ON tag.tag_id=post.tag_id INNER JOIN register ON post.publisher_id=register.id WHERE post.status = '0' and LOWER(tag.name) LIKE LOWER('%%%s%%');"
-                            % (item))
-                for row in cur:
-                    if row not in data:
-                        data.append(row)
-        # Not matching data logic
-        if not data:
+        # client search
+        if type == '1':
             with db.get_db_cursor() as cur:
                 cur.execute(
                     "SELECT register.name, register.avator, register.description, register.email FROM register WHERE NOT register.isdesigner;")
