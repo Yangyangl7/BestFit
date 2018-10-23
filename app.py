@@ -288,6 +288,7 @@ def search():
                             data.append(row)
 
     else:
+        # get search type, '0' for team search '1' for client search
         type = request.form.get("type")
         # store db query results
         data = []
