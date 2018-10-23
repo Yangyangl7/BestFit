@@ -72,7 +72,7 @@ def callback_handling():
     }
 
     with db.get_db_cursor(commit=True) as cur:
-<<<<<<< HEAD
+
             # cur.execute("""IF EXISTS (SELECT * FROM register where user_id=%s) BEGIN END
             # ELSE BEGIN insert into register (name,user_id,avator) values (%s,%s,%s) END;""",(session.get('profile').get('user_id'),userinfo['name'],userinfo['sub'],userinfo['picture']))
             cur.execute("INSERT INTO register (user_id,name,avator) values (%s,%s,%s) ON CONFLICT (user_id) DO NOTHING;",(userinfo['sub'],userinfo['name'],userinfo['picture']))
@@ -81,17 +81,17 @@ def callback_handling():
             #     return redirect('/')
             # else :
             #cur.execute("""insert into register (name,user_id,avator) values (%s,%s,%s)""", (userinfo['name'],userinfo['sub'],userinfo['picture']))
-=======
+
         # cur.execute("""IF EXISTS (SELECT * FROM register where user_id=%s) BEGIN END
         # ELSE BEGIN insert into register (name,user_id,avator) values (%s,%s,%s) END;""",(session.get('profile').get('user_id'),userinfo['name'],userinfo['sub'],userinfo['picture']))
-        cur.execute("INSERT INTO register (user_id,name,avator) values (%s,%s,%s) ON CONFLICT (user_id) DO NOTHING;",
-                    (userinfo['sub'], userinfo['name'], userinfo['picture']))
+        # cur.execute("INSERT INTO register (user_id,name,avator) values (%s,%s,%s) ON CONFLICT (user_id) DO NOTHING;",
+        #             (userinfo['sub'], userinfo['name'], userinfo['picture']))
         # user_id_res=[record["user_id"] for record in cur]
         # if  user_id_res==session.get('profile').get('user_id'):
         #     return redirect('/')
         # else :
         #cur.execute("""insert into register (name,user_id,avator) values (%s,%s,%s)""", (userinfo['name'],userinfo['sub'],userinfo['picture']))
->>>>>>> master
+
     return redirect('/')
 
 # Auth0 Login
@@ -183,10 +183,7 @@ def upload():
     text_res = request.form.get("text")
     dt = datetime.now()
 
-<<<<<<< HEAD
 
-=======
->>>>>>> master
     if 'file' not in request.files:
         flash("no file part")
         return redirect(request.url)
@@ -212,11 +209,7 @@ def upload():
                 "SELECT MAX(post_id) AS maxid FROM post where publisher_id=%s;", (user_id_res[0],))
             post_id_res = [record["maxid"] for record in cur]
             cur.execute("insert into picture (register_id,post_id,img) values (%s,%s,%s)",
-<<<<<<< HEAD
                 (user_id_res[0], post_id_res[0], data))
-=======
-                        (user_id_res[0], post_id_res[0], data))
->>>>>>> master
 
     return redirect(url_for("profile"))
 
@@ -230,10 +223,7 @@ def serve_img(img_id):
 
         # in memory binary stream
         stream = io.BytesIO(image_row["img"])
-<<<<<<< HEAD
 
-=======
->>>>>>> master
 
         # return send_file(
         #     stream,
