@@ -118,7 +118,7 @@ def logout():
 
 
 @app.route('/profile')
-@requires_auth
+# @requires_auth
 def profile():
     #     with db.get_db_cursor() as cur:
 
@@ -137,33 +137,38 @@ def profile():
     #     images = [record for record in cur]
 
 
-    return render_template('profile.html',usr_name=session.get('profile').get('name'),avator=session.get('profile').get('picture'))
-
-
-
-@app.route('/user/<int:user_id>')
-# @requires_auth
-def show_post(user_id):
-    tagsql = "select * from tag limit 40";
     with db.get_db_cursor() as cur:
-        tagsql = "select * from tag limit 40";
-        rev = request.args.get('status');
-        if not rev:
-            rev = 1;
-        try:
+        tagsql = "select * from tag limit 40;";
+        usersql = "select * from register where id = 4;";
 
+        try:
+            postsql = "select * from post where publisher_id = 15 order by time DESC;";
+            # Build tag array
             cur.execute(tagsql);
             tagArray = [dict((cur.description[i][0], value) \
                for i, value in enumerate(row)) for row in cur.fetchall()]
-            print(str(tagArray))
+            print(tagArray)
+
+            #  Build users array
+            cur.execute(usersql)
+            userArray = [dict((cur.description[i][0], value) \
+               for i, value in enumerate(row)) for row in cur.fetchall()]
+            # print(str(userArray[0]))
+
+
+            cur.execute(postsql)
+            postArray = [dict((cur.description[i][0], value) \
+               for i, value in enumerate(row)) for row in cur.fetchall()]
+            # print(str(postArray))
+
 
 
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
+    return render_template('profile.html',userInfo=userArray[0], tagInfo = tagArray, postInfo = postArray )
 
 
-    # need data name email avator id, all information for the post for this user
-    return render_template("profile.html")
+
 
 # upload imaage into data base
 

@@ -329,7 +329,7 @@ footer {
   }
 }
 
-/* 
+/*
 @media (min-width: 992px) {}
 
 @media (min-width: 1200px) {} */
@@ -1396,11 +1396,51 @@ nav.change-page {
 
 
 .postList {
-  width: 23%;
+  width: 21%;
   margin-top: 5px;
   display: inline-block;
   position: relative;
 min-height: 1px;
 padding-right: 15px;
 padding-left: 15px;
+}
+
+.postTagContainer {
+  height: 90%;
+width: 40%;
+background-color: white;
+position: absolute;
+right: 17px;
+top: 0;
+border-left: 2px solid #ddd;
+padding: 10px;
+border-bottom: 2px solid #ddd;
+}
+
+
+.label.Category{
+  background-color: #f0ad4e;
+}
+
+.label.Room {
+  background-color: #337ab7;
+}
+
+.label.Size {
+  background-color:#5cb85c;
+}
+
+.label.Style {
+    background-color:#5bc0de;
+}
+
+.label.Start.Time {
+    background-color:#777;
+}
+
+.label:hover {
+  background-color: black;
+}
+.label.Start.Time:hover {
+  background-color: black;
 }
