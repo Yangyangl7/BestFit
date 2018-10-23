@@ -180,7 +180,7 @@ def serve_img(img_id):
             stream,
             attachment_filename="test")
 
-@app.route('/search', methods=['POST'])
+@app.route('/search', methods=['POST'，'GET'])
 def search():
     # get search type, '0' for team search '1' for client search
     type = request.form.get("type");
