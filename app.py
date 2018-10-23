@@ -288,6 +288,7 @@ def search():
                             data.append(row)
 
     else:
+        type = request.form.get("type")
         # store db query results
         data = []
 
