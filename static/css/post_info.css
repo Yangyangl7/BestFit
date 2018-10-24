@@ -336,7 +336,7 @@ div.arrow a:hover::before {
 }
 
 /*  Comment  */
-textarea {
+/* textarea {
     resize: none;
     outline: none;
     width: 394px;
@@ -513,4 +513,4 @@ i {
 
 .menu-right:after {
     margin-left: 5px;
-}
+} */
