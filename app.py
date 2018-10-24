@@ -34,7 +34,7 @@ def countPost():
     numberOfType = []
 
     with db.get_db_cursor() as cur:
-        cur.execute("SELECT count(tag.tag_id) as numberOfType from post_tag INNER JOIN tag ON post_tag.tag_id = tag.tag_id;")
+        cur.execute("SELECT tag.name, count(tag.name) as numberOfType from post_tag INNER JOIN tag ON post_tag.tag_id = tag.tag_id GROUP BY tag.name;")
         for row in cur:
             if row not in numberOfType:
                 numberOfType.append(row)
@@ -356,7 +356,7 @@ def searchteam():
     numberOfType = countPost()
 
     return render_template("search.html", data=data, numberOfType=numberOfType)
-    
+
 @app.route('/searchclient')
 def searchclient():
     data = []
@@ -433,21 +433,27 @@ def post_info(post_id):
         cur.execute("SELECT picture_id FROM picture where post_id=%s;",
                     (post_id,))
         post_pictures=[record["picture_id"] for record in cur]
+        toemail = post_user_Array[0]["email"]
+        tophone = post_user_Array[0]["phone"]
+        if not toemail:
+            toemail = "no email avaliable"
+        if not tophone:
+            tophone = "no phone avaliable"
 
         if 'profile' not in session:
             return render_template("post_info.html",display_image=post_pictures[0], post_id_store=post_id,pop_login=0,post_title=postArray[0]["title"],
                                     user_profile_image=post_user_Array[0]["avator"],user_name=post_user_Array[0]["name"],team_client_description=postArray[0]["content"],
-                                    tagArray=tags)
+                                    tagArray=tags,phone = "log in to see", email = "log in to see")
         else:
             if (session.get('profile').get('user_id')==post_user_Array[0]["user_id"]):
                 closed_tag_visible=1
                 return render_template("post_info.html",display_image=post_pictures[0], post_id_store=post_id,pop_login=0,post_title=postArray[0]["title"],
                                          user_profile_image=post_user_Array[0]["avator"],user_name=post_user_Array[0]["name"],team_client_description=postArray[0]["content"],
-                                            closed_tag_visible=1,tagArray=tags)
+                                            closed_tag_visible=1,tagArray=tags,phone = tophone, email = toemail)
             else:
                 return render_template("post_info.html",display_image=post_pictures[0], post_id_store=post_id,pop_login=0,post_title=postArray[0]["title"],
                                          user_profile_image=post_user_Array[0]["avator"],user_name=post_user_Array[0]["name"],team_client_description=postArray[0]["content"],
-                                            closed_tag_visible=0,tagArray=tags)
+                                            closed_tag_visible=0,tagArray=tags,phone = tophone, email = toemail)
 
 @app.route('/post_info_upload/<int:post_id>',methods=['POST'])
 def post_info_upload(post_id):
