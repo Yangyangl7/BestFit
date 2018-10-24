@@ -14,17 +14,14 @@
 
 
     <div class = "postTagContainer">
+      <span class="postLabel" > Tags</span><br>
   {% for tag in tagInfo %}
-      <div style = "display: inline-block; position: relative" onclick="selectTag(this)">
-      <img class="removeImg"
-      src = "https://www.materialui.co/materialIcons/action/highlight_remove_grey_192x192.png"
-      style = "cursor: pointer;height: 20px;top: 0px;right: -10px;position: absolute;display: none;
-    width: 20px;" onclick="hideSelf(this)" select = false>
-      <span style="line-height: 4;cursor:pointer;" class="label {{tag['type']}}"}> {{tag["name"]}}</span>
+      <div id = "tag{{tag['tag_id']}}" style = "display: inline-block; position: relative" >
+      <span style="line-height: 4;cursor:pointer;" class="label {{tag['type']}}" onclick="selectTag(this, {{tag['tag_id']}})"> {{tag["name"]}}</span>
     </div>
   {% endfor %}
     </div>
-    <form class="pure-form pure-form-stacked" action="/upload" method="post" enctype="multipart/form-data">
+    <form class="pure-form pure-form-stacked" action="/upload" method="post" enctype="multipart/form-data" id = "mainForm">
       <div class="postContainer">
         <span class="postLabel" > Name </span>
         <input type="input" name="name" class="postInput" placeholder="This name will be shown public ..." required="required">
@@ -32,7 +29,15 @@
 
       <div class="postContainer">
         <span class="postLabel" > Phone </span>
-        <input type="input" name="name" class="postInput" placeholder="Phone number" required="required">
+        <input type="input" name="phone" class="postInput" placeholder="Phone number" required="required">
+      </div>
+
+      <div class="postContainer">
+        <span class="postLabel" > Who are You </span>
+        Designer:
+        <input type="radio" name="designer" class="postInput" value = "designer"  >
+         Owner:
+        <input type="radio" name="designer" class="postInput"  value = "owner">
       </div>
 
       <div class="postContainer">
@@ -42,7 +47,7 @@
 
       <div class="postContainer">
         <!-- NOTE: ignore this count for now  -->
-        <input type="input" name="count" style="display:none" value=1 id=imageTracker>
+        <input type="input" id="countDiv" style="display:none" value=1 id=imageTracker>
 
         <!-- NOTE 'status' store the post status 1 = active post, 2 = saved -->
         <input type="input" name="status" id=formStatus style="display: none" value=1>

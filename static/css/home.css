@@ -1512,3 +1512,8 @@ border-bottom: 2px solid #ddd;
 .label.Start.Time:hover {
   background-color: black;
 }
+
+.removeImg {
+  cursor: pointer;height: 25px;top: -15px;right: -7px;position: absolute;
+width: 25px;
+}
