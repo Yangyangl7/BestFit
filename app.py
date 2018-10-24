@@ -421,7 +421,7 @@ def post_info(post_id):
                 closed_tag_visible=1
             return render_template("post_info.html",display_image=post_pictures[0], post_id_store=post_id,pop_login=0,post_title=postArray[0]["title"],
                                     user_profile_image=post_user_Array[0]["avator"],user_name=post_user_Array[0]["name"],team_client_description=postArray[0]["content"],
-                                    closed_tag_visible=1)
+                                    closed_tag_visible=1, tagArray = tags)
 
 @app.route('/post_info_upload/<int:post_id>',methods=['POST'])
 def post_info_upload(post_id):
