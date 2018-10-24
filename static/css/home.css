@@ -1518,12 +1518,12 @@ border-bottom: 2px solid #ddd;
 width: 25px;
 }
 .uploadPhoto {
+  z-index: 200;
   position: fixed;
 top: 14%;
 right: 20%;
 height: 50px;
-background-color: white;
 padding: 10px;
-background-color: black;
+background-color: white;
 display: none;
 }

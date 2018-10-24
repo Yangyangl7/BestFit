@@ -85,12 +85,13 @@ def callback_handling():
 
             # cur.execute("""IF EXISTS (SELECT * FROM register where user_id=%s) BEGIN END
             # ELSE BEGIN insert into register (name,user_id,avator) values (%s,%s,%s) END;""",(session.get('profile').get('user_id'),userinfo['name'],userinfo['sub'],userinfo['picture']))
-            cur.execute("INSERT INTO register (user_id,name,avator) values (%s,%s,%s) ON CONFLICT (user_id) DO NOTHING;",(userinfo['sub'],userinfo['name'],userinfo['picture']))
-            # user_id_res=[record["user_id"] for record in cur]
-            # if  user_id_res==session.get('profile').get('user_id'):
-            #     return redirect('/')
-            # else :
-            #cur.execute("""insert into register (name,user_id,avator) values (%s,%s,%s)""", (userinfo['name'],userinfo['sub'],userinfo['picture']))
+        cur.execute("INSERT INTO register (user_id,name,avator) values (%s,%s,%s) ON CONFLICT (user_id) DO NOTHING;",
+                    (userinfo['sub'], userinfo['name'], userinfo['picture']))
+        # user_id_res=[record["user_id"] for record in cur]
+        # if  user_id_res==session.get('profile').get('user_id'):
+        #     return redirect('/')
+        # else :
+        #cur.execute("""insert into register (name,user_id,avator) values (%s,%s,%s)""", (userinfo['name'],userinfo['sub'],userinfo['picture']))
 
         # cur.execute("""IF EXISTS (SELECT * FROM register where user_id=%s) BEGIN END
         # ELSE BEGIN insert into register (name,user_id,avator) values (%s,%s,%s) END;""",(session.get('profile').get('user_id'),userinfo['name'],userinfo['sub'],userinfo['picture']))
@@ -135,11 +136,10 @@ def profile():
     #             usr_name=[record["name"] for record in cur]
     #             usr_email=[record["email"] for record in cur]
 
+    #             usr_name=[record["name"] for record in cur]
+    #             usr_email=[record["email"] for record in cur]
 
-#             usr_name=[record["name"] for record in cur]
-#             usr_email=[record["email"] for record in cur]
-
-    #return render_template('profile.html',usr_name=session.get('profile').get('name'),avator=session.get('profile').get('picture'))
+    # return render_template('profile.html',usr_name=session.get('profile').get('name'),avator=session.get('profile').get('picture'))
     # with db.get_db_cursor() as cur:
     #     cur.execute("SELECT picture_id, filename FROM picture order by picture_id desc")
     #     images = [record for record in cur]
@@ -151,7 +151,7 @@ def profile():
         usersql = "select * from register where id = %s;"
 
         try:
-            postsql = "select * from post where publisher_id = %s order by time DESC;"
+            postsql = "SELECT *,picture_id FROM post,picture where post.post_id=picture.post_id and publisher_id=%s order by time DESC;"
            # postsql_all="""select picture_id from picture where post_id in (select * from post where publisher_id = %s order by time DESC);""";
             # Build tag array
             cur.execute(tagsql)
@@ -182,8 +182,7 @@ def profile():
 
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
-    return render_template('profile.html',userInfo=userArray[0], tagInfo = tagArray, postInfo = postArray )
-
+    return render_template('profile.html', userInfo=userArray[0], tagInfo=tagArray, postInfo=postArray)
 # upload imaage into data base
 
 
@@ -207,7 +206,6 @@ def upload():
     is_designer_res = request.form.get("designer")
 
     dt = datetime.now()
-
 
     if 'file' not in request.files:
         flash("no file part")
@@ -261,7 +259,7 @@ def serve_img(img_id):
 
         return send_file(
             stream, 
-            attachment_filename=image_row["picture_id"])
+            attachment_filename="pic")
 
 @app.route('/search', methods=['POST', 'GET'])
 def search():
@@ -274,7 +272,7 @@ def search():
         # Next improvement '[(\s)*(,|\.|;)+(\s)*]+'
         # Using regular expression to split search text
         inputArr = re.split('[,|\.|;|,\s|\.\s|;\s]+', input)
-        
+
         # store db query results
         data = []
 
@@ -375,10 +373,11 @@ def post_info(post_id):
         post_comment_time=[record["time"] for record in cur]
         post_comment_reviewer_id=[record["reviewer_id"] for record in cur]
         post_comment_rate=[record["rate"] for record in cur]
-        cur.execute("SELECT * FROM register where id=%s;",
-                    (post_comment_reviewer_id,))
-        post_comment_reviewer_name=[record["name"] for record in cur]
-        post_comment_reviewer_avator=[record["avator"] for record in cur]
+        if (not post_comment_reviewer_id):
+            cur.execute("SELECT * FROM register where id=%s;",
+                        (post_comment_reviewer_id,))
+            post_comment_reviewer_name=[record["name"] for record in cur]
+            post_comment_reviewer_avator=[record["avator"] for record in cur]
         cur.execute("SELECT * FROM register where id=%s;",
                     (user_id_res,))
         post_user_name=[record["name"] for record in cur]
