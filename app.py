@@ -149,13 +149,13 @@ def profile():
             cur.execute(tagsql)
             tagArray = [dict((cur.description[i][0], value) \
                for i, value in enumerate(row)) for row in cur.fetchall()]
-            print(tagArray)
+            #print(tagArray)
 
             #  Build users array
-            cur.execute(usersql,(user_id_res,))
+            cur.execute(usersql,(user_id_res[0],))
             userArray = [dict((cur.description[i][0], value) \
                for i, value in enumerate(row)) for row in cur.fetchall()]
-            # print(str(userArray[0]))
+            print(str(userArray[0]))
 
             # cur.execute(postsql,(user_id_res,))
             # post_id=[record["post_id"] for record in cur]
@@ -165,7 +165,7 @@ def profile():
             #                 (i,))
             #     picture_id=[record["picture_id"] for record in cur]
             #     pictures_id.append()
-            cur.execute(postsql,(user_id_res,))
+            cur.execute(postsql,(user_id_res[0],))
             postArray = [dict((cur.description[i][0], value) \
                for i, value in enumerate(row)) for row in cur.fetchall()]
             # print(str(postArray))
