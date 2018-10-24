@@ -370,7 +370,7 @@ def post_info(post_id):
             post_comment_reviewer_name=[record["name"] for record in cur]
             post_comment_reviewer_avator=[record["avator"] for record in cur]
         cur.execute("SELECT * FROM register where id=%s;",
-                    (user_id_res,))
+                    (user_id_res[0],))
         post_user_name=[record["name"] for record in cur]
         post_user_avator=[record["avator"] for record in cur]
         post_user_phone=[record["phone"] for record in cur]
