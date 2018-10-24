@@ -272,7 +272,7 @@ def search():
         if type == '0':
             for item in inputArr:
                 with db.get_db_cursor() as cur:
-                    cur.execute("SELECT post.id, post.title, post.content, post.status, post.location, post.budget FROM post_tag INNER JOIN tag ON tag.tag_id=post_tag.tag_id INNER JOIN post ON post_tag.post_id=post.post_id INNER JOIN register ON post.publisher_id=register.id WHERE register.isdesigner and LOWER(tag.name) LIKE LOWER('%%%s%%');"
+                    cur.execute("SELECT post.post_id, post.title, post.content, post.status, post.location, post.budget FROM post_tag INNER JOIN tag ON tag.tag_id=post_tag.tag_id INNER JOIN post ON post_tag.post_id=post.post_id INNER JOIN register ON post.publisher_id=register.id WHERE register.isdesigner and LOWER(tag.name) LIKE LOWER('%%%s%%');"
                                 % (item))
                     for row in cur:
                         if row not in data:
@@ -280,7 +280,7 @@ def search():
              # Not matching data logic
             if not data:
                 with db.get_db_cursor() as cur:
-                    cur.execute("SELECT post.id, post.title, post.content, post.status, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE register.isdesigner;")
+                    cur.execute("SELECT post.post_id, post.title, post.content, post.status, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE register.isdesigner;")
                     for row in cur:
                         if row not in data:
                             data.append(row)
@@ -288,7 +288,7 @@ def search():
         if type == '1':
             for item in inputArr:
                 with db.get_db_cursor() as cur:
-                    cur.execute("SELECT post.id, post.title, post.content, post.status, post.location, post.budget FROM post_tag INNER JOIN tag ON tag.tag_id=post_tag.tag_id INNER JOIN post ON post_tag.post_id=post.post_id INNER JOIN register ON post.publisher_id=register.id WHERE NOT register.isdesigner and LOWER(tag.name) LIKE LOWER('%%%s%%');"
+                    cur.execute("SELECT post.post_id, post.title, post.content, post.status, post.location, post.budget FROM post_tag INNER JOIN tag ON tag.tag_id=post_tag.tag_id INNER JOIN post ON post_tag.post_id=post.post_id INNER JOIN register ON post.publisher_id=register.id WHERE NOT register.isdesigner and LOWER(tag.name) LIKE LOWER('%%%s%%');"
                                 % (item))
                     for row in cur:
                         if row not in data:
@@ -296,7 +296,7 @@ def search():
             # Not matching data logic
             if not data:
                 with db.get_db_cursor() as cur:
-                    cur.execute("SELECT post.id, post.title, post.content, post.status, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE NOT register.isdesigner;")
+                    cur.execute("SELECT post.post_id, post.title, post.content, post.status, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE NOT register.isdesigner;")
                     for row in cur:
                         if row not in data:
                             data.append(row)
@@ -311,7 +311,7 @@ def search():
         if type == '0':
             with db.get_db_cursor() as cur:
                 cur.execute(
-                    "SELECT post.id, post.title, post.content, post.status, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE register.isdesigner;")
+                    "SELECT post.post_id, post.title, post.content, post.status, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE register.isdesigner;")
                 for row in cur:
                     if row not in data:
                         data.append(row)
@@ -319,7 +319,7 @@ def search():
         if type == '1':
             with db.get_db_cursor() as cur:
                 cur.execute(
-                    "SELECT post.id, post.title, post.content, post.status, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE NOT register.isdesigner;")
+                    "SELECT post.post_id, post.title, post.content, post.status, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE NOT register.isdesigner;")
                 for row in cur:
                     if row not in data:
                         data.append(row)
