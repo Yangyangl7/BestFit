@@ -65,13 +65,13 @@
                                 <li><a class="" href="{{ url_for("search") }}">FIND CLIENTS</a></li>
 =======
 
-                                <form id="magic-form" method="post" action="/search">
-                                    <input type="hidden" id="type" value="0">
-                                    <li><a href="#" onclick="event.preventDefault(); document.getElementById('magic-form').submit;">FIND TEAMS</a></li>
+                                <form method="get" action="/search">
+                                    <input name="type" type="hidden" id="type" value="0">
+                                    <li><a href="{{ url_for("search") }}" type="submit">FIND TEAMS</a></li>
                                 </form>
-                                <form id="magic-form" method="post" action="/search">
-                                    <input type="hidden" id="type" value="1">
-                                    <li><a href="#" onclick="event.preventDefault(); document.getElementById('magic-form').submit;">FIND CLIENTS</a></li>
+                                <form method="get" action="/search">
+                                    <input name="type" type="hidden" id="type" value="1">
+                                    <li><a href="{{ url_for("search") }}" type="submit">FIND CLIENTS</a></li>
                                 </form>                                            
 
 >>>>>>> 38e5d1a4716963fb92c752ffcff87b466616ad53
