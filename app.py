@@ -219,31 +219,30 @@ def upload():
         # convert the flask object to a regular file object
         data = request.files['file'].read()
         
-        with db.get_db_cursor(commit=True) as cur:
-            # we are storing the original filename for demo purposes
-            # might be useful to also/instead save the file extension or mime type
-            try:
-                cur.execute("SELECT * FROM register where user_id=%s;",
-                            (session.get('profile').get('user_id'),))
-                user_id_res = [record["id"] for record in cur]
-                cur.execute("insert into post (publisher_id,time,title, status,location,budget,content) values (%s,%s,%s,%s,%s,%s, %s)",
-                            (user_id_res[0], dt, title_res, status_res, location_res, budget_res, text_res))
-                cur.execute(
-                    "SELECT MAX(post_id) AS maxid FROM post where publisher_id=%s;", (user_id_res[0],))
-                post_id_res = [record["maxid"] for record in cur]
-                cur.execute("insert into picture (register_id,post_id,img) values (%s,%s,%s)",
-                            (user_id_res[0], post_id_res[0], data))
-                for i in tags_res:
-                    cur.execute("insert into post_tag (post_id,tag_id) values (%s,%s)",
-                                (post_id_res[0], i ))
-                if (is_designer_res=="designer"):
-                    is_designer=True
-                else:
-                    is_designer=False
-                cur.execute("update register set name=%s,phone=%s,isDesigner=%s where id=%s",
-                            (name_res, phone_res, is_designer,user_id_res[0]))
-            except (Exception, psycopg2.DatabaseError) as error:
-                    print(error)
+    with db.get_db_cursor(commit=True) as cur:
+        # we are storing the original filename for demo purposes
+        # might be useful to also/instead save the file extension or mime type
+        
+        cur.execute("SELECT * FROM register where user_id=%s;",
+                    (session.get('profile').get('user_id'),))
+        user_id_res = [record["id"] for record in cur]
+        cur.execute("insert into post (publisher_id,time,title, status,location,budget,content) values (%s,%s,%s,%s,%s,%s, %s)",
+                    (user_id_res[0], dt, title_res, status_res, location_res, budget_res, text_res))
+        cur.execute(
+            "SELECT MAX(post_id) AS maxid FROM post where publisher_id=%s;", (user_id_res[0],))
+        post_id_res = [record["maxid"] for record in cur]
+        cur.execute("insert into picture (register_id,post_id,img) values (%s,%s,%s)",
+                    (user_id_res[0], post_id_res[0], data))
+        for i in tags_res:
+            cur.execute("insert into post_tag (post_id,tag_id) values (%s,%s)",
+                        (post_id_res[0], i ))
+        if (is_designer_res=="designer"):
+            is_designer=True
+        else:
+            is_designer=False
+        cur.execute("update register set name=%s,phone=%s,isDesigner=%s where id=%s",
+                    (name_res, phone_res, is_designer,user_id_res[0]))
+        
     return redirect(url_for("profile"))
 
 
