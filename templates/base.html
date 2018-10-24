@@ -57,30 +57,21 @@
                     <!-- Main Menu -->
                     <div class="container" id="nav-menu">
                         <div class="collapse navbar-collapse">
-
                             <ul class="nav navbar-nav" id="nav-item">
-
                                 <li><a class="" href="{{ url_for("home") }}">HOME</a></li>
                                 <li><a class="smooth-scroll" href="#howItWorks">HOW IT WORKS</a></li>
-
-                                <form method="post" action="/search">
-                                    <input type="hidden" id="type" value="0">
-                                    <li><a type="submit">FIND TEAMS</a></li>
-                                </form>
-                                <form method="post" action="/search">
-                                    <input type="hidden" id="type" value="1">
-                                    <li><a type="submit">FIND CLIENTS</a></li>
-                                </form>                                            
-
+                                <li><a href="{{ url_for("searchteam") }}">FIND TEAMS</a></li>
+                                <li><a href="{{ url_for("searchclient") }}">FIND CLIENTS</a></li>
+                               
                                 {% if session['profile'] is defined %}
                                 <li><a class="" href="{{ url_for("logout") }}">LOGOUT</a></li>
-                                <li><a class="" href="{{ url_for("profile") }}">PROFILE</a></li>
+                                <li><a class="" href="{{ url_for("profile") }}">PROFILE<a></li>
                                 {% else %}
                                 <li><a class="" href="{{ url_for("login") }}" id="sign-up">SIGN UP/LOG IN</a>
                                 <li>
                                     {% endif %}
                             </ul>
-                            <input type="hidden" id="type" name="type" />
+                            <!-- <input type="hidden" id="nav-type" name="type" /> -->
                         </div>
                     </div>
                 </div>
@@ -114,7 +105,7 @@
                 <div class="col-md-3 col-sm-6 footer-nav" style="padding-bottom: 25px;">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item"><a href="">Find Clients</a></li>
-                        <li class="list-group-item"><a href="">Building Designers</a></li>
+                        <li class="list-group-item"><a href="">Need Building Designers</a></li>
                         <li class="list-group-item"><a href="">Need Home Builders</a></li>
                         <li class="list-group-item"><a href="">Need Interior Decorators</a></li>
                         <li class="list-group-item"><a href="">Need Home Remodelers</a></li>

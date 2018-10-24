@@ -34,7 +34,7 @@ def countPost():
     numberOfType = []
 
     with db.get_db_cursor() as cur:
-        cur.execute("SELECT tag.type, count(tag.type) as numberOfType from post_tag INNER JOIN tag ON post_tag.tag_id = tag.tag_id GROUP BY tag.type;")
+        cur.execute("SELECT count(tag.tag_id) as numberOfType from post_tag INNER JOIN tag ON post_tag.tag_id = tag.tag_id;")
         for row in cur:
             if row not in numberOfType:
                 numberOfType.append(row)
@@ -274,18 +274,14 @@ def serve_img(img_id):
 
 @app.route('/search', methods=['POST'])
 def search():
-    # if request.method == 'POST':
-        # get search type, '0' for team search '1' for client search
+    # get search type, '0' for team search '1' for client search
     type = request.form.get("type")
     # search text
     input = request.form.get("input")
 
     # Next improvement '[(\s)*(,|\.|;)+(\s)*]+'
     # Using regular expression to split search text
-    if not input:
-        inputArr = [""]
-    else:
-        inputArr = re.split('[,|\.|;|,\s|\.\s|;\s]+', input)
+    inputArr = re.split('[,|\.|;|,\s|\.\s|;\s]+', input)
 
     # store db query results
     data = []
@@ -350,6 +346,31 @@ def search():
 
     return render_template("search.html", type=type, data=data, numberOfType=numberOfType)
 
+@app.route('/searchteam')
+def searchteam():
+    data = []
+    with db.get_db_cursor() as cur:
+                cur.execute("SELECT register.avator, register.name, post.post_id, post.title, post.content, post.status, post.time, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE register.isdesigner;")
+                for row in cur:
+                    if row not in data:
+                        data.append(row)
+
+    numberOfType = countPost()
+
+    return render_template("search.html", data=data, numberOfType=numberOfType)
+    
+@app.route('/searchclient')
+def searchteam():
+    data = []
+    with db.get_db_cursor() as cur:
+                cur.execute("SELECT register.avator, register.name, post.post_id, post.title, post.content, post.status, post.time, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE NOT register.isdesigner;")
+                for row in cur:
+                    if row not in data:
+                        data.append(row)
+
+    numberOfType = countPost()
+
+    return render_template("search.html", data=data, numberOfType=numberOfType)
 
 @app.route('/post_info/<int:post_id>')
 def post_info(post_id):
@@ -417,18 +438,18 @@ def post_info(post_id):
 
         if 'profile' not in session:
             return render_template("post_info.html",display_image=post_pictures[0], post_id_store=post_id,pop_login=0,post_title=postArray[0]["title"],
-                                    user_profile_image=post_user_Array[0]["avator"],user_name=post_user_Array[0]["name"],team_client_description=postArray[0]["content"]
-                                    )
+                                    user_profile_image=post_user_Array[0]["avator"],user_name=post_user_Array[0]["name"],team_client_description=postArray[0]["content"],
+                                    tagArray=tags)
         else:
             if (session.get('profile').get('user_id')==post_user_Array[0]["user_id"]):
                 closed_tag_visible=1
                 return render_template("post_info.html",display_image=post_pictures[0], post_id_store=post_id,pop_login=0,post_title=postArray[0]["title"],
                                          user_profile_image=post_user_Array[0]["avator"],user_name=post_user_Array[0]["name"],team_client_description=postArray[0]["content"],
-                                            closed_tag_visible=1)
+                                            closed_tag_visible=1,tagArray=tags)
             else:
                 return render_template("post_info.html",display_image=post_pictures[0], post_id_store=post_id,pop_login=0,post_title=postArray[0]["title"],
                                          user_profile_image=post_user_Array[0]["avator"],user_name=post_user_Array[0]["name"],team_client_description=postArray[0]["content"],
-                                            closed_tag_visible=0)
+                                            closed_tag_visible=0,tagArray=tags)
 
 @app.route('/post_info_upload/<int:post_id>',methods=['POST'])
 def post_info_upload(post_id):
@@ -458,8 +479,6 @@ def post_info_upload(post_id):
         postArray[0]["views"]=postArray[0]["views"]+1
         # cur.execute("insert into post (saved_times,closed,views) values (%s,%s, %s)",
         #             (post_saved_times_res[0], post_closed_res[0], post_views_res[0]))
-
-
 
         if 'profile' not in session:
             return redirect(url_for("post_info",post_id=post_id,pop_login=1))
