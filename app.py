@@ -455,9 +455,9 @@ def post_info(post_id):
         cur.execute("SELECT picture_id FROM picture where post_id=%s;",
                     (post_id,))
         post_pictures=[record["picture_id"] for record in cur]
-        postArray[0]["views"]=postArray[0]["views"]+1
+        #postArray[0]["views"]=postArray[0]["views"]+1
         cur.execute("insert into post (views) values (%s)",
-                        (postArray[0]["views"],))
+                        (postArray[0]["views"]+1,))
         toemail = post_user_Array[0]["email"]
         tophone = post_user_Array[0]["phone"]
         if not toemail:
