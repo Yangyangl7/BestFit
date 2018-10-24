@@ -323,7 +323,7 @@ def search():
 
     numberOfType = []
 
-    with db.get_db_cursor as cur:
+    with db.get_db_cursor() as cur:
         cur.execute("SELECT tag.type, count(tag.type) as numberOfType from post_tag INNER JOIN tag ON post_tag.tag_id = tag.tag_id GROUP BY tag.type;")
         for row in cur:
             if row not in numberOfType:
