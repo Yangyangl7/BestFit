@@ -126,7 +126,7 @@ def logout():
 
 
 @app.route('/profile')
-# @requires_auth
+@requires_auth
 def profile():
     #     with db.get_db_cursor() as cur:
 
