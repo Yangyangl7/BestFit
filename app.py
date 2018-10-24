@@ -236,7 +236,7 @@ def serve_img(img_id):
         return send_file(
             stream,
             attachment_filename="test")
-        
+
 @app.route('/search', methods=['POST', 'GET'])
 def search():
     if request.method == 'POST':
@@ -256,7 +256,7 @@ def search():
         if type == '0':
             for item in inputArr:
                 with db.get_db_cursor() as cur:
-                    cur.execute("SELECT register.name, register.avator, register.description, register.phone, register.email FROM register_tag INNER JOIN tag ON tag.tag_id=register_tag.tag_id INNER JOIN register ON register_tag.register_id=register.id WHERE LOWER(tag.name) LIKE LOWER('%%%s%%');"
+                    cur.execute("SELECT post.id, post.title, post.content, post.status, post.location, post.budget FROM post_tag INNER JOIN tag ON tag.tag_id=post_tag.tag_id INNER JOIN post ON post_tag.post_id=post.post_id WHERE LOWER(tag.name) LIKE LOWER('%%%s%%');"
                                 % (item))
                     for row in cur:
                         if row not in data:
@@ -265,7 +265,7 @@ def search():
             if not data:
                 with db.get_db_cursor() as cur:
                     cur.execute(
-                        "SELECT register.name, register.avator, register.description, register.email, register.phone FROM register WHERE register.isdesigner;")
+                        "SELECT post.id, post.title, post.content, post.status, post.location, post.budget FROM post WHERE post.status =;")
                     for row in cur:
                         if row not in data:
                             data.append(row)
