@@ -63,13 +63,13 @@
                                 <li><a class="" href="{{ url_for("home") }}">HOME</a></li>
                                 <li><a class="smooth-scroll" href="#howItWorks">HOW IT WORKS</a></li>
 
-                                <form method="post" action="/search">
+                                <form id="magic-form" method="post" action="/search">
                                     <input type="hidden" id="type" value="0">
-                                    <li><a type="submit">FIND TEAMS</a></li>
+                                    <li><a href="#" onclick="event.preventDefault(); document.getElementById('magic-form').submit;">FIND TEAMS</a></li>
                                 </form>
-                                <form method="post" action="/search">
+                                <form id="magic-form" method="post" action="/search">
                                     <input type="hidden" id="type" value="1">
-                                    <li><a type="submit">FIND CLIENTS</a></li>
+                                    <li><a href="#" onclick="event.preventDefault(); document.getElementById('magic-form').submit;">FIND CLIENTS</a></li>
                                 </form>                                            
 
                                 {% if session['profile'] is defined %}
