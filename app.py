@@ -395,7 +395,7 @@ def post_info(post_id):
         if 'profile' not in session:
             return render_template("post_info.html",post_pictures=post_pictures, post_id_store=post_id,pop_login=0)
         else:
-            if (session.get('profile').get('user_id')==post_user_id[0]):
+            if (session.get('profile').get('user_id')==user_id_res[0]):
                 closed_tag_visible=1
             return render_template("post_info.html",post_pictures=post_pictures, post_id_store=post_id,pop_login=0,closed_tag_visible=1)
 
