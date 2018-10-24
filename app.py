@@ -135,8 +135,6 @@ def logout():
     return redirect(auth0.api_base_url + '/v2/logout?' + urlencode(params))
 
 # Profile Page
-
-
 @app.route('/profile')
 @requires_auth
 def profile():
@@ -360,7 +358,7 @@ def searchteam():
     return render_template("search.html", data=data, numberOfType=numberOfType)
     
 @app.route('/searchclient')
-def searchteam():
+def searchclient():
     data = []
     with db.get_db_cursor() as cur:
                 cur.execute("SELECT register.avator, register.name, post.post_id, post.title, post.content, post.status, post.time, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE NOT register.isdesigner;")
