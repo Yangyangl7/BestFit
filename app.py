@@ -143,7 +143,7 @@ def profile():
         usersql = "select * from register where id = %s;"
 
         try:
-            postsql = "select * from post where publisher_id = %s order by time DESC;"
+            postsql = "SELECT *,picture_id FROM post,picture where post.post_id=picture.post_id and publisher_id=%s order by time DESC;"
            # postsql_all="""select picture_id from picture where post_id in (select * from post where publisher_id = %s order by time DESC);""";
             # Build tag array
             cur.execute(tagsql)
