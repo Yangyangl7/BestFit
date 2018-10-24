@@ -22,7 +22,9 @@ CSCI 5117, Fall 2018, [assignment description](https://docs.google.com/document/
 **Describe the most challenging features you implemented
 (one sentence per bullet, maximum 4 bullets):**
 
-* ...
+* Making user-friendly UI Design within limited time
+* Allowing users to build their profile and create post after logging in
+* Allowing users to search and view team/client posts
 
 
 ## Screenshots of Site
@@ -61,8 +63,8 @@ along with a very brief caption:**
 **Document integrations with 3rd Party code or services here.
 Please do not document required libraries (e.g., Flask, jQuery, Pure).**
 
-* Library or service name: description of use
-* ...
+* Pagination JS: We used this jQuery plugin to provide customisable pagination in the search result page.
+* Bootstrap: We used Bootstrap as our front-end framework for designing the website.
 
 **If there's anything else you would like to disclose about how your project
 relied on external code, expertise, or anything else, please disclose that
