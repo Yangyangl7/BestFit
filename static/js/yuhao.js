@@ -70,7 +70,9 @@ function hideSelf(tagId) {
   img.parentNode.removeChild(img);
   container.getElementsByTagName("span")[0].style.pointerEvents = "fill";
 
+}
 
 
-
+function hideUpdate(){
+  document.getElementById('uploadpop').style.display='none';
 }
