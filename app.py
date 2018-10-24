@@ -22,6 +22,16 @@ app = Flask(__name__)
 # def id_generator(size=13, chars=string.ascii_uppercase + string.digits):
 #         return ''.join(random.SystemRandom().choice(chars) for _ in range(size))
 
+def countPost():
+    numberOfType = []
+
+    with db.get_db_cursor as cur:
+        cur.execute("SELECT tag.type, count(tag.type) as numberOfType from post_tag INNER JOIN tag ON post_tag.tag_id = tag.tag_id GROUP BY tag.type;")
+        for row in cur:
+            if row not in numberOfType:
+                numberOfType.append(row)
+
+    return numberOfType
 
 @app.before_first_request
 def initialize():
@@ -322,7 +332,9 @@ def search():
                     if row not in data:
                         data.append(row)
 
-    return render_template("search.html", type=type, data=data)
+    numberOfType = countPost()
+
+    return render_template("search.html", type=type, data=data, numberOfType=numberOfType)
 
 
 @app.route('/post_info/<int:post_id>')
@@ -435,9 +447,6 @@ def post_info_upload(post_id):
             cur.execute("insert into post_saved (post_id,user_id) values (%s, %s)",
                     (post_id, comment_user_id[0]))
         return redirect(url_for("post_info",post_id=post_id,pop_login=0))
-
-
-
 
 @app.route('/selfie',methods=['POST'])
 def selfie():
