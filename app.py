@@ -168,7 +168,7 @@ def profile():
             cur.execute(postsql,(user_id_res[0],))
             postArray = [dict((cur.description[i][0], value) \
                for i, value in enumerate(row)) for row in cur.fetchall()]
-            # print(str(postArray))
+            print(str(postArray))
 
 
 
