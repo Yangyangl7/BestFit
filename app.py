@@ -34,7 +34,7 @@ def countPost():
     numberOfType = []
 
     with db.get_db_cursor() as cur:
-        cur.execute("SELECT tag.type, count(tag.type) as numberOfType from post_tag INNER JOIN tag ON post_tag.tag_id = tag.tag_id GROUP BY tag.type;")
+        cur.execute("SELECT count(tag.tag_id) as numberOfType from post_tag INNER JOIN tag ON post_tag.tag_id = tag.tag_id;")
         for row in cur:
             if row not in numberOfType:
                 numberOfType.append(row)
@@ -272,81 +272,105 @@ def serve_img(img_id):
             stream,
             attachment_filename="pic")
 
-@app.route('/search', methods=['POST', 'GET'])
+@app.route('/search', methods=['POST'])
 def search():
-    if request.method == 'POST':
-        # get search type, '0' for team search '1' for client search
-        type = request.form.get("type")
-        # search text
-        input = request.form.get("input")
+    # get search type, '0' for team search '1' for client search
+    type = request.form.get("type")
+    # search text
+    input = request.form.get("input")
 
-        # Next improvement '[(\s)*(,|\.|;)+(\s)*]+'
-        # Using regular expression to split search text
-        inputArr = re.split('[,|\.|;|,\s|\.\s|;\s]+', input)
+    # Next improvement '[(\s)*(,|\.|;)+(\s)*]+'
+    # Using regular expression to split search text
+    inputArr = re.split('[,|\.|;|,\s|\.\s|;\s]+', input)
 
-        # store db query results
-        data = []
+    # store db query results
+    data = []
 
-        # team search logic
-        if type == '0':
-            for item in inputArr:
-                with db.get_db_cursor() as cur:
-                    cur.execute("SELECT register.avator, register.name, post.post_id, post.title, post.content, post.status, post.time, post.location, post.budget FROM post_tag INNER JOIN tag ON tag.tag_id=post_tag.tag_id INNER JOIN post ON post_tag.post_id=post.post_id INNER JOIN register ON post.publisher_id=register.id WHERE register.isdesigner and LOWER(tag.name) LIKE LOWER('%%%s%%');"
-                                % (item))
-                    for row in cur:
-                        if row not in data:
-                            data.append(row)
-             # Not matching data logic
-            if not data:
-                with db.get_db_cursor() as cur:
-                    cur.execute("SELECT register.avator, register.name, post.post_id, post.title, post.content, post.status, post.time, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE register.isdesigner;")
-                    for row in cur:
-                        if row not in data:
-                            data.append(row)
-        # client search
-        if type == '1':
-            for item in inputArr:
-                with db.get_db_cursor() as cur:
-                    cur.execute("SELECT register.avator, register.name, post.post_id, post.title, post.content, post.status, post.time, post.location, post.budget FROM post_tag INNER JOIN tag ON tag.tag_id=post_tag.tag_id INNER JOIN post ON post_tag.post_id=post.post_id INNER JOIN register ON post.publisher_id=register.id WHERE NOT register.isdesigner and LOWER(tag.name) LIKE LOWER('%%%s%%');"
-                                % (item))
-                    for row in cur:
-                        if row not in data:
-                            data.append(row)
-            # Not matching data logic
-            if not data:
-                with db.get_db_cursor() as cur:
-                    cur.execute("SELECT register.avator, register.name, post.post_id, post.title, post.content, post.status, post.time, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE NOT register.isdesigner;")
-                    for row in cur:
-                        if row not in data:
-                            data.append(row)
-
-    else:
-        # get search type, '0' for team search '1' for client search
-        type = request.form.get("type")
-        # store db query results
-        data = []
-
-        # team search logic
-        if type == '0':
+    # team search logic
+    if type == '0':
+        for item in inputArr:
             with db.get_db_cursor() as cur:
-                cur.execute(
-                    "SELECT post.post_id, post.title, post.content, post.status, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE register.isdesigner;")
+                cur.execute("SELECT register.avator, register.name, post.post_id, post.title, post.content, post.status, post.time, post.location, post.budget FROM post_tag INNER JOIN tag ON tag.tag_id=post_tag.tag_id INNER JOIN post ON post_tag.post_id=post.post_id INNER JOIN register ON post.publisher_id=register.id WHERE register.isdesigner and LOWER(tag.name) LIKE LOWER('%%%s%%');"
+                            % (item))
                 for row in cur:
                     if row not in data:
                         data.append(row)
-        # client search
-        if type == '1':
+         # Not matching data logic
+        if not data:
             with db.get_db_cursor() as cur:
-                cur.execute(
-                    "SELECT post.post_id, post.title, post.content, post.status, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE NOT register.isdesigner;")
+                cur.execute("SELECT register.avator, register.name, post.post_id, post.title, post.content, post.status, post.time, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE register.isdesigner;")
+                for row in cur:
+                    if row not in data:
+                        data.append(row)
+    # client search
+    if type == '1':
+        for item in inputArr:
+            with db.get_db_cursor() as cur:
+                cur.execute("SELECT register.avator, register.name, post.post_id, post.title, post.content, post.status, post.time, post.location, post.budget FROM post_tag INNER JOIN tag ON tag.tag_id=post_tag.tag_id INNER JOIN post ON post_tag.post_id=post.post_id INNER JOIN register ON post.publisher_id=register.id WHERE NOT register.isdesigner and LOWER(tag.name) LIKE LOWER('%%%s%%');"
+                            % (item))
+                for row in cur:
+                    if row not in data:
+                        data.append(row)
+        # Not matching data logic
+        if not data:
+            with db.get_db_cursor() as cur:
+                cur.execute("SELECT register.avator, register.name, post.post_id, post.title, post.content, post.status, post.time, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE NOT register.isdesigner;")
+                for row in cur:
+                    if row not in data:
+                        data.append(row)
+
+    # else:
+    #     # get search type, '0' for team search '1' for client search
+    #     type = request.form.get("type")
+    #     # store db query results
+    #     data = []
+
+    #     # team search logic
+    #     if type == '0':
+    #         with db.get_db_cursor() as cur:
+    #             cur.execute(
+    #                 "SELECT post.post_id, post.title, post.content, post.status, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE register.isdesigner;")
+    #             for row in cur:
+    #                 if row not in data:
+    #                     data.append(row)
+    #     # client search
+    #     if type == '1':
+    #         with db.get_db_cursor() as cur:
+    #             cur.execute(
+    #                 "SELECT post.post_id, post.title, post.content, post.status, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE NOT register.isdesigner;")
+    #             for row in cur:
+    #                 if row not in data:
+    #                     data.append(row)
+
+    numberOfType = countPost()
+
+    return render_template("search.html", type=type, data=data, numberOfType=numberOfType)
+
+@app.route('/searchteam')
+def searchteam():
+    data = []
+    with db.get_db_cursor() as cur:
+                cur.execute("SELECT register.avator, register.name, post.post_id, post.title, post.content, post.status, post.time, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE register.isdesigner;")
                 for row in cur:
                     if row not in data:
                         data.append(row)
 
     numberOfType = countPost()
 
-    return render_template("search.html", type=type, data=data, numberOfType=numberOfType)
+    return render_template("search.html", data=data, numberOfType=numberOfType)
+    
+@app.route('/searchclient')
+def searchteam():
+    data = []
+    with db.get_db_cursor() as cur:
+                cur.execute("SELECT register.avator, register.name, post.post_id, post.title, post.content, post.status, post.time, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE NOT register.isdesigner;")
+                for row in cur:
+                    if row not in data:
+                        data.append(row)
 
+    numberOfType = countPost()
+
+    return render_template("search.html", data=data, numberOfType=numberOfType)
 
 @app.route('/post_info/<int:post_id>')
 def post_info(post_id):
@@ -449,8 +473,6 @@ def post_info_upload(post_id):
         post_views_res[0]=post_views_res[0]+1
         # cur.execute("insert into post (saved_times,closed,views) values (%s,%s, %s)",
         #             (post_saved_times_res[0], post_closed_res[0], post_views_res[0]))
-
-
 
         if 'profile' not in session:
             return redirect(url_for("post_info",post_id=post_id,pop_login=1))
