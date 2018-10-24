@@ -367,19 +367,22 @@ def post_info(post_id):
                     (i,))
             tag_name=[record["name"] for record in cur]
             tags.append(tag_name[0])
+        cur.execute("SELECT count(reviewer_id) as count FROM review where post_id=%s;",
+                    (post_id,))
+        count_reviewer_id=[record["count"] for record in cur]
         cur.execute("SELECT * FROM review where post_id=%s;",
                     (post_id,))
         post_comment_res=[record["comment"] for record in cur]
         post_comment_time=[record["time"] for record in cur]
         post_comment_reviewer_id=[record["reviewer_id"] for record in cur]
         post_comment_rate=[record["rate"] for record in cur]
-        if (not post_comment_reviewer_id):
+        if (count_reviewer_id[0]>0):
             cur.execute("SELECT * FROM register where id=%s;",
-                        (post_comment_reviewer_id,))
+                        (post_comment_reviewer_id[0],))
             post_comment_reviewer_name=[record["name"] for record in cur]
             post_comment_reviewer_avator=[record["avator"] for record in cur]
         cur.execute("SELECT * FROM register where id=%s;",
-                    (user_id_res,))
+                    (user_id_res[0],))
         post_user_name=[record["name"] for record in cur]
         post_user_avator=[record["avator"] for record in cur]
         post_user_phone=[record["phone"] for record in cur]
@@ -388,7 +391,7 @@ def post_info(post_id):
         
         cur.execute("SELECT * FROM picture where post_id=%s;",
                     (post_id,))
-        post_pictures=[record["email"] for record in cur]
+        post_pictures=[record["picture_id"] for record in cur]
 
     if 'profile' not in session:
         return render_template("post_info.html",post_pictures=post_pictures, post_id_store=post_id,pop_login=0)
