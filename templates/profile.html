@@ -139,7 +139,15 @@
 
 
 
-
+<div class = "uploadPhoto" id="uploadpop">
+  <form class="pure-form pure-form-stacked" action="/upload?update=1" method="post" enctype="multipart/form-data" id = "subForm">
+     <img class="removeImg" style="height: -15px; right:-15px;"
+     src = "https://www.materialui.co/materialIcons/action/highlight_remove_grey_192x192.png"
+     onclick="hideUpdate()">
+  <input type="file" style="display:inline-block" name="file" accept=".png, .jpg, .jpeg">
+  <div class="button-success pure-button" onclick="">Submit</div>
+  </form>
+</div>
 
 <div class="profileBody" style="border-bottom: 2px solid #ddd;padding-bottom:5%">
   <div id="scrim" onclick="scrimTriger(1)" style="height: 300%; width:100%;background-color:black;
@@ -150,7 +158,7 @@
     <div class="profileTop" style="height:320px; margin: 0">
       <div class="backGroud" style="height: 280px;background-size:cover;
        background-image: url({{ url_for('static', filename='img/bg7.jpg')}} );">
-        <div style="height:160px; position: relative; bottom: -140px;left:10px">
+        <div style="height:160px; position: relative; z-index: 150;bottom: -140px;left:10px">
 
 
           <img src={{userInfo['avator']}} style="width: 160px; height: 160px; border: 1.5px solid white">
@@ -164,16 +172,7 @@
               <div style="display:inline-block; vertical-align: middle;margin:5px;
                 margin-top:-0.5px;font-size:13px;cursor:pointer;" onclick="document.getElementById('uploadpop').style.display='block'">
                 Change Cover Photo
-                <div class = "uploadPhoto" id="uploadpop">
-                  <form class="pure-form pure-form-stacked" action="/upload?update=1" method="post" enctype="multipart/form-data" id = "subForm">
-                     <img class="removeImg"
-                     src = "https://www.materialui.co/materialIcons/action/highlight_remove_grey_192x192.png"
-                     onclick="hideSelf(this)" select = false>
-                     
-                  <input type="file" style="display:inline-block" name="updateFile" accept=".png, .jpg, .jpeg">
-                  <div class="button-success pure-button" onclick="">Submit</div>
-                  </form>
-                </div>
+
 
               </div><br>
             </div>
