@@ -418,7 +418,7 @@ def post_info_upload(post_id):
         post_views_res = [record["views"] for record in cur]
         user_id_res = [record["publisher_id"] for record in cur]
         cur.execute("SELECT * FROM register where id=%s;",
-                    (user_id_res,))
+                    (user_id_res[0],))
         post_user_id=[record["user_id"] for record in cur]
         
 
