@@ -68,10 +68,11 @@ def home():
 @app.route('/update', methods=['POST'])
 def update():
     link_res = request.form.get("link")
+    user_id = request.form.get("id")
     with db.get_db_cursor(commit=True) as cur:
         try:
             cur.execute("update register set avator='%s' where id=%s",
-                        (link_res,user_id_res[0]))
+                        (link_res,user_id))
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
     return redirect(url_for("profile"))
