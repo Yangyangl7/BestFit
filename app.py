@@ -39,7 +39,7 @@ def countPost():
             if row not in numberOfType:
                 numberOfType.append(row)
 
-     return numberOfType
+    return numberOfType
 
 def countTime():
     numberOfTime = []
