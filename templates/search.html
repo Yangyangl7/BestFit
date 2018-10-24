@@ -49,13 +49,14 @@
     <div class="container">
         <div class="row">
             <div class="col-md-2 col-sm-2" id="list-left" style="font-family: 'Raleway', sans-serif;padding-left:0">
-                <p style="font-size: 16px;font-weight: 700;letter-spacing: .04em;margin-bottom:10px; margin-top:8px">Normal Tag Categories</p>
+                <p style="font-size: 16px;font-weight: 700;letter-spacing: .04em;margin-bottom:10px; margin-top:8px">Tag
+                    Categories</p>
                 <ul style="padding-left:0" id="cat-list">
                     {% for item in numberOfType %}
-                    <li class="list-item">{{item[0]}}<span>{{item[1]}}</span></li>
+                    <li class="list-item">{{item[0]}}<span>({{item[1]}})</span></li>
                     {% endfor %}
-                    
-<!-- 
+
+                    <!-- 
                     <li class="list-item">Home Builders<i class="fa fa-caret-up close-list2" aria-hidden="true" style="cursor: pointer;display: none"></i><i
                             class="fa fa-caret-down open-list2" aria-hidden="true" style="cursor: pointer;"></i><span>(12)</span></li>
                     <ul class="sub-list" id="home-builder-list" style="display: none;">
@@ -106,7 +107,7 @@
                 <hr style="width:60%;float: left;"><br><br>
 
                 <p class="start-time" style="margin: 6px 10px 6px 0px; font-size:14px; font-weight: 600;">Start Time</p>
-                <ul class="filter-checkbox" style="padding-left:0; line-height: 2.2em; color: rgba(0, 0, 0, 0.5);">
+                <ul style="padding-left:0" id="cat-list">
                     {% for item in numberOfTime %}
                     <li class="list-item">>{{item[0]}}<span>{{item[1]}}</span></li>
                     {% endfor %}
@@ -116,8 +117,8 @@
 
                 <p class="project-size" style="margin: 6px 10px 6px 0px; font-size:14px; font-weight: 600;">Square
                     Footage Of Project</p>
-                <ul class="filter-checkbox" style="padding-left:0; line-height: 2.2em; color: rgba(0, 0, 0, 0.5);">
-                     {% for item in numberOfTime %}
+                <ul style="padding-left:0" id="cat-list">
+                    {% for item in numberOfSize %}
                     <li class="list-item">>{{item[0]}}<span>{{item[1]}}</span></li>
                     {% endfor %}
                 </ul>
@@ -201,7 +202,7 @@
                     <!-- {% if loop.index0 % 3 == 0 %} -->
                     <div class="col-lg-3 col-md-4 col-sm-6" style="margin-top:20px; padding-left:5px; padding-right:5px;">
                         <!-- {% endif %} -->
-                        <a href="" style="text-decoration:none;" class="scrolling-post-content">
+                        <a href="https://enigmatic-citadel-11799.herokuapp.com/post_info/{{item[2]}}" style="text-decoration:none;" class="scrolling-post-content">
                             <div class="thumbnail">
                                 <img src="https://images.unsplash.com/photo-1519974719765-e6559eac2575?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=4ff6057dcdea838163d82bc2a52d5679&auto=format&fit=crop&w=1650&q=80"
                                     alt="post1">
@@ -210,7 +211,7 @@
                                         <li style="display: inline-block; vertical-align: middle"><img src="{{item[0]}}"
                                                 alt="client photo" style="width:33px;height: 33px;border-radius: 50%;display: inline-block;"></li>
                                         <ul style="display: inline-block; vertical-align: middle;padding-left:10px">
-                                            <li style="list-style-type:none;font-weight: 600;font-size:13px">garycorr</li>
+                                            <li style="list-style-type:none;font-weight: 600;font-size:13px">{{item[3]}}</li>
                                             <li style="list-style-type:none;color:rgba(0,0,0,0.3);font-size:11px">Sep
                                                 24th,
                                                 2018</li>

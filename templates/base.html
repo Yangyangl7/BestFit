@@ -46,7 +46,7 @@
     <!-- Navbar -->
     <header id="navbar">
         <nav class="navbar navbar-fixed-top">
-            <div class="container-fluid">
+            <div class="container-fluid" style="height: 78px;">
                 <div class="site-nav-wrapper">
                     <!-- Logo -->
                     <div class="navbar-header">
@@ -62,7 +62,7 @@
                                 <li><a class="smooth-scroll" href="#howItWorks">HOW IT WORKS</a></li>
                                 <li><a href="{{ url_for("searchteam") }}">FIND TEAMS</a></li>
                                 <li><a href="{{ url_for("searchclient") }}">FIND CLIENTS</a></li>
-                               
+
                                 {% if session['profile'] is defined %}
                                 <li><a class="" href="{{ url_for("logout") }}">LOGOUT</a></li>
                                 <li><a class="" href="{{ url_for("profile") }}">PROFILE<a></li>
