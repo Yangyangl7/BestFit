@@ -1,6 +1,9 @@
 drop table IF EXISTS register CASCADE;
+drop table IF EXISTS register_tag CASCADE;
 drop table IF EXISTS tag CASCADE;
 drop table IF EXISTS post CASCADE;
+drop table IF EXISTS post_tag CASCADE;
+drop table IF EXISTS post_saved CASCADE;
 drop table IF EXISTS picture CASCADE;
 drop table IF EXISTS review CASCADE;
 
@@ -14,24 +17,19 @@ create table register (
     phone varchar(30),
     isDesigner boolean
 );
-
-create table register_tag (
-	id SERIAL PRIMARY KEY,
-    register_id int references register,
-    tag_id int references tag
-)
-
 create table tag (
 	tag_id SERIAL PRIMARY KEY,
 	name varchar(255),
 	type varchar(100)
 );
 
-create table post_tag (
-    id SERIAL PRIMARY KEY,
-    post_id int references post,
+
+create table register_tag (
+	id SERIAL PRIMARY KEY,
+    register_id int references register,
     tag_id int references tag
 );
+
 
 create table post (
 	post_id SERIAL PRIMARY KEY,
@@ -44,15 +42,31 @@ create table post (
 	location varchar(255) NOT NULL,
 	budget int,
 	area text,
-	tag_id int references tag
+	saved_times int DEFAULT 0,
+	closed boolean DEFAULT FALSE,
+	views int DEFAULT 0
+);
+
+create table post_tag (
+    id SERIAL PRIMARY KEY,
+    post_id int references post,
+    tag_id int references tag
+);
+
+create table post_saved(
+	saved_id SERIAL PRIMARY KEY,
+	post_id int references post,
+	user_id int references register
 );
 
 create table review (
 	review_id SERIAL PRIMARY KEY,
 	company_id int references register,
 	reviewer_id int references register,
+	post_id int references post,
 	rate int NOT NULL,
-	comment text
+	comment text,
+	time timestamp
 );
 
 create table picture (
@@ -62,4 +76,3 @@ create table picture (
 	img bytea
 );
 
-insert into register (name, isdesigner) values ('test1', TRUE);

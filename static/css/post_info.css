@@ -265,6 +265,7 @@
     border: 0.5px solid rgba(0, 0, 0, 0.1);
     background-color: #fff;
     font-size: 12px;
+<<<<<<< HEAD
 }
 
 .aboutme .nav-tabs>li.active>a {
@@ -333,4 +334,6 @@ div.arrow a:hover::before {
     border-color: #eac71f;
     transform: scale(.9);
 
+=======
+>>>>>>> a62e612b4a4a64c9bb91265750f2d4ad5614398b
 }

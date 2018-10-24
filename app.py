@@ -96,8 +96,6 @@ def callback_handling():
     return redirect('/')
 
 # Auth0 Login
-
-
 @app.route('/login')
 def login():
     return auth0.authorize_redirect(redirect_uri=os.environ['AUTH0_CALLBACK_URL'], audience='https://' + os.environ['AUTH0_DOMAIN']+'/userinfo')
@@ -135,6 +133,7 @@ def profile():
     # with db.get_db_cursor() as cur:
     #     cur.execute("SELECT picture_id, filename FROM picture order by picture_id desc")
     #     images = [record for record in cur]
+<<<<<<< HEAD
 
     with db.get_db_cursor() as cur:
         tagsql = "select * from tag limit 40;"
@@ -159,6 +158,44 @@ def profile():
                               for i, value in enumerate(row)) for row in cur.fetchall()]
             # print(str(postArray))
             
+=======
+    with db.get_db_cursor() as cur:
+        cur.execute("SELECT * FROM register where user_id=%s;",
+                        (session.get('profile').get('user_id'),))
+        user_id_res = [record["id"] for record in cur]
+        tagsql = "select * from tag limit 40;"
+        usersql = "select * from register where id = %s;"
+
+        try:
+            postsql = "SELECT *,picture_id FROM post,picture where post.post_id=picture.post_id and publisher_id=%s order by time DESC;"
+           # postsql_all="""select picture_id from picture where post_id in (select * from post where publisher_id = %s order by time DESC);""";
+            # Build tag array
+            cur.execute(tagsql)
+            tagArray = [dict((cur.description[i][0], value) \
+               for i, value in enumerate(row)) for row in cur.fetchall()]
+            #print(tagArray)
+
+            #  Build users array
+            cur.execute(usersql,(user_id_res[0],))
+            userArray = [dict((cur.description[i][0], value) \
+               for i, value in enumerate(row)) for row in cur.fetchall()]
+            print(str(userArray[0]))
+
+            # cur.execute(postsql,(user_id_res,))
+            # post_id=[record["post_id"] for record in cur]
+            # pictures_id=dict()
+            # for i in post_id:
+            #     cur.execute("SELECT * FROM picture where post_id=%s;",
+            #                 (i,))
+            #     picture_id=[record["picture_id"] for record in cur]
+            #     pictures_id.append()
+            cur.execute(postsql,(user_id_res[0],))
+            postArray = [dict((cur.description[i][0], value) \
+               for i, value in enumerate(row)) for row in cur.fetchall()]
+            print(str(postArray))
+
+
+>>>>>>> a62e612b4a4a64c9bb91265750f2d4ad5614398b
 
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
@@ -167,10 +204,13 @@ def profile():
 =======
     return render_template('profile.html',userInfo=userArray[0], tagInfo = tagArray, postInfo = [] )
 
+<<<<<<< HEAD
 
 >>>>>>> 92319d4b5339d08cbb366b218541689c34453ab3
 
 
+=======
+>>>>>>> a62e612b4a4a64c9bb91265750f2d4ad5614398b
 # upload imaage into data base
 
 
@@ -187,6 +227,12 @@ def upload():
     location_res = request.form.get("location")
     budget_res = request.form.get("budget")
     text_res = request.form.get("text")
+    tags_res = request.form.getlist("tags[]")
+    print(str(tags_res))
+    name_res = request.form.get("name")
+    phone_res = request.form.get("phone")
+    is_designer_res = request.form.get("designer")
+
     dt = datetime.now()
 
     if 'file' not in request.files:
@@ -201,6 +247,7 @@ def upload():
 
         # convert the flask object to a regular file object
         data = request.files['file'].read()
+<<<<<<< HEAD
 
         with db.get_db_cursor(commit=True) as cur:
             # we are storing the original filename for demo purposes
@@ -216,19 +263,47 @@ def upload():
             cur.execute("insert into picture (register_id,post_id,img) values (%s,%s,%s)",
                         (user_id_res[0], post_id_res[0], data))
 
+=======
+        
+    with db.get_db_cursor(commit=True) as cur:
+        # we are storing the original filename for demo purposes
+        # might be useful to also/instead save the file extension or mime type
+        
+        cur.execute("SELECT * FROM register where user_id=%s;",
+                    (session.get('profile').get('user_id'),))
+        user_id_res = [record["id"] for record in cur]
+        cur.execute("insert into post (publisher_id,time,title, status,location,budget,content) values (%s,%s,%s,%s,%s,%s, %s)",
+                    (user_id_res[0], dt, title_res, status_res, location_res, budget_res, text_res))
+        cur.execute(
+            "SELECT MAX(post_id) AS maxid FROM post where publisher_id=%s;", (user_id_res[0],))
+        post_id_res = [record["maxid"] for record in cur]
+        cur.execute("insert into picture (register_id,post_id,img) values (%s,%s,%s)",
+                    (user_id_res[0], post_id_res[0], data))
+        for i in tags_res:
+            cur.execute("insert into post_tag (post_id,tag_id) values (%s,%s)",
+                        (post_id_res[0], i ))
+        if (is_designer_res=="designer"):
+            is_designer=True
+        else:
+            is_designer=False
+        cur.execute("update register set name=%s,phone=%s,isDesigner=%s where id=%s",
+                    (name_res, phone_res, is_designer,user_id_res[0]))
+        
+>>>>>>> a62e612b4a4a64c9bb91265750f2d4ad5614398b
     return redirect(url_for("profile"))
 
 
 @app.route('/img/<int:img_id>')
 def serve_img(img_id):
     with db.get_db_cursor() as cur:
-        #cur.execute("SELECT * FROM images where img_id=%s", (img_id,))
-        cur.execute("SELECT * FROM picture;")
+        cur.execute("SELECT * FROM picture where picture_id=%s", (img_id,))
+        #cur.execute("SELECT * FROM picture;")
         image_row = cur.fetchone()
 
         # in memory binary stream
         stream = io.BytesIO(image_row["img"])
 
+<<<<<<< HEAD
         # return send_file(
         #     stream,
         #     attachment_filename=image_row["filename"])
@@ -236,6 +311,11 @@ def serve_img(img_id):
             stream,
             attachment_filename="test")
 
+=======
+        return send_file(
+            stream, 
+            attachment_filename=image_row["picture_id"])
+>>>>>>> a62e612b4a4a64c9bb91265750f2d4ad5614398b
 
 @app.route('/search', methods=['POST', 'GET'])
 def search():
@@ -256,7 +336,7 @@ def search():
         if type == '0':
             for item in inputArr:
                 with db.get_db_cursor() as cur:
-                    cur.execute("SELECT register.name, register.avator, register.description, register.phone, register.email FROM register_tag INNER JOIN tag ON tag.tag_id=register_tag.tag_id INNER JOIN register ON register_tag.register_id=register.id WHERE LOWER(tag.name) LIKE LOWER('%%%s%%');"
+                    cur.execute("SELECT register.avator, register.name, post.post_id, post.title, post.content, post.status, post.time, post.location, post.budget FROM post_tag INNER JOIN tag ON tag.tag_id=post_tag.tag_id INNER JOIN post ON post_tag.post_id=post.post_id INNER JOIN register ON post.publisher_id=register.id WHERE register.isdesigner and LOWER(tag.name) LIKE LOWER('%%%s%%');"
                                 % (item))
                     for row in cur:
                         if row not in data:
@@ -264,8 +344,7 @@ def search():
              # Not matching data logic
             if not data:
                 with db.get_db_cursor() as cur:
-                    cur.execute(
-                        "SELECT register.name, register.avator, register.description, register.email, register.phone FROM register WHERE register.isdesigner;")
+                    cur.execute("SELECT register.avator, register.name, post.post_id, post.title, post.content, post.status, post.time, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE register.isdesigner;")
                     for row in cur:
                         if row not in data:
                             data.append(row)
@@ -273,7 +352,7 @@ def search():
         if type == '1':
             for item in inputArr:
                 with db.get_db_cursor() as cur:
-                    cur.execute("SELECT register.name, register.avator, register.description, register.email FROM tag INNER JOIN post ON tag.tag_id=post.tag_id INNER JOIN register ON post.publisher_id=register.id WHERE post.status = '0' and LOWER(tag.name) LIKE LOWER('%%%s%%');"
+                    cur.execute("SELECT register.avator, register.name, post.post_id, post.title, post.content, post.status, post.time, post.location, post.budget FROM post_tag INNER JOIN tag ON tag.tag_id=post_tag.tag_id INNER JOIN post ON post_tag.post_id=post.post_id INNER JOIN register ON post.publisher_id=register.id WHERE NOT register.isdesigner and LOWER(tag.name) LIKE LOWER('%%%s%%');"
                                 % (item))
                     for row in cur:
                         if row not in data:
@@ -281,8 +360,7 @@ def search():
             # Not matching data logic
             if not data:
                 with db.get_db_cursor() as cur:
-                    cur.execute(
-                        "SELECT register.name, register.avator, register.description, register.email FROM register WHERE NOT register.isdesigner;")
+                    cur.execute("SELECT register.avator, register.name, post.post_id, post.title, post.content, post.status, post.time, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE NOT register.isdesigner;")
                     for row in cur:
                         if row not in data:
                             data.append(row)
@@ -297,7 +375,7 @@ def search():
         if type == '0':
             with db.get_db_cursor() as cur:
                 cur.execute(
-                    "SELECT register.name, register.avator, register.description, register.email, register.phone FROM register WHERE register.isdesigner;")
+                    "SELECT post.post_id, post.title, post.content, post.status, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE register.isdesigner;")
                 for row in cur:
                     if row not in data:
                         data.append(row)
@@ -305,7 +383,7 @@ def search():
         if type == '1':
             with db.get_db_cursor() as cur:
                 cur.execute(
-                    "SELECT register.name, register.avator, register.description, register.email FROM register WHERE NOT register.isdesigner;")
+                    "SELECT post.post_id, post.title, post.content, post.status, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE NOT register.isdesigner;")
                 for row in cur:
                     if row not in data:
                         data.append(row)
@@ -313,14 +391,138 @@ def search():
     return render_template("search.html", type=type, data=data)
 
 
-@app.route('/post_info')
-def post_info():
-    return render_template("post_info.html")
+@app.route('/post_info/<int:post_id>')
+def post_info(post_id):
+    tags=[]
+
+    with db.get_db_cursor(commit=True) as cur:
+        # we are storing the original filename for demo purposes
+        # might be useful to also/instead save the file extension or mime type
+        cur.execute("SELECT * FROM post where post_id=%s;",
+                    (post_id,))
+        user_id_res = [record["publisher_id"] for record in cur]
+        post_title_res = [record["title"] for record in cur]
+        post_time_res = [record["time"] for record in cur]
+        post_content_res = [record["content"] for record in cur]
+        # post_status_res = [record["status"] for record in cur]
+        post_location_res = [record["location"] for record in cur]
+        post_budget_res = [record["budget"] for record in cur]
+        post_area_res = [record["area"] for record in cur]
+        # post_tag_id_res = [record["tag_id"] for record in cur]
+        post_saved_times_res = [record["saved_times"] for record in cur]
+        post_closed_res = [record["closed"] for record in cur]
+        post_views_res = [record["views"] for record in cur]
+
+        cur.execute("SELECT * FROM post_tag where post_id=%s;",
+                    (post_id,))
+        post_tags_id_res = [record["tag_id"] for record in cur]
+        for i in post_tags_id_res:
+            cur.execute("SELECT * FROM tag where tag_id=%s;",
+                    (i,))
+            tag_name=[record["name"] for record in cur]
+            tags.append(tag_name[0])
+        cur.execute("SELECT * FROM review where post_id=%s;",
+                    (post_id,))
+        post_comment_res=[record["comment"] for record in cur]
+        post_comment_time=[record["time"] for record in cur]
+        post_comment_reviewer_id=[record["reviewer_id"] for record in cur]
+        post_comment_rate=[record["rate"] for record in cur]
+        cur.execute("SELECT * FROM register where id=%s;",
+                    (post_comment_reviewer_id,))
+        post_comment_reviewer_name=[record["name"] for record in cur]
+        post_comment_reviewer_avator=[record["avator"] for record in cur]
+        cur.execute("SELECT * FROM register where id=%s;",
+                    (user_id_res,))
+        post_user_name=[record["name"] for record in cur]
+        post_user_avator=[record["avator"] for record in cur]
+        post_user_phone=[record["phone"] for record in cur]
+        post_user_email=[record["email"] for record in cur]
+        post_user_id=[record["user_id"] for record in cur]
+        
+        cur.execute("SELECT * FROM picture where post_id=%s;",
+                    (post_id,))
+        post_pictures=[record["email"] for record in cur]
+
+    if 'profile' not in session:
+        return render_template("post_info.html",post_pictures=post_pictures, post_id_store=post_id,pop_login=0)
+    else:
+        if (session.get('profile').get('user_id')==post_user_id[0]):
+            closed_tag_visible=1
+        return render_template("post_info.html",post_pictures=post_pictures, post_id_store=post_id,pop_login=0,closed_tag_visible=1)
+
+@app.route('/post_info_upload/<int:post_id>',methods=['POST'])
+def post_info_upload(post_id):
+    saved_res = request.form.get("saved")
+    closed_res = request.form.get("closed")
+    #contact_res = request.form.get("contact")
+    comment_content_res = request.form.get("comment_content")
+    stars_res = request.form.get("stars")
+    dt = datetime.now()
+
+    with db.get_db_cursor(commit=True) as cur:
+        # we are storing the original filename for demo purposes
+        # might be useful to also/instead save the file extension or mime type
+        cur.execute("SELECT * FROM post where post_id=%s;",
+                    (post_id,))
+        post_saved_times_res = [record["saved_times"] for record in cur]
+        post_closed_res = [record["closed"] for record in cur]
+        post_views_res = [record["views"] for record in cur]
+        user_id_res = [record["publisher_id"] for record in cur]
+        cur.execute("SELECT * FROM register where id=%s;",
+                    (user_id_res,))
+        post_user_id=[record["user_id"] for record in cur]
+        
+
+        post_views_res[0]=post_views_res[0]+1
+        # cur.execute("insert into post (saved_times,closed,views) values (%s,%s, %s)",
+        #             (post_saved_times_res[0], post_closed_res[0], post_views_res[0]))
+        
 
 
-@app.route('/self_post_info')
-def self_post_info():
-    return render_template("self_post_info.html")
+    if 'profile' not in session:
+        return redirect(url_for("post_info",post_id=post_id,pop_login=1))
+    else:
+        if (saved_res==1):
+            post_saved_times_res[0]=post_saved_times_res[0]+1
+        if (closed_res==1 and session.get('profile').get('user_id')==post_user_id[0]):
+            post_closed_res[0]=True
+        cur.execute("insert into post (saved_times,closed,views) values (%s,%s, %s)",
+                    (post_saved_times_res[0], post_closed_res[0], post_views_res[0]))
+        cur.execute("SELECT * FROM register where user_id=%s;",
+                        (session.get('profile').get('user_id'),))
+        comment_user_id = [record["id"] for record in cur]
+        cur.execute("insert into review (reviewer_id,comment,time,rate,post_id) values (%s,%s,%s,%s,%s)",
+                    (comment_user_id[0], comment_content_res, dt, stars_res,post_id))
+        if (saved_res==1):
+            cur.execute("insert into post_saved (post_id,user_id) values (%s, %s)",
+                    (post_id, comment_user_id[0]))
+        return redirect(url_for("post_info",post_id=post_id,pop_login=0))
+
+
+
+
+@app.route('/selfie',methods=['POST'])
+def selfie():
+    if 'file' not in request.files:
+        flash("no file part")
+        return redirect(request.url)
+    file = request.files['file']
+    if file.filename == '':
+        flash("no selected file")
+        return redirect(request.url)
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+
+        # convert the flask object to a regular file object
+        data = request.files['file'].read()
+
+        with db.get_db_cursor(commit=True) as cur:
+            cur.execute("SELECT * FROM register where user_id=%s;",
+                        (session.get('profile').get('user_id'),))
+            user_id_res = [record["id"] for record in cur]
+            cur.execute("update register set avator=%s where id=%s",
+                        (data,user_id_res[0]))
+    return redirect(url_for("profile"))
 
 
 if __name__ == '__main__':
