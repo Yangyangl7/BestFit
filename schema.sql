@@ -31,7 +31,6 @@ create table register_tag (
 );
 
 
-
 create table post (
 	post_id SERIAL PRIMARY KEY,
 	publisher_id int references register,
@@ -46,9 +45,8 @@ create table post (
 	saved_times int DEFAULT 0,
 	closed boolean DEFAULT FALSE,
 	views int DEFAULT 0
-
-
 );
+
 create table post_tag (
     id SERIAL PRIMARY KEY,
     post_id int references post,

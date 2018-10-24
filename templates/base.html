@@ -60,8 +60,8 @@
                             <ul class="nav navbar-nav" id="nav-item">
                                 <li><a class="" href="{{ url_for("home") }}">HOME</a></li>
                                 <li><a class="smooth-scroll" href="#howItWorks">HOW IT WORKS</a></li>
-                                <li><a class="" href="{{ url_for("search") }}" name="type" value="0">FIND TEAMS</a></li>
-                                <li><a class="" href="{{ url_for("search") }}" name="type" value="1">FIND CLIENTS</a></li>
+                                <li><a class="" href="{{ url_for("search") }}"><input type="hidden" name="type" value="0">FIND TEAMS</a></li>
+                                <li><a class="" href="{{ url_for("search") }}"><input type="hidden" name="type" value="0">FIND CLIENTS</a></li>
                                 {% if session['profile'] is defined %}
                                 <li><a class="" href="{{ url_for("logout") }}">LOGOUT</a></li>
                                 <li><a class="" href="{{ url_for("profile") }}">PROFILE</a></li>
