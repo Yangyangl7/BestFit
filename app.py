@@ -34,12 +34,32 @@ def countPost():
     numberOfType = []
 
     with db.get_db_cursor() as cur:
-        cur.execute("SELECT tag.name, count(tag.name) as numberOfType from post_tag INNER JOIN tag ON post_tag.tag_id = tag.tag_id GROUP BY tag.name;")
+        cur.execute("SELECT tag.name, count(tag.name) as numberOfType from post_tag INNER JOIN tag ON post_tag.tag_id = tag.tag_id WHERE tag.type != 'Start Time' GROUP BY tag.name;")
         for row in cur:
             if row not in numberOfType:
                 numberOfType.append(row)
 
-    return numberOfType
+     return numberOfType
+
+def countTime():
+    numberOfTime = []
+    with db.get_db_cursor() as cur:
+        cur.execute("SELECT tag.name, count(tag.name) as numberOfType from post_tag INNER JOIN tag ON post_tag.tag_id = tag.tag_id WHERE tag.type = 'Start Time' GROUP BY tag.name;")
+        for row in cur:
+            if row not in numberOfTime:
+                numberOfTime.append(row)
+
+    return numberOfTime
+
+def countSize():
+    numberOfSize = []
+    with db.get_db_cursor() as cur:
+        cur.execute("SELECT tag.name, count(tag.name) as numberOfType from post_tag INNER JOIN tag ON post_tag.tag_id = tag.tag_id WHERE tag.type = 'Size' GROUP BY tag.name;")
+        for row in cur:
+            if row not in numberOfSize:
+                numberOfSize.append(row)
+
+    return numberOfSize
 
 # Protected Page. Only accessible after login
 def requires_auth(f):
@@ -341,8 +361,10 @@ def search():
     #                     data.append(row)
 
     numberOfType = countPost()
+    numberOfTime = countTime()
+    numberOfSize = countTime()
 
-    return render_template("search.html", type=type, data=data, numberOfType=numberOfType)
+    return render_template("search.html", type=type, data=data, numberOfType=numberOfType, numberOfSize=numberOfSize, numberOfTime=numberOfTime)
 
 @app.route('/searchteam')
 def searchteam():
