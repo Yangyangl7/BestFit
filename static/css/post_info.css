@@ -275,3 +275,62 @@
 .aboutme .nav-tabs>li a:focus {
     background-color: #fff;
 }
+
+.contact-button button {
+    transition: all linear 300ms;
+}
+
+.contact-button button:hover,
+.contact-button button:focus {
+    color: #fff !important;
+    background-color: #eac71f !important;
+}
+
+div.arrow a {
+    width: 3vmin;
+    height: 3vmin;
+    box-sizing: border-box;
+    position: absolute;
+    left: -8%;
+    top: 50%;
+    transform: rotate(-135deg);
+}
+
+div.arrow a::before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    border-width: .4vmin .4vmin 0 0;
+    border-style: solid;
+    border-color: #61686e;
+    transition: .2s ease;
+    display: block;
+    transform-origin: 100% 0;
+}
+
+
+div.arrow a:after {
+    content: '';
+    float: left;
+    position: relative;
+    top: -100%;
+    width: 100%;
+    height: 100%;
+    border-width: 0 .4vmin 0 0;
+    border-style: solid;
+    border-color: #61686e;
+    transform-origin: 100% 0;
+    transition: .2s ease;
+}
+
+div.arrow a:hover::after {
+    transform: rotate(45deg);
+    border-color: #eac71f;
+    height: 120%;
+}
+
+div.arrow a:hover::before {
+    border-color: #eac71f;
+    transform: scale(.9);
+
+}
