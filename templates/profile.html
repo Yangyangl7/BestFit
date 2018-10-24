@@ -13,12 +13,30 @@
   <div style="height: 90%;overflow-y: scroll;width:100%; border-bottom: 2px solid #ddd; padding:5%;box-sizing:border-box">
 
 
-    <!--  TODO:  create /upload handle the for m-->
-    <!-- NOTE:  Save button save post with  status = 2, Submit save post with status = 1-->
-
+    <div class = "postTagContainer">
+  {% for tag in tagInfo %}
+      <div style = "display: inline-block; position: relative" onclick="selectTag(this)">
+      <img class="removeImg"
+      src = "https://www.materialui.co/materialIcons/action/highlight_remove_grey_192x192.png"
+      style = "cursor: pointer;height: 20px;top: 0px;right: -10px;position: absolute;display: none;
+    width: 20px;" onclick="hideSelf(this)" select = false>
+      <span style="line-height: 4;cursor:pointer;" class="label {{tag['type']}}"}> {{tag["name"]}}</span>
+    </div>
+  {% endfor %}
+    </div>
     <form class="pure-form pure-form-stacked" action="/upload" method="post" enctype="multipart/form-data">
       <div class="postContainer">
-        <span class="postLabel"> Title </span>
+        <span class="postLabel" > Name </span>
+        <input type="input" name="name" class="postInput" placeholder="This name will be shown public ..." required="required">
+      </div>
+
+      <div class="postContainer">
+        <span class="postLabel" > Phone </span>
+        <input type="input" name="name" class="postInput" placeholder="Phone number" required="required">
+      </div>
+
+      <div class="postContainer">
+        <span class="postLabel" > Title </span>
         <input type="input" name="title" class="postInput" placeholder="Enter Your Title ..." required="required">
       </div>
 
@@ -107,16 +125,16 @@
     </form>
   </div>
   <div style="height: 10%; width:100%; align-items: center">
-    <div style="position: absolute;left: 30%;top: 92%;" class="button-success pure-button" onclick="submitForm(1)">Submit</div>
+    <div style="position: absolute;left: 45%;top: 92%;" class="button-success pure-button" onclick="submitForm(1)">Submit</div>
 
-    <div style="position: absolute;left: 60%;top: 92%;" class="button-warning pure-button" onclick="submitForm(2)">
-      Save </div>
   </div>
 </div>
-
-
-
 </div>
+
+
+
+
+
 
 <div class="profileBody" style="border-bottom: 2px solid #ddd;padding-bottom:5%">
   <div id="scrim" onclick="scrimTriger(1)" style="height: 300%; width:100%;background-color:black;
@@ -129,8 +147,8 @@
        background-image: url({{ url_for('static', filename='img/bg7.jpg')}} );">
         <div style="height:160px; position: relative; bottom: -140px;left:10px">
 
-          <!--  TODO: change src to avator -->
-          <img src={{avator}} style="width: 160px; height: 160px; border: 1.5px solid white">
+
+          <img src={{userInfo['avator']}} style="width: 160px; height: 160px; border: 1.5px solid white">
           <div class="info" style="position: absolute; margin-left:20px;
           display: inline-block;">
 
@@ -148,8 +166,8 @@
 
             <!-- TODO Repalce user name and eMail -->
 
-            <span style="line-height:2; font-weight:bolder"> {{usr_name}} </br></span>
-            <!-- <span style = " font-weight:bolder">{{usr_email}}</span> -->
+            <span style="line-height:2; font-weight:bolder"> {{userInfo['name']}} </br></span>
+            <span style = " font-weight:bolder">{{userInfo['email']}}</span>
 
           </div>
         </div>
@@ -176,58 +194,73 @@
 
 
 
-  <div class="profilePost" style="width:88%; margin:auto">
-    <div style="font-size: 28px; font-family:sans-serif; font-weight: bolder;margin:2%;margin-bottom: 0"> Current List
-      : </div>
-
-
-    <!-- <div style="width:38%;height:2px;background-color:#ddd;display:inline-block;margin-top:3px;margin-bottom:10px"></div>
-    <div style="width:23%;height:3px;background-color:#00cc00;display:inline-block;margin-top:5px;z-index: 100;margin-bottom:10px;margin-left:-1px"></div>
-    <div style="width:38%;height:2px;background-color:#ddd;display:inline-block;margin-top:3px;z-index: 50;margin-bottom:10px;margin-left:-1px"></div> -->
-
-    <!--  TODO for Yuhao Li check cookies if it's owner-->
+  <div class="profilePost" style="width:88%; margin:auto;">
+    <div style="font-size: 28px; font-family:sans-serif; font-weight: bolder;margin:2%;margin-bottom: 0"> Current List: </div>
     <div class="postList">
       <div id=createPost style="background-color:#ddd" class="postImgFrame">
         <div style="width:90px; margin:auto; margin-top:55px; cursor: pointer" onClick="showPost()">
-          <!-- TODO  REPLACE user posted Image-->
           <img src="https://cdn1.iconfinder.com/data/icons/basic-ui-elements-color-round/3/30-512.png" style="height: 90px;"
             class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
         </div>
 
       </div>
-      <!--  TODO Replace usr post title-->
+
       <div style="margin: 2%; margin-top:0;font-size: 18px; font-family:sans-serif; font-weight: bolder"> Create Post
       </div>
     </div>
 
-    <!-- TODO: For loop render all post -->
-    <div class="postList">
-      <div class="postImgFrame" style="margin-bottom:0">
-        <img
-        src = "/img/1"
-        class="postImage" style="width:100%;height:200px;">
-      </div>
-      <div class="postTitle"> Draw Graph</div>
-    </div>
 
 
-    <!-- NOTE: delete the two below -->
-    <div class="postList">
-      <div class="postImgFrame" style="margin-bottom:0">
-        <img src="https://www.timeshighereducation.com/sites/default/files/styles/the_breaking_news_image_style/public/why-study-architecture_0.jpg?itok=yr8Uelyq"
-          class="postImage" style="width:100%;height:200px;">
-      </div>
-      <div class="postTitle"> Draw Graph</div>
-    </div>
 
-    <div class="postList">
-      <div class="postImgFrame" style="margin-bottom:0">
-        <img src="https://www.timeshighereducation.com/sites/default/files/styles/the_breaking_news_image_style/public/why-study-architecture_0.jpg?itok=yr8Uelyq"
-          class="postImage" style="width:100%; height:200px;">
+      <!--  Start render user created post-->
+  {% for post in postInfo %}
+      <div class="col-sm-6 col-md-3" style="margin-top:5px;float: none;display:inline-block">
+          <a href="" style="text-decoration:none;" class="scrolling-post-content">
+              <div class="thumbnail">
+                  <img src="https://images.unsplash.com/photo-1501876725168-00c445821c9e?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=2a1a9a1d07a8a1cb53aa3686da2ef497&auto=format&fit=crop&w=2550&q=80"
+                      alt="post1">
+                  <div class="caption">
+                      <ul style="padding-left:0">
+                          <li style="display: inline-block; vertical-align: middle"><img src= "{{userInfo['avator']}}"
+                                  alt="client photo" style="max-width:36px;border-radius: 50%;display: inline-block;"></li>
+                          <ul style="display: inline-block; vertical-align: middle;padding-left:10px">
+                              <li style="list-style-type:none;font-weight: 600;font-size:13px">
+                                {{userInfo["name"]}}
+                              </li>
+                              <li style="list-style-type:none;color:rgba(0,0,0,0.3);font-size:11px">Sep
+                                {{userInfo["time"]}}
+                              </li>
+                          </ul>
+                      </ul>
+                      <h3 class="post-title" style="font-weight: 700;font-size:16px;overflow: hidden;white-space: nowrap;
+              text-overflow: ellipsis;max-height: 30px;">{{post["title"]}}</h3>
+                      <p style="max-height:57px; font-size:13px; overflow: hidden;text-overflow: ellipsis;display: -webkit-box; -webkit-line-clamp: 3;
+                        -webkit-box-orient: vertical;">
+
+                      </p>
+
+                      <p class="rate-save"><i class="fa fa-star" aria-hidden="true" style="color:#eac71f">
+                              <span style="font-family: 'Open Sans', sans-serif;color:rgba(0,0,0,0.5);font-size:12px">4.0
+                                  (8)</span></i>
+                          <em class="save-button">
+                              <a name="save_post" class="fa fa-heart-o" style="float:right;text-decoration: none; padding-top:3px;color:#EF4158;padding-right:3px;"></a>
+                              <a class="fa fa-heart" style="float:right;text-decoration: none; padding-top:3px;color:#EF4158;padding-right:3px;"></a></em>
+                      </p>
+                  </div>
+              </div>
+          </a>
       </div>
-      <div class="postTitle"> Draw Graph</div>
-    </div>
+      {% endfor %}
+
+
+
+
+
 
   </div>
+
+
+
+
 </div>
 {% endblock %}

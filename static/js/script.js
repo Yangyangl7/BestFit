@@ -179,3 +179,16 @@ $('.close-list5').click(function () {
   $('.open-list5').show();
   $('.close-list5').hide();
 });
+
+/* ====================================
+              Pagination
+======================================= */
+$(document).ready(function () {
+  $("#tab").pagination({
+    items: 4,
+    contents: 'contents',
+    previous: '《',
+    next: '》',
+    position: 'bottom',
+  });
+});

@@ -24,3 +24,11 @@ function submitForm(status) {
   $('#subButton').click();
 
 }
+
+
+function selectTag(tag) {
+  var span =tag.getElementsByTagName("span")[0];
+  var showDelete = tag.getElementsByClassName("removeImg")[0];
+  showDelete.select = "true";
+  showDelete.style.display = "block";
+}
