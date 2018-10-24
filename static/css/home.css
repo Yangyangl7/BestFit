@@ -40,6 +40,7 @@ body {
   /* Gecko Browsers */
 }
 
+
 /* ====================================
                Content Boxes
 ======================================= */
@@ -1227,6 +1228,7 @@ a.scrolling-post-content {
   margin-bottom: 8px;
 }
 
+
 .sub-list li a {
   text-decoration: none;
   color: rgba(0, 0, 0, 0.5);
@@ -1244,6 +1246,7 @@ a.scrolling-post-content {
   font-weight: 600;
   padding-top: 5px;
   margin-bottom: -9px;
+  padding-bottom: 15px;
 }
 
 .list-item i {
@@ -1282,7 +1285,6 @@ a.scrolling-post-content {
   font-size: 8px;
   /* padding-right: 10px; */
   font-family: 'Open Sans', sans-serif;
-  margin-top: -15px;
 }
 
 .filter-checkbox li {
@@ -1468,25 +1470,25 @@ nav.change-page {
   margin-top: 5px;
   display: inline-block;
   position: relative;
-min-height: 1px;
-padding-right: 15px;
-padding-left: 15px;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
 }
 
 .postTagContainer {
   height: 90%;
-width: 40%;
-background-color: white;
-position: absolute;
-right: 17px;
-top: 0;
-border-left: 2px solid #ddd;
-padding: 10px;
-border-bottom: 2px solid #ddd;
+  width: 40%;
+  background-color: white;
+  position: absolute;
+  right: 17px;
+  top: 0;
+  border-left: 2px solid #ddd;
+  padding: 10px;
+  border-bottom: 2px solid #ddd;
 }
 
 
-.label.Category{
+.label.Category {
   background-color: #f0ad4e;
 }
 
@@ -1495,35 +1497,51 @@ border-bottom: 2px solid #ddd;
 }
 
 .label.Size {
-  background-color:#5cb85c;
+  background-color: #5cb85c;
 }
 
 .label.Style {
-    background-color:#5bc0de;
+  background-color: #5bc0de;
 }
 
 .label.Start.Time {
-    background-color:#777;
+  background-color: #777;
 }
 
 .label:hover {
   background-color: black;
 }
+
 .label.Start.Time:hover {
   background-color: black;
 }
 
 .removeImg {
-  cursor: pointer;height: 25px;top: -15px;right: -7px;position: absolute;
-width: 25px;
+  cursor: pointer;
+  height: 25px;
+  top: -15px;
+  right: -7px;
+  position: absolute;
+  width: 25px;
 }
+
 .uploadPhoto {
   z-index: 200;
   position: fixed;
-top: 14%;
-right: 20%;
-height: 50px;
-padding: 10px;
-background-color: white;
-display: none;
+  top: 14%;
+  right: 20%;
+  height: 50px;
+  padding: 10px;
+  background-color: white;
+  display: none;
+}
+
+a {
+  color: unset;
+}
+
+a:hover,
+a:focus {
+  text-decoration: none;
+  color: unset;
 }

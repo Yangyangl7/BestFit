@@ -22,7 +22,6 @@ app = Flask(__name__)
 # def id_generator(size=13, chars=string.ascii_uppercase + string.digits):
 #         return ''.join(random.SystemRandom().choice(chars) for _ in range(size))
 
-
 @app.before_first_request
 def initialize():
     db.setup()
@@ -30,9 +29,39 @@ def initialize():
     global auth0
     auth0 = auth.auth0
 
+#Used to count number of tags by type
+def countPost():
+    numberOfType = []
+
+    with db.get_db_cursor() as cur:
+        cur.execute("SELECT tag.name, count(tag.name) as numberOfType from post_tag INNER JOIN tag ON post_tag.tag_id = tag.tag_id WHERE tag.type != 'Start Time' GROUP BY tag.name;")
+        for row in cur:
+            if row not in numberOfType:
+                numberOfType.append(row)
+
+    return numberOfType
+
+def countTime():
+    numberOfTime = []
+    with db.get_db_cursor() as cur:
+        cur.execute("SELECT tag.name, count(tag.name) as numberOfType from post_tag INNER JOIN tag ON post_tag.tag_id = tag.tag_id WHERE tag.type = 'Start Time' GROUP BY tag.name;")
+        for row in cur:
+            if row not in numberOfTime:
+                numberOfTime.append(row)
+
+    return numberOfTime
+
+def countSize():
+    numberOfSize = []
+    with db.get_db_cursor() as cur:
+        cur.execute("SELECT tag.name, count(tag.name) as numberOfType from post_tag INNER JOIN tag ON post_tag.tag_id = tag.tag_id WHERE tag.type = 'Size' GROUP BY tag.name;")
+        for row in cur:
+            if row not in numberOfSize:
+                numberOfSize.append(row)
+
+    return numberOfSize
+
 # Protected Page. Only accessible after login
-
-
 def requires_auth(f):
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -55,6 +84,18 @@ def home():
 
 # Auth0 callback after login
 
+
+@app.route('/update', methods=['POST'])
+def update():
+    link_res = request.form.get("link")
+    user_id = request.form.get("id")
+    with db.get_db_cursor(commit=True) as cur:
+        try:
+            cur.execute("update register set avator=%s where id=%s",
+                        (link_res,user_id))
+        except (Exception, psycopg2.DatabaseError) as error:
+            print(error)
+    return redirect(url_for("profile"))
 
 @app.route('/callback')
 def callback_handling():
@@ -114,10 +155,8 @@ def logout():
     return redirect(auth0.api_base_url + '/v2/logout?' + urlencode(params))
 
 # Profile Page
-
-
 @app.route('/profile')
-# @requires_auth
+@requires_auth
 def profile():
     #     with db.get_db_cursor() as cur:
 
@@ -133,9 +172,6 @@ def profile():
     # with db.get_db_cursor() as cur:
     #     cur.execute("SELECT picture_id, filename FROM picture order by picture_id desc")
     #     images = [record for record in cur]
-
-
-
     with db.get_db_cursor() as cur:
         cur.execute("SELECT * FROM register where user_id=%s;",
                         (session.get('profile').get('user_id'),))
@@ -173,14 +209,9 @@ def profile():
 
 
 
-
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
-
     return render_template('profile.html', userInfo=userArray[0], tagInfo=tagArray, postInfo=postArray)
-
-
-
 # upload imaage into data base
 
 
@@ -217,7 +248,6 @@ def upload():
 
         # convert the flask object to a regular file object
         data = request.files['file'].read()
-
 
     with db.get_db_cursor(commit=True) as cur:
         # we are storing the original filename for demo purposes
@@ -256,85 +286,111 @@ def serve_img(img_id):
         # in memory binary stream
         stream = io.BytesIO(image_row["img"])
 
-
         return send_file(
             stream,
-            attachment_filename=image_row["picture_id"])
+            attachment_filename="pic")
 
-
-@app.route('/search', methods=['POST', 'GET'])
+@app.route('/search', methods=['POST'])
 def search():
-    if request.method == 'POST':
-        # get search type, '0' for team search '1' for client search
-        type = request.form.get("type")
-        # search text
-        input = request.form.get("input")
+    # get search type, '0' for team search '1' for client search
+    type = request.form.get("type")
+    # search text
+    input = request.form.get("input")
 
-        # Next improvement '[(\s)*(,|\.|;)+(\s)*]+'
-        # Using regular expression to split search text
-        inputArr = re.split('[,|\.|;|,\s|\.\s|;\s]+', input)
+    # Next improvement '[(\s)*(,|\.|;)+(\s)*]+'
+    # Using regular expression to split search text
+    inputArr = re.split('[,|\.|;|,\s|\.\s|;\s]+', input)
 
-        # store db query results
-        data = []
+    # store db query results
+    data = []
 
-        # team search logic
-        if type == '0':
-            for item in inputArr:
-                with db.get_db_cursor() as cur:
-                    cur.execute("SELECT register.avator, register.name, post.post_id, post.title, post.content, post.status, post.time, post.location, post.budget FROM post_tag INNER JOIN tag ON tag.tag_id=post_tag.tag_id INNER JOIN post ON post_tag.post_id=post.post_id INNER JOIN register ON post.publisher_id=register.id WHERE register.isdesigner and LOWER(tag.name) LIKE LOWER('%%%s%%');"
-                                % (item))
-                    for row in cur:
-                        if row not in data:
-                            data.append(row)
-             # Not matching data logic
-            if not data:
-                with db.get_db_cursor() as cur:
-                    cur.execute("SELECT register.avator, register.name, post.post_id, post.title, post.content, post.status, post.time, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE register.isdesigner;")
-                    for row in cur:
-                        if row not in data:
-                            data.append(row)
-        # client search
-        if type == '1':
-            for item in inputArr:
-                with db.get_db_cursor() as cur:
-                    cur.execute("SELECT register.avator, register.name, post.post_id, post.title, post.content, post.status, post.time, post.location, post.budget FROM post_tag INNER JOIN tag ON tag.tag_id=post_tag.tag_id INNER JOIN post ON post_tag.post_id=post.post_id INNER JOIN register ON post.publisher_id=register.id WHERE NOT register.isdesigner and LOWER(tag.name) LIKE LOWER('%%%s%%');"
-                                % (item))
-                    for row in cur:
-                        if row not in data:
-                            data.append(row)
-            # Not matching data logic
-            if not data:
-                with db.get_db_cursor() as cur:
-                    cur.execute("SELECT register.avator, register.name, post.post_id, post.title, post.content, post.status, post.time, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE NOT register.isdesigner;")
-                    for row in cur:
-                        if row not in data:
-                            data.append(row)
-
-    else:
-        # get search type, '0' for team search '1' for client search
-        type = request.form.get("type")
-        # store db query results
-        data = []
-
-        # team search logic
-        if type == '0':
+    # team search logic
+    if type == '0':
+        for item in inputArr:
             with db.get_db_cursor() as cur:
-                cur.execute(
-                    "SELECT post.post_id, post.title, post.content, post.status, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE register.isdesigner;")
+                cur.execute("SELECT register.avator, register.name, post.post_id, post.title, post.content, post.status, post.time, post.location, post.budget FROM post_tag INNER JOIN tag ON tag.tag_id=post_tag.tag_id INNER JOIN post ON post_tag.post_id=post.post_id INNER JOIN register ON post.publisher_id=register.id WHERE register.isdesigner and LOWER(tag.name) LIKE LOWER('%%%s%%');"
+                            % (item))
                 for row in cur:
                     if row not in data:
                         data.append(row)
-        # client search
-        if type == '1':
+         # Not matching data logic
+        if not data:
             with db.get_db_cursor() as cur:
-                cur.execute(
-                    "SELECT post.post_id, post.title, post.content, post.status, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE NOT register.isdesigner;")
+                cur.execute("SELECT register.avator, register.name, post.post_id, post.title, post.content, post.status, post.time, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE register.isdesigner;")
+                for row in cur:
+                    if row not in data:
+                        data.append(row)
+    # client search
+    if type == '1':
+        for item in inputArr:
+            with db.get_db_cursor() as cur:
+                cur.execute("SELECT register.avator, register.name, post.post_id, post.title, post.content, post.status, post.time, post.location, post.budget FROM post_tag INNER JOIN tag ON tag.tag_id=post_tag.tag_id INNER JOIN post ON post_tag.post_id=post.post_id INNER JOIN register ON post.publisher_id=register.id WHERE NOT register.isdesigner and LOWER(tag.name) LIKE LOWER('%%%s%%');"
+                            % (item))
+                for row in cur:
+                    if row not in data:
+                        data.append(row)
+        # Not matching data logic
+        if not data:
+            with db.get_db_cursor() as cur:
+                cur.execute("SELECT register.avator, register.name, post.post_id, post.title, post.content, post.status, post.time, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE NOT register.isdesigner;")
                 for row in cur:
                     if row not in data:
                         data.append(row)
 
-    return render_template("search.html", type=type, data=data)
+    # else:
+    #     # get search type, '0' for team search '1' for client search
+    #     type = request.form.get("type")
+    #     # store db query results
+    #     data = []
 
+    #     # team search logic
+    #     if type == '0':
+    #         with db.get_db_cursor() as cur:
+    #             cur.execute(
+    #                 "SELECT post.post_id, post.title, post.content, post.status, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE register.isdesigner;")
+    #             for row in cur:
+    #                 if row not in data:
+    #                     data.append(row)
+    #     # client search
+    #     if type == '1':
+    #         with db.get_db_cursor() as cur:
+    #             cur.execute(
+    #                 "SELECT post.post_id, post.title, post.content, post.status, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE NOT register.isdesigner;")
+    #             for row in cur:
+    #                 if row not in data:
+    #                     data.append(row)
+
+    numberOfType = countPost()
+    numberOfTime = countTime()
+    numberOfSize = countTime()
+
+    return render_template("search.html", type=type, data=data, numberOfType=numberOfType, numberOfSize=numberOfSize, numberOfTime=numberOfTime)
+
+@app.route('/searchteam')
+def searchteam():
+    data = []
+    with db.get_db_cursor() as cur:
+                cur.execute("SELECT register.avator, register.name, post.post_id, post.title, post.content, post.status, post.time, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE register.isdesigner;")
+                for row in cur:
+                    if row not in data:
+                        data.append(row)
+
+    numberOfType = countPost()
+
+    return render_template("search.html", data=data, numberOfType=numberOfType)
+
+@app.route('/searchclient')
+def searchclient():
+    data = []
+    with db.get_db_cursor() as cur:
+                cur.execute("SELECT register.avator, register.name, post.post_id, post.title, post.content, post.status, post.time, post.location, post.budget FROM post INNER JOIN register ON post.publisher_id=register.id WHERE NOT register.isdesigner;")
+                for row in cur:
+                    if row not in data:
+                        data.append(row)
+
+    numberOfType = countPost()
+
+    return render_template("search.html", data=data, numberOfType=numberOfType)
 
 @app.route('/post_info/<int:post_id>')
 def post_info(post_id):
@@ -345,18 +401,20 @@ def post_info(post_id):
         # might be useful to also/instead save the file extension or mime type
         cur.execute("SELECT * FROM post where post_id=%s;",
                     (post_id,))
-        user_id_res = [record["publisher_id"] for record in cur]
-        post_title_res = [record["title"] for record in cur]
-        post_time_res = [record["time"] for record in cur]
-        post_content_res = [record["content"] for record in cur]
-        # post_status_res = [record["status"] for record in cur]
-        post_location_res = [record["location"] for record in cur]
-        post_budget_res = [record["budget"] for record in cur]
-        post_area_res = [record["area"] for record in cur]
-        # post_tag_id_res = [record["tag_id"] for record in cur]
-        post_saved_times_res = [record["saved_times"] for record in cur]
-        post_closed_res = [record["closed"] for record in cur]
-        post_views_res = [record["views"] for record in cur]
+        postArray = [dict((cur.description[i][0], value) \
+               for i, value in enumerate(row)) for row in cur.fetchall()]
+        # user_id_res = [record["publisher_id"] for record in cur]
+        # post_title_res = [record["title"] for record in cur]
+        # post_time_res = [record["time"] for record in cur]
+        # post_content_res = [record["content"] for record in cur]
+        # # post_status_res = [record["status"] for record in cur]
+        # post_location_res = [record["location"] for record in cur]
+        # post_budget_res = [record["budget"] for record in cur]
+        # post_area_res = [record["area"] for record in cur]
+        # # post_tag_id_res = [record["tag_id"] for record in cur]
+        # post_saved_times_res = [record["saved_times"] for record in cur]
+        # post_closed_res = [record["closed"] for record in cur]
+        # post_views_res = [record["views"] for record in cur]
 
         cur.execute("SELECT * FROM post_tag where post_id=%s;",
                     (post_id,))
@@ -366,34 +424,64 @@ def post_info(post_id):
                     (i,))
             tag_name=[record["name"] for record in cur]
             tags.append(tag_name[0])
+        cur.execute("SELECT count(reviewer_id) as count FROM review where post_id=%s;",
+                    (post_id,))
+        count_reviewer_id=[record["count"] for record in cur]
         cur.execute("SELECT * FROM review where post_id=%s;",
                     (post_id,))
-        post_comment_res=[record["comment"] for record in cur]
-        post_comment_time=[record["time"] for record in cur]
-        post_comment_reviewer_id=[record["reviewer_id"] for record in cur]
-        post_comment_rate=[record["rate"] for record in cur]
+        commentArray = [dict((cur.description[i][0], value) \
+               for i, value in enumerate(row)) for row in cur.fetchall()]
+        # post_comment_res=[record["comment"] for record in cur]
+        # post_comment_time=[record["time"] for record in cur]
+        # post_comment_reviewer_id=[record["reviewer_id"] for record in cur]
+        # post_comment_rate=[record["rate"] for record in cur]
+        if (count_reviewer_id[0]>0):
+            cur.execute("SELECT * FROM register where id=%s;",
+                        (commentArray[0]["reviewer_id"],))
+            commentArray_name_avator = [dict((cur.description[i][0], value) \
+               for i, value in enumerate(row)) for row in cur.fetchall()]
+            # post_comment_reviewer_name=[record["name"] for record in cur]
+            # post_comment_reviewer_avator=[record["avator"] for record in cur]
         cur.execute("SELECT * FROM register where id=%s;",
-                    (post_comment_reviewer_id,))
-        post_comment_reviewer_name=[record["name"] for record in cur]
-        post_comment_reviewer_avator=[record["avator"] for record in cur]
-        cur.execute("SELECT * FROM register where id=%s;",
-                    (user_id_res,))
-        post_user_name=[record["name"] for record in cur]
-        post_user_avator=[record["avator"] for record in cur]
-        post_user_phone=[record["phone"] for record in cur]
-        post_user_email=[record["email"] for record in cur]
-        post_user_id=[record["user_id"] for record in cur]
+                    (postArray[0]["publisher_id"],))
+        post_user_Array = [dict((cur.description[i][0], value) \
+               for i, value in enumerate(row)) for row in cur.fetchall()]
+        # post_user_name=[record["name"] for record in cur]
+        # post_user_avator=[record["avator"] for record in cur]
+        # post_user_phone=[record["phone"] for record in cur]
+        # post_user_email=[record["email"] for record in cur]
+        # post_user_id=[record["user_id"] for record in cur]
 
-        cur.execute("SELECT * FROM picture where post_id=%s;",
+        cur.execute("SELECT picture_id FROM picture where post_id=%s;",
                     (post_id,))
-        post_pictures=[record["email"] for record in cur]
+        post_pictures=[record["picture_id"] for record in cur]
+        postArray[0]["views"]=postArray[0]["views"]+1
+        cur.execute("update post set views=%s where post_id=%s;",
+                        (postArray[0]["views"],post_id))
+        toemail = post_user_Array[0]["email"]
+        tophone = post_user_Array[0]["phone"]
+        if not toemail:
+            toemail = "no email avaliable"
+        if not tophone:
+            tophone = "no phone avaliable"
 
-    if 'profile' not in session:
-        return render_template("post_info.html",post_pictures=post_pictures, post_id_store=post_id,pop_login=0)
-    else:
-        if (session.get('profile').get('user_id')==post_user_id[0]):
-            closed_tag_visible=1
-        return render_template("post_info.html",post_pictures=post_pictures, post_id_store=post_id,pop_login=0,closed_tag_visible=1)
+        if 'profile' not in session:
+            return render_template("post_info.html",display_image=post_pictures[0], post_id_store=post_id,pop_login=0,post_title=postArray[0]["title"],
+                                    user_profile_image=post_user_Array[0]["avator"],user_name=post_user_Array[0]["name"],team_client_description=postArray[0]["content"],
+                                    tagArray=tags,phone = "log in to see", email = "log in to see",views=postArray[0]["views"],
+                                    saved_time=postArray[0]["saved_times"])
+        else:
+            if (session.get('profile').get('user_id')==post_user_Array[0]["user_id"]):
+                closed_tag_visible=1
+                return render_template("post_info.html",display_image=post_pictures[0], post_id_store=post_id,pop_login=0,post_title=postArray[0]["title"],
+                                         user_profile_image=post_user_Array[0]["avator"],user_name=post_user_Array[0]["name"],team_client_description=postArray[0]["content"],
+                                            closed_tag_visible=1,tagArray=tags,phone = tophone, email = toemail,views=postArray[0]["views"],
+                                    saved_time=postArray[0]["saved_times"])
+            else:
+                return render_template("post_info.html",display_image=post_pictures[0], post_id_store=post_id,pop_login=0,post_title=postArray[0]["title"],
+                                         user_profile_image=post_user_Array[0]["avator"],user_name=post_user_Array[0]["name"],team_client_description=postArray[0]["content"],
+                                            closed_tag_visible=0,tagArray=tags,phone = tophone, email = toemail,views=postArray[0]["views"],
+                                    saved_time=postArray[0]["saved_times"])
 
 @app.route('/post_info_upload/<int:post_id>',methods=['POST'])
 def post_info_upload(post_id):
@@ -409,42 +497,40 @@ def post_info_upload(post_id):
         # might be useful to also/instead save the file extension or mime type
         cur.execute("SELECT * FROM post where post_id=%s;",
                     (post_id,))
-        post_saved_times_res = [record["saved_times"] for record in cur]
-        post_closed_res = [record["closed"] for record in cur]
-        post_views_res = [record["views"] for record in cur]
-        user_id_res = [record["publisher_id"] for record in cur]
+        postArray = [dict((cur.description[i][0], value) \
+               for i, value in enumerate(row)) for row in cur.fetchall()]
+        # post_saved_times_res = [record["saved_times"] for record in cur]
+        # post_closed_res = [record["closed"] for record in cur]
+        # post_views_res = [record["views"] for record in cur]
+        # user_id_res = [record["publisher_id"] for record in cur]
         cur.execute("SELECT * FROM register where id=%s;",
-                    (user_id_res,))
+                    (postArray[0]["publisher_id"],))
         post_user_id=[record["user_id"] for record in cur]
 
 
-        post_views_res[0]=post_views_res[0]+1
+        # postArray[0]["views"]=postArray[0]["views"]+1
         # cur.execute("insert into post (saved_times,closed,views) values (%s,%s, %s)",
         #             (post_saved_times_res[0], post_closed_res[0], post_views_res[0]))
 
-
-
-    if 'profile' not in session:
-        return redirect(url_for("post_info",post_id=post_id,pop_login=1))
-    else:
-        if (saved_res==1):
-            post_saved_times_res[0]=post_saved_times_res[0]+1
-        if (closed_res==1 and session.get('profile').get('user_id')==post_user_id[0]):
-            post_closed_res[0]=True
-        cur.execute("insert into post (saved_times,closed,views) values (%s,%s, %s)",
-                    (post_saved_times_res[0], post_closed_res[0], post_views_res[0]))
-        cur.execute("SELECT * FROM register where user_id=%s;",
-                        (session.get('profile').get('user_id'),))
-        comment_user_id = [record["id"] for record in cur]
-        cur.execute("insert into review (reviewer_id,comment,time,rate,post_id) values (%s,%s,%s,%s,%s)",
-                    (comment_user_id[0], comment_content_res, dt, stars_res,post_id))
-        if (saved_res==1):
-            cur.execute("insert into post_saved (post_id,user_id) values (%s, %s)",
-                    (post_id, comment_user_id[0]))
-        return redirect(url_for("post_info",post_id=post_id,pop_login=0))
-
-
-
+        if 'profile' not in session:
+            return redirect(url_for("post_info",post_id=post_id,pop_login=1))
+        else:
+            if (saved_res==1):
+                postArray[0]["saved_times"]=postArray[0]["saved_times"]+1
+            if (closed_res==1 and session.get('profile').get('user_id')==post_user_id[0]):
+                postArray[0]["closed"]=True
+            cur.execute("update post set saved_times=%s,closed=%s where post_id=%s;",(postArray[0]["saved_times"], postArray[0]["closed"],post_id))
+            # cur.execute("insert into post (saved_times,closed) values (%s,%s)",
+            #             (postArray[0]["saved_times"], postArray[0]["closed"]))
+            cur.execute("SELECT * FROM register where user_id=%s;",
+                            (session.get('profile').get('user_id'),))
+            comment_user_id = [record["id"] for record in cur]
+            cur.execute("insert into review (reviewer_id,comment,time,rate,post_id) values (%s,%s,%s,%s,%s)",
+                        (comment_user_id[0], comment_content_res, dt, stars_res,post_id))
+            if (saved_res==1):
+                cur.execute("insert into post_saved (post_id,user_id) values (%s, %s)",
+                        (post_id, comment_user_id[0]))
+            return redirect(url_for("post_info",post_id=post_id,pop_login=0))
 
 @app.route('/selfie',methods=['POST'])
 def selfie():

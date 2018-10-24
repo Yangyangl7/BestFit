@@ -12,7 +12,6 @@
                         style="height:55px;border-radius: 0;border:0.5px solid rgba(0,0,0,0.1);z-index:0;box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);">
 
                     <span class="input-group-btn" id="select-box">
-
                         <select class="btn btn-default dropdown-toggle" name="type" aria-label="Example select with button addon">
                             <option selected value="0" style="position: absolute; top: 50px;">All Teams</option>
                             <option value="1">All Clients</option>
@@ -50,22 +49,14 @@
     <div class="container">
         <div class="row">
             <div class="col-md-2 col-sm-2" id="list-left" style="font-family: 'Raleway', sans-serif;padding-left:0">
-                <p style="font-size: 16px;font-weight: 700;letter-spacing: .04em;margin-bottom:10px; margin-top:8px">Team
+                <p style="font-size: 16px;font-weight: 700;letter-spacing: .04em;margin-bottom:10px; margin-top:8px">Tag
                     Categories</p>
                 <ul style="padding-left:0" id="cat-list">
-                    <li class="list-item">Building Designers<i class="fa fa-caret-up close-list1" aria-hidden="true"
-                            style="cursor: pointer;"></i><i class="fa fa-caret-down open-list1" aria-hidden="true"
-                            style="display: none; cursor: pointer;"></i><span>(12)</span></li>
-                    <ul class="sub-list" id="building-designer-list">
-                        <li><a href="">3D Rendering</a></li>
-                        <li><a href="">Architectural Design</a></li>
-                        <li><a href="">Bathroom Design</a></li>
-                        <li><a href="">Kitchen Design</a></li>
-                        <li><a href="">Space Planning</a></li>
-                        <li><a href="">Site Analysis & Design</a></li>
-                        <li><a href="">Structural Engineering</a></li>
-                    </ul>
+                    {% for item in numberOfType %}
+                    <li class="list-item">{{item[0]}}<span>({{item[1]}})</span></li>
+                    {% endfor %}
 
+                    <!-- 
                     <li class="list-item">Home Builders<i class="fa fa-caret-up close-list2" aria-hidden="true" style="cursor: pointer;display: none"></i><i
                             class="fa fa-caret-down open-list2" aria-hidden="true" style="cursor: pointer;"></i><span>(12)</span></li>
                     <ul class="sub-list" id="home-builder-list" style="display: none;">
@@ -110,18 +101,16 @@
                         <li><a href="">Custom Water Features</a></li>
                         <li><a href="">Garden Design</a></li>
                         <li><a href="">Hardscaping</a></li>
-                    </ul>
+                    </ul> -->
                 </ul>
 
                 <hr style="width:60%;float: left;"><br><br>
 
                 <p class="start-time" style="margin: 6px 10px 6px 0px; font-size:14px; font-weight: 600;">Start Time</p>
                 <ul class="filter-checkbox" style="padding-left:0; line-height: 2.2em; color: rgba(0, 0, 0, 0.5);">
-                    <li><input type="checkbox" name="start_time" value="">Timing Is Flexible<span>(12)</span></li>
-                    <li><input type="checkbox" name="start_time" value="">Within A Week<span>(12)</span></li>
-                    <li><input type="checkbox" name="start_time" value="">Within A Month<span>(12)</span></li>
-                    <li><input type="checkbox" name="start_time" value="">Within Six Months<span>(12)</span></li>
-                    <li><input type="checkbox" name="start_time" value="">Within A Year<span>(12)</span></li>
+                    {% for item in numberOfTime %}
+                    <li class="list-item">>{{numberOfTime[0]}}<span>{{numberOfTime[1]}}</span></li>
+                    {% endfor %}
                 </ul>
 
                 <hr style="width:60%;float: left;"><br><br>
@@ -129,12 +118,9 @@
                 <p class="project-size" style="margin: 6px 10px 6px 0px; font-size:14px; font-weight: 600;">Square
                     Footage Of Project</p>
                 <ul class="filter-checkbox" style="padding-left:0; line-height: 2.2em; color: rgba(0, 0, 0, 0.5);">
-                    <li><input type="checkbox" name="project_size" value="">Less than 500<span>(12)</span></li>
-                    <li><input type="checkbox" name="project_size" value="">500-1000<span>(12)</span></li>
-                    <li><input type="checkbox" name="project_size" value="">1000-2000<span>(12)</span></li>
-                    <li><input type="checkbox" name="project_size" value="">2000-3000<span>(12)</span></li>
-                    <li><input type="checkbox" name="project_size" value="">3000-4000<span>(12)</span></li>
-                    <li><input type="checkbox" name="project_size" value="">More than 4000<span>(12)</span></li>
+                    {% for item in numberOfTime %}
+                    <li class="list-item">>{{numberOfSize[0]}}<span>{{numberOfSize[1]}}</span></li>
+                    {% endfor %}
                 </ul>
 
                 <hr style="width:60%;float: left;"><br><br>
@@ -201,7 +187,7 @@
             <!-- Show Post -->
             <div class="col-md-10 col-sm-10 show-post" style="padding-left:20px;">
                 <div id="search-result-wrapper" style="vertical-align: middle; padding-left:5px; padding-right:5px">
-                    <h4 style="display:inline-block;">Found 1234 results for keyword</h4>
+                    <h4 style="display:inline-block;">Found {{data|length}} results for keyword</h4>
                     <select name="sortBy" style="display:inline-block; color:rgba(0,0,0,0.5); float:right;">
                         <option value="">Relevance</option>
                         <option value="">Newest Arrivals</option>
@@ -222,8 +208,8 @@
                                     alt="post1">
                                 <div class="caption">
                                     <ul style="padding-left:0">
-                                        <li style="display: inline-block; vertical-align: middle"><img src="{{item[1]}}"
-                                                alt="client photo" style="max-width:36px;border-radius: 50%;display: inline-block;"></li>
+                                        <li style="display: inline-block; vertical-align: middle"><img src="{{item[0]}}"
+                                                alt="client photo" style="width:33px;height: 33px;border-radius: 50%;display: inline-block;"></li>
                                         <ul style="display: inline-block; vertical-align: middle;padding-left:10px">
                                             <li style="list-style-type:none;font-weight: 600;font-size:13px">garycorr</li>
                                             <li style="list-style-type:none;color:rgba(0,0,0,0.3);font-size:11px">Sep
@@ -233,7 +219,7 @@
                                     </ul>
                                     <h3 class="post-title" style="font-weight: 700;font-size:14px;overflow: hidden;white-space: nowrap;
                             text-overflow: ellipsis;max-height: 30px;">
-                                        {{item[0]}}</h3>
+                                        {{item[1]}}</h3>
                                     <p style="max-height:57px; font-size:12px; overflow: hidden;text-overflow: ellipsis;display: -webkit-box; -webkit-line-clamp: 2;
                             -webkit-box-orient: vertical;">Cras
                                         justo odio, dapibus ac facilisis in, egestas
@@ -296,6 +282,7 @@
 
 {% for item in data%}
 
+<p>{{numberOfType}}</p>
 <p>{{item[0]}}</p>
 <img src={{item[1]}}>
 

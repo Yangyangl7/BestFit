@@ -10,30 +10,30 @@
 
 <div class="box" style="padding: 20px 80px; color: #fff; font-family: 'Open Sans', sans-serif;letter-spacing: 0.01em">
     <div>
-        <h3 style="font-size: 28px;font-weight: 600;">A Place To Browse And Share</h3>
-        <p style="font-weight: 200;">We focuse on providing fully-fledged websites based on
-            your branding requirements.</p>
+        <h3 style="font-size: 28px;font-weight: 600;">{{post_title}}</h3>
+        <p style="font-weight: 200;">We focuse on providing functional architectural design worthy home based on
+            your requirements.</p>
         <!-- <hr WIDTH=auto ALIGN="center"> -->
     </div>
     <p style="margin-top:50px; margin-left:3px;">
         <!-- &nbsp &nbsp &nbsp &nbsp &nbsp  -->
         <!-- <img src="static/img/post/default_user_icon.png" alt="default user" height="24" width="24">  -->
         <ul style="padding-left:0">
-            <li style="display: inline-block; vertical-align: middle"><img src="https://images.unsplash.com/profile-1491574953230-a12e6d92ce4b?dpr=2&auto=format&fit=crop&w=128&h=128&q=60&crop=faces&bg=fff"
-                    alt="client photo" style="max-width:36px;border-radius: 50%;display: inline-block;"></li>
+            <li style="display: inline-block; vertical-align: middle"><img src="{{user_profile_image}} " alt="client photo"
+                    style="width:36px; height:36px; border-radius: 50%;display: inline-block;"></li>
             <ul style="display: inline-block; vertical-align: middle;padding-left:10px">
-                <li style="list-style-type:none;font-weight: 600;font-size:13px">Mandrrew</li>
-                <li style="list-style-type:none;color:rgba(225,225,225,0.8);font-size:11px;font-weight: 300;">Web
-                    Development Team</li>
+                <li style="list-style-type:none;font-weight: 600;font-size:13px">{{user_name}}</li>
+                <li style="list-style-type:none;color:rgba(225,225,225,0.8);font-size:11px;font-weight: 300;">Home
+                    Designer</li>
             </ul>
             <span style="margin-left: 90px;margin-top:10px;font-size: 12px;">
                 <span class="glyphicon glyphicon-eye-open" style="border:1px solid rgba(225,225,225,0.8);border-radius:50%;padding:8px;"></span>&nbsp
                 &nbsp
-                <span style="font-weight: 300; color:rgba(225,225,225,0.8)">34 views</span>
+                <span style="font-weight: 300; color:rgba(225,225,225,0.8)">{{views}} views</span>
                 &nbsp &nbsp
                 <span class="fa fa-heart" style="border:1px solid rgba(225,225,225,0.8);border-radius:50%;padding:8px;"></span>&nbsp
                 &nbsp
-                <span style="font-weight: 300;color:rgba(225,225,225,0.8)">20 Times Saved</span>
+                <span style="font-weight: 300;color:rgba(225,225,225,0.8)">{{saved_time}} Times Saved</span>
                 &nbsp &nbsp
                 <span class="fa fa-star" style="border:1px solid rgba(225,225,225,0.8);border-radius:50%;padding:8px;"></span>&nbsp
                 &nbsp
@@ -97,8 +97,7 @@
                     <!-- </div> -->
 
                     <div class="">
-                        <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ba2b9dcc1af593a7d93ed9b4ed952ac&auto=format&fit=crop&w=1053&q=80"
-                            alt="Kitchen" style="height: 400px; width:100%;">
+                        <img src="/img/{{display_image}}" alt="display" style="height: 400px; width:100%;">
                         <!-- <div class="carousel-caption">
               <h3>Kitchen planning</h3>
               <p>Simple design</p>
@@ -126,22 +125,14 @@
                             data-toggle="tab" style="padding: 10px">ABOUT ME</a></li>
                     <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab"
                             style="padding: 10px">GENERAL INFO</a></li>
-                    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab"
-                            style="padding: 10px">OTHER INFO</a></li>
+                    <!-- <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab"
+                            style="padding: 10px">OTHER INFO</a></li> -->
                 </ul>
 
                 <!-- Tab panes -->
-<<<<<<< HEAD
                 <div class="tab-content" style="padding:15px 12px 20px 12px">
-=======
-                <div class="tab-content" style="padding:8px 8px 30px 8px">
->>>>>>> a62e612b4a4a64c9bb91265750f2d4ad5614398b
                     <div role="tabpanel" class="tab-pane active" id="profile">
-                        <P>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua. Ut enim ad minim veniam. Lorem ipsum dolor sit amet,
-                            consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                            do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.</P>
+                        <P>{{about_me}}</P>
 
                         <button onclick="myFunction('myDIV')" style="margin:15px auto;background-color: transparent;border: none;color:#eac71f;font-weight: 600;outline:none;">+
                             Show more</button>
@@ -149,15 +140,15 @@
                         <div id="myDIV" style="display:none">
                         </div>
                         <div style="height:60px; text-align: center;margin-top:30px" class="contact-button">
-                            <button type="button" class="btn btn-primary" style="border-radius: 50px; background-color: transparent;color:#eac71f;border: 1px solid #eac71f; outline:none;margin-right:20px;padding:10px 20px;">Contact
+                            <button type="button" onclick='alert("email:"  + "{{email}}" + "         phone: "  + "{{phone}}")'
+                                class="btn btn-primary" style="border-radius: 50px; background-color: transparent;color:#eac71f;border: 1px solid #eac71f; outline:none;margin-right:20px;padding:10px 20px;">Contact
                                 Me</button>
                             <button type="button" class="btn btn-primary" style="border-radius: 50px; background-color: transparent;color:#eac71f;border: 1px solid #eac71f; outline:none;margin-left:20px; padding:10px 18px;">Add
                                 To Saved</button>
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="messages">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua. Ut enim ad minim veniam. Lorem ipsum dolor sit amet</p>
+                        <p>{{my_general_info}}</p>
                         <button onclick="myFunction('myDIV2')" style="margin:15px auto;background-color: transparent;border: none;color:#eac71f;font-weight: 600;outline:none;">+
                             Show more</button>
 
@@ -174,7 +165,7 @@
                                 To Saved</button>
                         </div>
                     </div>
-                    <div role="tabpanel" class="tab-pane" id="settings">
+                    <!-- <div role="tabpanel" class="tab-pane" id="settings">
                         <p>{{otherInfo}}</p>
                         <button onclick="myFunction('myDIV3')" style="margin:15px auto;background-color: transparent;border: none;color:#eac71f;font-weight: 600;outline:none;">+
                             Show more</button>
@@ -185,7 +176,7 @@
                             <button type="button" class="btn btn-primary btn-rounded" style="margin: -20px -50px; position:relative; top:50%; left:50%; border-radius: 25px; background-color: transparent;color:#eac71f;border-color: #eac71f; outline:none;">Contact
                                 Me</button>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
 
@@ -194,34 +185,18 @@
 
         <div class="aboutTheTeam col-lg-8" style="">
             <div class="well well-sm" id="description">Description</div>
-            <p style="padding: 10px 20px; font-family: 'Open Sans', sans-serif;font-size: 14px;"> Lorem ipsum dolor sit
-                amet, consectetur adipiscing elit, sed do eiusmod
-                tempor
-                incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim veniam. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim veniam. Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br><br>
-                Lorem ipsum dolor sit
-                amet, consectetur adipiscing elit, sed do eiusmod
-                tempor
-                incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim veniam. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim veniam. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </p>
+            <p style="padding: 10px 20px; font-family: 'Open Sans', sans-serif;font-size: 14px;">{{team_client_description}}</p>
             <hr style="border: none; border-top: 1px dotted #D8D8D8; width:400px; margin-left:20px;">
             <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit optio dolores quia quis minus harum repudiandae officia maxime accusamus modi voluptate repellendus laudantium, ullam ad voluptatum labore libero explicabo! Repudiandae.</p>
       <hr style="border: none; border-top: 1px dotted #D8D8D8;">
       <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Placeat vel maiores asperiores sed vero, voluptates laborum officiis blanditiis neque, nulla sit ut cum! Nisi, dolor. Iure incidunt non exercitationem pariatur?</p>
       <hr> -->
             <span class="post-tags" style="padding:0 20px;">
-                <button type="button" class="btn btn-primary">jquery</button>
+                {% for t in tagArray %}
+                <button type="button" class="btn btn-primary">{{t}}</button>
                 &nbsp;
-                <button type="button" class="btn btn-primary">php</button>
-                &nbsp;
-                <button type="button" class="btn btn-primary">javascript</button>
-                &nbsp;
-                <button type="button" class="btn btn-primary">nodejs</button>
+                {% endfor %}
+
             </span>
         </div>
 
@@ -233,7 +208,7 @@
                 <span class="glyphicon glyphicon-star"></span>&nbsp
                 <span class="glyphicon glyphicon-star"></span>&nbsp -->
                 4.0 (3)
-                <!-- 
+                <!--
                 <div class="dropdown" style="position: absolute; top:55px; right:15px;">
                     <button class="btn btn-default dropdown-toggle pull-right" type="button" id="dropdownMenu1"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="background-color: transparent;color:#eac71f;border-color: #eac71f;  outline:none;">
@@ -253,27 +228,32 @@
                 </select>
             </div>
             <hr WIDTH=auto ALIGN="center">
-            <p><img src="static/img/post/default_user_icon.png" alt="default user" height="24" width="24"> djrubb &nbsp
-                &nbsp <span class="glyphicon glyphicon-star"></span>&nbsp &nbsp 5.0
+            <p><img src="https://images.unsplash.com/photo-1519643225200-94e79e383724?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=57a962be8447ae8fbea351abe9262275&auto=format&fit=crop&w=1655&q=80"
+                    alt="default user" height="24" width="24" style="border-radius: 50px;"> &nbsp Hank &nbsp
+                &nbsp <span class="fa fa-star" style="color: #eac71f;font-size: 15px;"></span>&nbsp &nbsp 5.0
             </p>
-            <p style="margin-left: 3em;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse quisquam et
-                accusamus cupiditate quam a eius quibusdam, consequuntur sint, fugit eum hic voluptatibus doloribus id
-                repellat, voluptates eligendi dignissimos laudantium!</p>
+            <p style="margin-left: 3em;">Never having built a home, I needed lots of direction and advise. Everyone at
+                this team was helpful, knowledgable and professional. They made the building experience a
+                creative and rewarding one. Working with Divine was a delight. I highly recommend building a new home
+                with Divine Custom Homes!</p>
             <p style="margin-left: 3em;">Sep. 24th, 2018</p>
             <hr WIDTH=auto ALIGN="center">
-            <p><img src="static/img/post/default_user_icon.png" alt="default user" height="24" width="24"> djrubb &nbsp
-                &nbsp <span class="glyphicon glyphicon-star"></span>&nbsp &nbsp 4.0
+            <p><img src="https://images.unsplash.com/profile-1504195942065-4f5b12cec31d?dpr=2&auto=format&fit=crop&w=128&h=128&q=60&crop=faces&bg=fff"
+                    alt="default user" height="24" width="24" style="border-radius: 50px;"> &nbsp djrubb &nbsp
+                &nbsp <span class="fa fa-star" style="color: #eac71f;font-size: 15px;"></span>&nbsp &nbsp 4.0
             </p>
-            <p style="margin-left: 3em;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse quisquam et
-                accusamus cupiditate quam a eius quibusdam, consequuntur sint, fugit eum hic voluptatibus doloribus id
-                repellat, voluptates eligendi dignissimos laudantium!</p>
+            <p style="margin-left: 3em;">The entire team did an exceptional job of customizing
+                our home, staying in tune to changes that we made a long the way, keeping a clean job site from start
+                to finish and meeting with us in a timely manner every time we requested it. </p>
             <p style="margin-left: 3em;">Sep. 24th, 2018</p>
-            <p style="margin-left: 6em;"><img src="static/img/post/default_user_icon.png" alt="default user" height="24"
-                    width="24"> Mandrew
+            <br>
+            <p style="margin-left: 6em;"><img src="https://images.unsplash.com/profile-1523574273386-b6f06440d3ef?dpr=2&auto=format&fit=crop&w=128&h=128&q=60&crop=faces&bg=fff"
+                    alt="default user" height="24" width="24" style="border-radius: 50px;"> &nbsp Mandrew
             </p>
-            <p style="margin-left: 9em;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse quisquam et
-                accusamus cupiditate quam a eius quibusdam, consequuntur sint, fugit eum hic voluptatibus doloribus id
-                repellat, voluptates eligendi dignissimos laudantium!</p>
+            <p style="margin-left: 9em;">Working with
+                Divine was an incredible experience. The owners of Divine really know how to add the right elements
+                that turn a house into a home. They build a house that has tons of character and is well balanced. The
+                structure is solid and level. The trim work is well crafted and not chintzy by any means.</p>
             <p style="margin-left: 9em;">Sep. 24th, 2018</p>
 
         </div>
@@ -281,11 +261,11 @@
         <div class="comments col-lg-8" style="margin-top: 60px; margin-bottom: 60px;">
             <div class="well well-sm" id="comments">Comments</div>
             <p>
-                <img src="static/img/post/default_user_icon.png" alt="default user" height="24" width="24">
+                <!-- <img src="static/img/post/default_user_icon.png" alt="default user" height="24" width="24"> -->
                 <form>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="usr" placeholder="Add a comment...">
-                        <button type="button" class="btn btn-primary" style="margin:10px; position: absolute; right:0;">Comment</button>
+                        <input type="text" class="form-control" id="usr" placeholder="Add a comment..." style="height: 80px;">
+                        <button type="button" class="btn btn-primary" style="margin:10px; position: absolute; right:0; background-color: #eac71f; border-radius: 50px;border-color: #eac71f;">Comment</button>
                     </div>
                 </form>
             </p>
@@ -303,7 +283,7 @@
                         <ul class="scrolling-post" style="padding-left:15px;">
                             <li>
                                 <p style="font-size:20px;font-weight: bold;list-style-type:none;text-transform: uppercase">Other
-                                    Posts By Mandrew</p>
+                                    Posts By {{user}}</p>
                             </li>
                             <li style="float:right;margin-right: 20px;padding-top: 3px;">
                                 <!-- <p><a href="" style="text-decoration:none;list-style-type:none;">View
@@ -323,8 +303,8 @@
                                     <div class="thumbnail">
                                         <img src="https://images.unsplash.com/photo-1501876725168-00c445821c9e?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=2a1a9a1d07a8a1cb53aa3686da2ef497&auto=format&fit=crop&w=2550&q=80"
                                             alt="post1">
-                                        <div class="caption">
-                                            <ul style="padding-left:0">
+                                        <div class="caption" style="padding:3px 10px;">
+                                            <!-- <ul style="padding-left:0">
                                                 <li style="display: inline-block; vertical-align: middle"><img src="https://images.unsplash.com/profile-1494048768229-78000599369d?dpr=2&auto=format&fit=crop&w=128&h=128&q=60&crop=faces&bg=fff"
                                                         alt="client photo" style="max-width:36px;border-radius: 50%;display: inline-block;"></li>
                                                 <ul style="display: inline-block; vertical-align: middle;padding-left:10px">
@@ -333,10 +313,10 @@
                                                         24th,
                                                         2018</li>
                                                 </ul>
-                                            </ul>
-                                            <!-- <h3 class="post-title" style="font-weight: 700;font-size:16px;overflow: hidden;white-space: nowrap;
+                                            </ul> -->
+                                            <h3 class="post-title" style="font-weight: 600;font-size:13px;overflow: hidden;white-space: nowrap;
                                 text-overflow: ellipsis;max-height: 30px;">Need
-                                                Interior Designers</h3> -->
+                                                Interior Designers</h3>
                                             <p style="max-height:57px; font-size:13px; overflow: hidden;text-overflow: ellipsis;display: -webkit-box; -webkit-line-clamp: 2;
                                 -webkit-box-orient: vertical;">Cras
                                                 justo odio, dapibus ac facilisis in, egestas
@@ -364,8 +344,8 @@
                                     <div class="thumbnail">
                                         <img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=4d2529242e0b4fadad755467e572682a&auto=format&fit=crop&w=2855&q=80"
                                             alt="post1">
-                                        <div class="caption">
-                                            <ul style="padding-left:0">
+                                        <div class="caption" style="padding:3px 10px;">
+                                            <!-- <ul style="padding-left:0">
                                                 <li style="display: inline-block; vertical-align: middle"><img src="https://images.unsplash.com/profile-1491574953230-a12e6d92ce4b?dpr=2&auto=format&fit=crop&w=128&h=128&q=60&crop=faces&bg=fff"
                                                         alt="client photo" style="max-width:36px;border-radius: 50%;display: inline-block;"></li>
                                                 <ul style="display: inline-block; vertical-align: middle;padding-left:10px">
@@ -374,10 +354,10 @@
                                                         24th,
                                                         2018</li>
                                                 </ul>
-                                            </ul>
-                                            <!-- <h3 class="post-title" style="font-weight: 700;font-size:16px;overflow: hidden;white-space: nowrap;
+                                            </ul> -->
+                                            <h3 class="post-title" style="font-weight: 600;font-size:13px;overflow: hidden;white-space: nowrap;
                                     text-overflow: ellipsis;max-height: 30px;">Need
-                                                Kitchen Remodelers</h3> -->
+                                                Kitchen Remodelers</h3>
                                             <p style="max-height:57px; font-size:13px; overflow: hidden;text-overflow: ellipsis;display: -webkit-box; -webkit-line-clamp: 2;
                                     -webkit-box-orient: vertical;">Cras
                                                 justo odio, dapibus ac facilisis in, egestas
