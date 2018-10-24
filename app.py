@@ -361,9 +361,9 @@ def post_info(post_id):
         post_comment_time=[record["time"] for record in cur]
         post_comment_reviewer_id=[record["reviewer_id"] for record in cur]
         post_comment_rate=[record["rate"] for record in cur]
-        if (not post_comment_reviewer_id):
+        if (len(post_comment_reviewer_id)>0):
             cur.execute("SELECT * FROM register where id=%s;",
-                        (post_comment_reviewer_id,))
+                        (post_comment_reviewer_id[0],))
             post_comment_reviewer_name=[record["name"] for record in cur]
             post_comment_reviewer_avator=[record["avator"] for record in cur]
         cur.execute("SELECT * FROM register where id=%s;",
