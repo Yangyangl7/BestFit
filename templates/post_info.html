@@ -191,13 +191,11 @@
       <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Placeat vel maiores asperiores sed vero, voluptates laborum officiis blanditiis neque, nulla sit ut cum! Nisi, dolor. Iure incidunt non exercitationem pariatur?</p>
       <hr> -->
             <span class="post-tags" style="padding:0 20px;">
-                <button type="button" class="btn btn-primary">jquery</button>
+              {% for t in tagArray %}
+                <button type="button" class="btn btn-primary">{{t}}</button>
                 &nbsp;
-                <button type="button" class="btn btn-primary">php</button>
-                &nbsp;
-                <button type="button" class="btn btn-primary">javascript</button>
-                &nbsp;
-                <button type="button" class="btn btn-primary">nodejs</button>
+              {% endfor %}
+
             </span>
         </div>
 
@@ -209,7 +207,7 @@
                 <span class="glyphicon glyphicon-star"></span>&nbsp
                 <span class="glyphicon glyphicon-star"></span>&nbsp -->
                 4.0 (3)
-                <!-- 
+                <!--
                 <div class="dropdown" style="position: absolute; top:55px; right:15px;">
                     <button class="btn btn-default dropdown-toggle pull-right" type="button" id="dropdownMenu1"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="background-color: transparent;color:#eac71f;border-color: #eac71f;  outline:none;">
