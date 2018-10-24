@@ -40,15 +40,6 @@ body {
   /* Gecko Browsers */
 }
 
-a {
-  color: unset;
-}
-
-a:hover,
-a:focus {
-  text-decoration: none;
-  color: unset;
-}
 
 /* ====================================
                Content Boxes
@@ -1542,4 +1533,14 @@ nav.change-page {
   padding: 10px;
   background-color: white;
   display: none;
+}
+
+a {
+  color: unset;
+}
+
+a:hover,
+a:focus {
+  text-decoration: none;
+  color: unset;
 }
