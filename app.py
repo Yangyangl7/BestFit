@@ -95,8 +95,6 @@ def callback_handling():
     return redirect('/')
 
 # Auth0 Login
-
-
 @app.route('/login')
 def login():
     return auth0.authorize_redirect(redirect_uri=os.environ['AUTH0_CALLBACK_URL'], audience='https://' + os.environ['AUTH0_DOMAIN']+'/userinfo')
