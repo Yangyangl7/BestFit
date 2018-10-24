@@ -176,35 +176,7 @@ def profile():
             print(error)
     return render_template('profile.html',userInfo=userArray[0], tagInfo = tagArray, postInfo = postArray )
 
-    with db.get_db_cursor() as cur:
-        tagsql = "select * from tag limit 40;";
-        usersql = "select * from register where id = 4;";
-
-        try:
-            postsql = "select * from post where publisher_id = 15 order by time DESC;";
-            # Build tag array
-            cur.execute(tagsql);
-            tagArray = [dict((cur.description[i][0], value) \
-               for i, value in enumerate(row)) for row in cur.fetchall()]
-            print(tagArray)
-
-            #  Build users array
-            cur.execute(usersql)
-            userArray = [dict((cur.description[i][0], value) \
-               for i, value in enumerate(row)) for row in cur.fetchall()]
-            # print(str(userArray[0]))
-
-
-            cur.execute(postsql)
-            postArray = [dict((cur.description[i][0], value) \
-               for i, value in enumerate(row)) for row in cur.fetchall()]
-            # print(str(postArray))
-
-
-
-        except (Exception, psycopg2.DatabaseError) as error:
-            print(error)
-    return render_template('profile.html',userInfo=userArray[0], tagInfo = tagArray, postInfo = postArray )
+    
 
 
 
@@ -470,7 +442,7 @@ def post_info_upload(post_id):
         if (saved_res==1):
             cur.execute("insert into post_saved (post_id,user_id) values (%s, %s)",
                     (post_id, comment_user_id[0]))
-        #return render_template("post_info.html")
+        return redirect(url_for("post_info",post_id=post_id,pop_login=0))
 
 
 
