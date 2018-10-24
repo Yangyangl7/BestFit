@@ -34,7 +34,7 @@ def countPost():
     numberOfType = []
 
     with db.get_db_cursor() as cur:
-        cur.execute("SELECT count(tag.tag_id) as numberOfType from post_tag INNER JOIN tag ON post_tag.tag_id = tag.tag_id;")
+        cur.execute("SELECT tag.name, count(tag.name) as numberOfType from post_tag INNER JOIN tag ON post_tag.tag_id = tag.tag_id GROUP BY tag.type;")
         for row in cur:
             if row not in numberOfType:
                 numberOfType.append(row)

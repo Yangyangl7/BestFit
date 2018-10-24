@@ -52,19 +52,13 @@
                 <p style="font-size: 16px;font-weight: 700;letter-spacing: .04em;margin-bottom:10px; margin-top:8px">Team
                     Categories</p>
                 <ul style="padding-left:0" id="cat-list">
-                    <li class="list-item">Building Designers<i class="fa fa-caret-up close-list1" aria-hidden="true"
+                    {% for item in numberOfType %}
+                    <li class="list-item">{{item[0]}}<i class="fa fa-caret-up close-list1" aria-hidden="true"
                             style="cursor: pointer;"></i><i class="fa fa-caret-down open-list1" aria-hidden="true"
-                            style="display: none; cursor: pointer;"></i><span>(12)</span></li>
-                    <ul class="sub-list" id="building-designer-list">
-                        <li><a href="">3D Rendering</a></li>
-                        <li><a href="">Architectural Design</a></li>
-                        <li><a href="">Bathroom Design</a></li>
-                        <li><a href="">Kitchen Design</a></li>
-                        <li><a href="">Space Planning</a></li>
-                        <li><a href="">Site Analysis & Design</a></li>
-                        <li><a href="">Structural Engineering</a></li>
-                    </ul>
-
+                            style="display: none; cursor: pointer;"></i><span>{{item[1]}}</span></li>
+                    {% endfor %}
+                    
+<!-- 
                     <li class="list-item">Home Builders<i class="fa fa-caret-up close-list2" aria-hidden="true" style="cursor: pointer;display: none"></i><i
                             class="fa fa-caret-down open-list2" aria-hidden="true" style="cursor: pointer;"></i><span>(12)</span></li>
                     <ul class="sub-list" id="home-builder-list" style="display: none;">
@@ -109,7 +103,7 @@
                         <li><a href="">Custom Water Features</a></li>
                         <li><a href="">Garden Design</a></li>
                         <li><a href="">Hardscaping</a></li>
-                    </ul>
+                    </ul> -->
                 </ul>
 
                 <hr style="width:60%;float: left;"><br><br>
@@ -200,7 +194,7 @@
             <!-- Show Post -->
             <div class="col-md-10 col-sm-10 show-post" style="padding-left:20px;">
                 <div id="search-result-wrapper" style="vertical-align: middle; padding-left:5px; padding-right:5px">
-                    <h4 style="display:inline-block;">Found 1234 results for keyword</h4>
+                    <h4 style="display:inline-block;">Found {{data|length}} results for keyword</h4>
                     <select name="sortBy" style="display:inline-block; color:rgba(0,0,0,0.5); float:right;">
                         <option value="">Relevance</option>
                         <option value="">Newest Arrivals</option>
