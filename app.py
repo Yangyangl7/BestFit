@@ -158,10 +158,17 @@ def profile():
             postArray = [dict((cur.description[i][0], value)
                               for i, value in enumerate(row)) for row in cur.fetchall()]
             # print(str(postArray))
+            
 
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
+<<<<<<< HEAD
     return render_template('profile.html', userInfo=userArray[0], tagInfo=tagArray, postInfo=postArray)
+=======
+    return render_template('profile.html',userInfo=userArray[0], tagInfo = tagArray, postInfo = [] )
+
+
+>>>>>>> 92319d4b5339d08cbb366b218541689c34453ab3
 
 
 # upload imaage into data base
