@@ -65,7 +65,7 @@
 
                                 {% if session['profile'] is defined %}
                                 <li><a class="" href="{{ url_for("logout") }}">LOGOUT</a></li>
-                                <li><a class="" href="{{ url_for("profile") }}" style="color: #eac71f">PROFILE<a></li>
+                                <li><a class="" href="{{ url_for("profile") }}">PROFILE<a></li>
                                 {% else %}
                                 <li><a class="" href="{{ url_for("login") }}" id="sign-up">SIGN UP/LOG IN</a>
                                 <li>
