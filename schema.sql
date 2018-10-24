@@ -18,7 +18,7 @@ create table register_tag (
 	id SERIAL PRIMARY KEY,
     register_id int references register,
     tag_id int references tag
-)
+);
 
 create table tag (
 	tag_id SERIAL PRIMARY KEY,
@@ -55,7 +55,7 @@ create table post_saved(
 	saved_id SERIAL PRIMARY KEY,
 	post_id int references post,
 	user_id int references register
-)
+);
 
 create table review (
 	review_id SERIAL PRIMARY KEY,
