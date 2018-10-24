@@ -64,11 +64,11 @@
                                 <li><a class="smooth-scroll" href="#howItWorks">HOW IT WORKS</a></li>
 
                                 <form method="get" action="/search">
-                                    <input type="hidden" id="type" value="0">
+                                    <input name="type" type="hidden" id="type" value="0">
                                     <li><a href="{{ url_for("search") }}" type="submit">FIND TEAMS</a></li>
                                 </form>
                                 <form method="get" action="/search">
-                                    <input type="hidden" id="type" value="1">
+                                    <input name="type" type="hidden" id="type" value="1">
                                     <li><a href="{{ url_for("search") }}" type="submit">FIND CLIENTS</a></li>
                                 </form>                                            
 
