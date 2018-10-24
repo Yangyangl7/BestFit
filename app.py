@@ -379,7 +379,7 @@ def post_info(post_id):
         
         cur.execute("SELECT * FROM picture where post_id=%s;",
                     (post_id,))
-        post_pictures=[record["email"] for record in cur]
+        post_pictures=[record["picture_id"] for record in cur]
 
     if 'profile' not in session:
         return render_template("post_info.html",post_pictures=post_pictures, post_id_store=post_id,pop_login=0)
