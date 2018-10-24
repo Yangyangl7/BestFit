@@ -272,7 +272,7 @@ def serve_img(img_id):
             stream,
             attachment_filename="pic")
 
-@app.route('/search', methods=['POST'])
+@app.route('/search', methods=['POST', 'GET'])
 def search():
     if request.method == 'POST':
         # get search type, '0' for team search '1' for client search
