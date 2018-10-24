@@ -53,7 +53,7 @@
                     Categories</p>
                 <ul style="padding-left:0" id="cat-list">
                     {% for item in numberOfType %}
-                    <li class="list-item">{{item[0]}}<span>({{item[1]}})</span></li>
+                    <li class="list-item">{{item[0]}}<span>{{item[1]}}</span></li>
                     {% endfor %}
 
                     <!-- 
@@ -107,9 +107,9 @@
                 <hr style="width:60%;float: left;"><br><br>
 
                 <p class="start-time" style="margin: 6px 10px 6px 0px; font-size:14px; font-weight: 600;">Start Time</p>
-                <ul class="filter-checkbox" style="padding-left:0; line-height: 2.2em; color: rgba(0, 0, 0, 0.5);">
+                <ul style="padding-left:0" id="cat-list">
                     {% for item in numberOfTime %}
-                    <li class="list-item">>{{numberOfTime[0]}}<span>{{numberOfTime[1]}}</span></li>
+                    <li class="list-item">{{item[0]}}<span>{{item[1]}}</span></li>
                     {% endfor %}
                 </ul>
 
@@ -117,9 +117,9 @@
 
                 <p class="project-size" style="margin: 6px 10px 6px 0px; font-size:14px; font-weight: 600;">Square
                     Footage Of Project</p>
-                <ul class="filter-checkbox" style="padding-left:0; line-height: 2.2em; color: rgba(0, 0, 0, 0.5);">
-                    {% for item in numberOfTime %}
-                    <li class="list-item">>{{numberOfSize[0]}}<span>{{numberOfSize[1]}}</span></li>
+                <ul style="padding-left:0" id="cat-list">
+                    {% for item in numberOfSize %}
+                    <li class="list-item">{{item[0]}}<span>{{item[1]}}</span></li>
                     {% endfor %}
                 </ul>
 
@@ -202,7 +202,7 @@
                     <!-- {% if loop.index0 % 3 == 0 %} -->
                     <div class="col-lg-3 col-md-4 col-sm-6" style="margin-top:20px; padding-left:5px; padding-right:5px;">
                         <!-- {% endif %} -->
-                        <a href="" style="text-decoration:none;" class="scrolling-post-content">
+                        <a href="https://enigmatic-citadel-11799.herokuapp.com/post_info/{{item[2]}}" style="text-decoration:none;" class="scrolling-post-content">
                             <div class="thumbnail">
                                 <img src="https://images.unsplash.com/photo-1519974719765-e6559eac2575?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=4ff6057dcdea838163d82bc2a52d5679&auto=format&fit=crop&w=1650&q=80"
                                     alt="post1">
@@ -211,7 +211,7 @@
                                         <li style="display: inline-block; vertical-align: middle"><img src="{{item[0]}}"
                                                 alt="client photo" style="width:33px;height: 33px;border-radius: 50%;display: inline-block;"></li>
                                         <ul style="display: inline-block; vertical-align: middle;padding-left:10px">
-                                            <li style="list-style-type:none;font-weight: 600;font-size:13px">garycorr</li>
+                                            <li style="list-style-type:none;font-weight: 600;font-size:13px">{{item[3]}}</li>
                                             <li style="list-style-type:none;color:rgba(0,0,0,0.3);font-size:11px">Sep
                                                 24th,
                                                 2018</li>
@@ -280,7 +280,7 @@
 </section>
 
 
-{% for item in data%}
+<!-- {% for item in data%}
 
 <p>{{numberOfType}}</p>
 <p>{{item[0]}}</p>
@@ -291,7 +291,7 @@
 
 <p>{{type}}</p>
 
-<p>{{data}}</p>
+<p>{{data}}</p> -->
 
 
 {% endblock %}
