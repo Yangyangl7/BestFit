@@ -162,8 +162,19 @@
               <img src="https://images.vexels.com/media/users/3/147752/isolated/preview/1fa075b761f0e6cd38181d9af310ff86-digital-camera-icon-by-vexels.png"
                 style="height:20px; width: 20px;">
               <div style="display:inline-block; vertical-align: middle;margin:5px;
-                margin-top:-0.5px;font-size:13px;cursor:pointer;">
+                margin-top:-0.5px;font-size:13px;cursor:pointer;" onclick="document.getElementById('uploadpop').style.display='block'">
                 Change Cover Photo
+                <div class = "uploadPhoto" id="uploadpop">
+                  <form class="pure-form pure-form-stacked" action="/upload?update=1" method="post" enctype="multipart/form-data" id = "subForm">
+                     <img class="removeImg"
+                     src = "https://www.materialui.co/materialIcons/action/highlight_remove_grey_192x192.png"
+                     onclick="hideSelf(this)" select = false>
+                     
+                  <input type="file" style="display:inline-block" name="updateFile" accept=".png, .jpg, .jpeg">
+                  <div class="button-success pure-button" onclick="">Submit</div>
+                  </form>
+                </div>
+
               </div><br>
             </div>
 

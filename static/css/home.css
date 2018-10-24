@@ -1517,3 +1517,13 @@ border-bottom: 2px solid #ddd;
   cursor: pointer;height: 25px;top: -15px;right: -7px;position: absolute;
 width: 25px;
 }
+.uploadPhoto {
+  position: fixed;
+top: 14%;
+right: 20%;
+height: 50px;
+background-color: white;
+padding: 10px;
+background-color: black;
+display: none;
+}
