@@ -65,11 +65,11 @@
 
                                 <form id="magic-form" method="post" action="/search">
                                     <input type="hidden" id="type" value="0">
-                                    <li><a href="#" onclick="event.preventDefault(); document.getElementById('magic-form').submit;">FIND TEAMS</a></li>
+                                    <li><a href="{{ url_for("search") }}" onclick="event.preventDefault(); document.getElementById('magic-form').submit;">FIND TEAMS</a></li>
                                 </form>
                                 <form id="magic-form" method="post" action="/search">
                                     <input type="hidden" id="type" value="1">
-                                    <li><a href="#" onclick="event.preventDefault(); document.getElementById('magic-form').submit;">FIND CLIENTS</a></li>
+                                    <li><a href="{{ url_for("search") }}" onclick="event.preventDefault(); document.getElementById('magic-form').submit;">FIND CLIENTS</a></li>
                                 </form>                                            
 
                                 {% if session['profile'] is defined %}
