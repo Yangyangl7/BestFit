@@ -392,12 +392,12 @@ def post_info(post_id):
                     (post_id,))
         post_pictures=[record["picture_id"] for record in cur]
 
-    if 'profile' not in session:
-        return render_template("post_info.html",post_pictures=post_pictures, post_id_store=post_id,pop_login=0)
-    else:
-        if (session.get('profile').get('user_id')==post_user_id[0]):
-            closed_tag_visible=1
-        return render_template("post_info.html",post_pictures=post_pictures, post_id_store=post_id,pop_login=0,closed_tag_visible=1)
+        if 'profile' not in session:
+            return render_template("post_info.html",post_pictures=post_pictures, post_id_store=post_id,pop_login=0)
+        else:
+            if (session.get('profile').get('user_id')==post_user_id[0]):
+                closed_tag_visible=1
+            return render_template("post_info.html",post_pictures=post_pictures, post_id_store=post_id,pop_login=0,closed_tag_visible=1)
 
 @app.route('/post_info_upload/<int:post_id>',methods=['POST'])
 def post_info_upload(post_id):
@@ -428,24 +428,24 @@ def post_info_upload(post_id):
         
 
 
-    if 'profile' not in session:
-        return redirect(url_for("post_info",post_id=post_id,pop_login=1))
-    else:
-        if (saved_res==1):
-            post_saved_times_res[0]=post_saved_times_res[0]+1
-        if (closed_res==1 and session.get('profile').get('user_id')==post_user_id[0]):
-            post_closed_res[0]=True
-        cur.execute("insert into post (saved_times,closed,views) values (%s,%s, %s)",
-                    (post_saved_times_res[0], post_closed_res[0], post_views_res[0]))
-        cur.execute("SELECT * FROM register where user_id=%s;",
-                        (session.get('profile').get('user_id'),))
-        comment_user_id = [record["id"] for record in cur]
-        cur.execute("insert into review (reviewer_id,comment,time,rate,post_id) values (%s,%s,%s,%s,%s)",
-                    (comment_user_id[0], comment_content_res, dt, stars_res,post_id))
-        if (saved_res==1):
-            cur.execute("insert into post_saved (post_id,user_id) values (%s, %s)",
-                    (post_id, comment_user_id[0]))
-        return redirect(url_for("post_info",post_id=post_id,pop_login=0))
+        if 'profile' not in session:
+            return redirect(url_for("post_info",post_id=post_id,pop_login=1))
+        else:
+            if (saved_res==1):
+                post_saved_times_res[0]=post_saved_times_res[0]+1
+            if (closed_res==1 and session.get('profile').get('user_id')==post_user_id[0]):
+                post_closed_res[0]=True
+            cur.execute("insert into post (saved_times,closed,views) values (%s,%s, %s)",
+                        (post_saved_times_res[0], post_closed_res[0], post_views_res[0]))
+            cur.execute("SELECT * FROM register where user_id=%s;",
+                            (session.get('profile').get('user_id'),))
+            comment_user_id = [record["id"] for record in cur]
+            cur.execute("insert into review (reviewer_id,comment,time,rate,post_id) values (%s,%s,%s,%s,%s)",
+                        (comment_user_id[0], comment_content_res, dt, stars_res,post_id))
+            if (saved_res==1):
+                cur.execute("insert into post_saved (post_id,user_id) values (%s, %s)",
+                        (post_id, comment_user_id[0]))
+            return redirect(url_for("post_info",post_id=post_id,pop_login=0))
 
 @app.route('/selfie',methods=['POST'])
 def selfie():
