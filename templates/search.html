@@ -108,7 +108,7 @@
                 <p class="start-time" style="margin: 6px 10px 6px 0px; font-size:14px; font-weight: 600;">Start Time</p>
                 <ul class="filter-checkbox" style="padding-left:0; line-height: 2.2em; color: rgba(0, 0, 0, 0.5);">
                     {% for item in numberOfTime %}
-                    <li class="list-item">>{{numberOfTime[0]}}<span>{{numberOfTime[1]}}</span></li>
+                    <li class="list-item">>{{item[0]}}<span>{{item[1]}}</span></li>
                     {% endfor %}
                 </ul>
 
@@ -118,7 +118,7 @@
                     Footage Of Project</p>
                 <ul class="filter-checkbox" style="padding-left:0; line-height: 2.2em; color: rgba(0, 0, 0, 0.5);">
                      {% for item in numberOfTime %}
-                    <li class="list-item">>{{numberOfSize[0]}}<span>{{numberOfSize[1]}}</span></li>
+                    <li class="list-item">>{{item[0]}}<span>{{item[1]}}</span></li>
                     {% endfor %}
                 </ul>
 
@@ -279,7 +279,7 @@
 </section>
 
 
-{% for item in data%}
+<!-- {% for item in data%}
 
 <p>{{numberOfType}}</p>
 <p>{{item[0]}}</p>
@@ -290,7 +290,7 @@
 
 <p>{{type}}</p>
 
-<p>{{data}}</p>
+<p>{{data}}</p> -->
 
 
 {% endblock %}
