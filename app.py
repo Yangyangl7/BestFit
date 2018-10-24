@@ -133,32 +133,9 @@ def profile():
     # with db.get_db_cursor() as cur:
     #     cur.execute("SELECT picture_id, filename FROM picture order by picture_id desc")
     #     images = [record for record in cur]
-<<<<<<< HEAD
 
-    with db.get_db_cursor() as cur:
-        tagsql = "select * from tag limit 40;"
-        usersql = "select * from register where id = 4;"
 
-        try:
-            postsql = "select * from post where publisher_id = 15 order by time DESC;"
-            # Build tag array
-            cur.execute(tagsql)
-            tagArray = [dict((cur.description[i][0], value)
-                             for i, value in enumerate(row)) for row in cur.fetchall()]
-            print(tagArray)
 
-            #  Build users array
-            cur.execute(usersql)
-            userArray = [dict((cur.description[i][0], value)
-                              for i, value in enumerate(row)) for row in cur.fetchall()]
-            # print(str(userArray[0]))
-
-            cur.execute(postsql)
-            postArray = [dict((cur.description[i][0], value)
-                              for i, value in enumerate(row)) for row in cur.fetchall()]
-            # print(str(postArray))
-            
-=======
     with db.get_db_cursor() as cur:
         cur.execute("SELECT * FROM register where user_id=%s;",
                         (session.get('profile').get('user_id'),))
@@ -195,22 +172,15 @@ def profile():
             print(str(postArray))
 
 
->>>>>>> a62e612b4a4a64c9bb91265750f2d4ad5614398b
+
 
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
-<<<<<<< HEAD
+
     return render_template('profile.html', userInfo=userArray[0], tagInfo=tagArray, postInfo=postArray)
-=======
-    return render_template('profile.html',userInfo=userArray[0], tagInfo = tagArray, postInfo = [] )
-
-<<<<<<< HEAD
-
->>>>>>> 92319d4b5339d08cbb366b218541689c34453ab3
 
 
-=======
->>>>>>> a62e612b4a4a64c9bb91265750f2d4ad5614398b
+
 # upload imaage into data base
 
 
@@ -247,28 +217,12 @@ def upload():
 
         # convert the flask object to a regular file object
         data = request.files['file'].read()
-<<<<<<< HEAD
 
-        with db.get_db_cursor(commit=True) as cur:
-            # we are storing the original filename for demo purposes
-            # might be useful to also/instead save the file extension or mime type
-            cur.execute("SELECT * FROM register where user_id=%s;",
-                        (session.get('profile').get('user_id'),))
-            user_id_res = [record["id"] for record in cur]
-            cur.execute("insert into post (publisher_id,time,title, status,location,budget,content) values (%s,%s,%s,%s,%s,%s, %s)",
-                        (user_id_res[0], dt, title_res, status_res, location_res, budget_res, text_res))
-            cur.execute(
-                "SELECT MAX(post_id) AS maxid FROM post where publisher_id=%s;", (user_id_res[0],))
-            post_id_res = [record["maxid"] for record in cur]
-            cur.execute("insert into picture (register_id,post_id,img) values (%s,%s,%s)",
-                        (user_id_res[0], post_id_res[0], data))
 
-=======
-        
     with db.get_db_cursor(commit=True) as cur:
         # we are storing the original filename for demo purposes
         # might be useful to also/instead save the file extension or mime type
-        
+
         cur.execute("SELECT * FROM register where user_id=%s;",
                     (session.get('profile').get('user_id'),))
         user_id_res = [record["id"] for record in cur]
@@ -288,8 +242,7 @@ def upload():
             is_designer=False
         cur.execute("update register set name=%s,phone=%s,isDesigner=%s where id=%s",
                     (name_res, phone_res, is_designer,user_id_res[0]))
-        
->>>>>>> a62e612b4a4a64c9bb91265750f2d4ad5614398b
+
     return redirect(url_for("profile"))
 
 
@@ -303,19 +256,11 @@ def serve_img(img_id):
         # in memory binary stream
         stream = io.BytesIO(image_row["img"])
 
-<<<<<<< HEAD
-        # return send_file(
-        #     stream,
-        #     attachment_filename=image_row["filename"])
+
         return send_file(
             stream,
-            attachment_filename="test")
-
-=======
-        return send_file(
-            stream, 
             attachment_filename=image_row["picture_id"])
->>>>>>> a62e612b4a4a64c9bb91265750f2d4ad5614398b
+
 
 @app.route('/search', methods=['POST', 'GET'])
 def search():
@@ -438,7 +383,7 @@ def post_info(post_id):
         post_user_phone=[record["phone"] for record in cur]
         post_user_email=[record["email"] for record in cur]
         post_user_id=[record["user_id"] for record in cur]
-        
+
         cur.execute("SELECT * FROM picture where post_id=%s;",
                     (post_id,))
         post_pictures=[record["email"] for record in cur]
@@ -471,12 +416,12 @@ def post_info_upload(post_id):
         cur.execute("SELECT * FROM register where id=%s;",
                     (user_id_res,))
         post_user_id=[record["user_id"] for record in cur]
-        
+
 
         post_views_res[0]=post_views_res[0]+1
         # cur.execute("insert into post (saved_times,closed,views) values (%s,%s, %s)",
         #             (post_saved_times_res[0], post_closed_res[0], post_views_res[0]))
-        
+
 
 
     if 'profile' not in session:
