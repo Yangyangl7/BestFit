@@ -68,10 +68,11 @@ def home():
 @app.route('/update', methods=['POST'])
 def update():
     link_res = request.form.get("link")
+    user_id = request.form.get("id")
     with db.get_db_cursor(commit=True) as cur:
         try:
             cur.execute("update register set avator=%s where id=%s",
-                        (link_res,user_id_res[0]))
+                        (link_res,user_id))
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
     return redirect(url_for("profile"))
@@ -407,11 +408,15 @@ def post_info(post_id):
         post_pictures=[record["picture_id"] for record in cur]
 
         if 'profile' not in session:
-            return render_template("post_info.html",post_pictures=post_pictures, post_id_store=post_id,pop_login=0)
+            return render_template("post_info.html",display_image=post_pictures[0], post_id_store=post_id,pop_login=0,post_title=post_title_res[0],
+                                    user_profile_image=post_user_avator[0],user_name=post_user_name[0],team_client_description=post_content_res[0]
+                                    )
         else:
             if (session.get('profile').get('user_id')==user_id_res[0]):
                 closed_tag_visible=1
-            return render_template("post_info.html",post_pictures=post_pictures, post_id_store=post_id,pop_login=0,closed_tag_visible=1)
+            return render_template("post_info.html",display_image=post_pictures[0], post_id_store=post_id,pop_login=0,post_title=post_title_res[0],
+                                    user_profile_image=post_user_avator[0],user_name=post_user_name[0],team_client_description=post_content_res[0],
+                                    closed_tag_visible=1)
 
 @app.route('/post_info_upload/<int:post_id>',methods=['POST'])
 def post_info_upload(post_id):
@@ -447,7 +452,7 @@ def post_info_upload(post_id):
         else:
             if (saved_res==1):
                 post_saved_times_res[0]=post_saved_times_res[0]+1
-            if (closed_res==1 and session.get('profile').get('user_id')==post_user_id[0]):
+            if (closed_res==1 and session.get('profile').get('user_id')==user_id_res[0]):
                 post_closed_res[0]=True
             cur.execute("insert into post (saved_times,closed,views) values (%s,%s, %s)",
                         (post_saved_times_res[0], post_closed_res[0], post_views_res[0]))
