@@ -60,8 +60,21 @@
                             <ul class="nav navbar-nav" id="nav-item">
                                 <li><a class="" href="{{ url_for("home") }}">HOME</a></li>
                                 <li><a class="smooth-scroll" href="#howItWorks">HOW IT WORKS</a></li>
+<<<<<<< HEAD
                                 <li><a class="" href="{{ url_for("search") }}">FIND TEAMS</a></li>
                                 <li><a class="" href="{{ url_for("search") }}">FIND CLIENTS</a></li>
+=======
+
+                                <form id="magic-form" method="post" action="/search">
+                                    <input type="hidden" id="type" value="0">
+                                    <li><a href="#" onclick="event.preventDefault(); document.getElementById('magic-form').submit;">FIND TEAMS</a></li>
+                                </form>
+                                <form id="magic-form" method="post" action="/search">
+                                    <input type="hidden" id="type" value="1">
+                                    <li><a href="#" onclick="event.preventDefault(); document.getElementById('magic-form').submit;">FIND CLIENTS</a></li>
+                                </form>                                            
+
+>>>>>>> 38e5d1a4716963fb92c752ffcff87b466616ad53
                                 {% if session['profile'] is defined %}
                                 <li><a class="" href="{{ url_for("logout") }}">LOGOUT</a></li>
                                 <li><a class="" href="{{ url_for("profile") }}">PROFILE<a></li>
