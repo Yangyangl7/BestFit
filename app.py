@@ -356,7 +356,7 @@ def searchteam():
     numberOfType = countPost()
 
     return render_template("search.html", data=data, numberOfType=numberOfType)
-    
+
 @app.route('/searchclient')
 def searchclient():
     data = []
@@ -436,14 +436,18 @@ def post_info(post_id):
 
         if 'profile' not in session:
             return render_template("post_info.html",display_image=post_pictures[0], post_id_store=post_id,pop_login=0,post_title=postArray[0]["title"],
-                                    user_profile_image=post_user_Array[0]["avator"],user_name=post_user_Array[0]["name"],team_client_description=postArray[0]["content"]
-                                    )
+                                    user_profile_image=post_user_Array[0]["avator"],user_name=post_user_Array[0]["name"],team_client_description=postArray[0]["content"],
+                                    tagArray=tags,phone = "log in to see", email = "log in to see")
         else:
             if (session.get('profile').get('user_id')==post_user_Array[0]["user_id"]):
                 closed_tag_visible=1
-            return render_template("post_info.html",display_image=post_pictures[0], post_id_store=post_id,pop_login=0,post_title=postArray[0]["title"],
-                                    user_profile_image=post_user_Array[0]["avator"],user_name=post_user_Array[0]["name"],team_client_description=postArray[0]["content"],
-                                    closed_tag_visible=1, tagArray = tags)
+                return render_template("post_info.html",display_image=post_pictures[0], post_id_store=post_id,pop_login=0,post_title=postArray[0]["title"],
+                                         user_profile_image=post_user_Array[0]["avator"],user_name=post_user_Array[0]["name"],team_client_description=postArray[0]["content"],
+                                            closed_tag_visible=1,tagArray=tags,phone = post_user_Array[0]["phone"], email =  post_user_Array[0]["email"])
+            else:
+                return render_template("post_info.html",display_image=post_pictures[0], post_id_store=post_id,pop_login=0,post_title=postArray[0]["title"],
+                                         user_profile_image=post_user_Array[0]["avator"],user_name=post_user_Array[0]["name"],team_client_description=postArray[0]["content"],
+                                            closed_tag_visible=0,tagArray=tags,phone = post_user_Array[0]["phone"], email =  post_user_Array[0]["email"])
 
 @app.route('/post_info_upload/<int:post_id>',methods=['POST'])
 def post_info_upload(post_id):
@@ -459,16 +463,18 @@ def post_info_upload(post_id):
         # might be useful to also/instead save the file extension or mime type
         cur.execute("SELECT * FROM post where post_id=%s;",
                     (post_id,))
-        post_saved_times_res = [record["saved_times"] for record in cur]
-        post_closed_res = [record["closed"] for record in cur]
-        post_views_res = [record["views"] for record in cur]
-        user_id_res = [record["publisher_id"] for record in cur]
+        postArray = [dict((cur.description[i][0], value) \
+               for i, value in enumerate(row)) for row in cur.fetchall()]
+        # post_saved_times_res = [record["saved_times"] for record in cur]
+        # post_closed_res = [record["closed"] for record in cur]
+        # post_views_res = [record["views"] for record in cur]
+        # user_id_res = [record["publisher_id"] for record in cur]
         cur.execute("SELECT * FROM register where id=%s;",
-                    (user_id_res[0],))
+                    (postArray[0]["publisher_id"],))
         post_user_id=[record["user_id"] for record in cur]
 
 
-        post_views_res[0]=post_views_res[0]+1
+        postArray[0]["views"]=postArray[0]["views"]+1
         # cur.execute("insert into post (saved_times,closed,views) values (%s,%s, %s)",
         #             (post_saved_times_res[0], post_closed_res[0], post_views_res[0]))
 
@@ -476,11 +482,11 @@ def post_info_upload(post_id):
             return redirect(url_for("post_info",post_id=post_id,pop_login=1))
         else:
             if (saved_res==1):
-                post_saved_times_res[0]=post_saved_times_res[0]+1
+                postArray[0]["saved_times"]=postArray[0]["saved_times"]+1
             if (closed_res==1 and session.get('profile').get('user_id')==post_user_id[0]):
-                post_closed_res[0]=True
+                postArray[0]["closed"]=True
             cur.execute("insert into post (saved_times,closed,views) values (%s,%s, %s)",
-                        (post_saved_times_res[0], post_closed_res[0], post_views_res[0]))
+                        (postArray[0]["saved_times"], postArray[0]["closed"], postArray[0]["views"]))
             cur.execute("SELECT * FROM register where user_id=%s;",
                             (session.get('profile').get('user_id'),))
             comment_user_id = [record["id"] for record in cur]
