@@ -1342,7 +1342,6 @@ nav.change-page {
   margin-bottom: 10px;
   padding: 0px;
   overflow: hidden;
-  padding-left: 15%;
 }
 
 #page-navi li {
@@ -1512,4 +1511,19 @@ border-bottom: 2px solid #ddd;
 }
 .label.Start.Time:hover {
   background-color: black;
+}
+
+.removeImg {
+  cursor: pointer;height: 25px;top: -15px;right: -7px;position: absolute;
+width: 25px;
+}
+.uploadPhoto {
+  position: fixed;
+top: 14%;
+right: 20%;
+height: 50px;
+background-color: white;
+padding: 10px;
+background-color: black;
+display: none;
 }
