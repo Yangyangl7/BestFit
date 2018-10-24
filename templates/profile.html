@@ -140,12 +140,14 @@
 
 
 <div class = "uploadPhoto" id="uploadpop">
-  <form class="pure-form pure-form-stacked" action="/selfie" method="post" enctype="multipart/form-data" id = "subForm">
+  <form class="pure-form pure-form-stacked" action="/update" method="post" enctype="multipart/form-data" id = "subForm">
      <img class="removeImg" style="height: -15px; right:-15px;"
      src = "https://www.materialui.co/materialIcons/action/highlight_remove_grey_192x192.png"
      onclick="hideUpdate()">
-  <input type="file" style="display:inline-block" name="file" accept=".png, .jpg, .jpeg">
-  <div class="button-success pure-button" type="submit">Submit</div>
+
+
+  <input type="text" style="display:inline-block" name="link" placeholder="your new avator src link" >
+  <div class="button-success pure-button" type="submit">update</div>
   </form>
 </div>
 

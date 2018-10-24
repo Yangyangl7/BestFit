@@ -65,6 +65,17 @@ def home():
 # Auth0 callback after login
 
 
+@app.route('/update', methods=['POST'])
+def update():
+    link_res = request.form.get("link")
+    with db.get_db_cursor(commit=True) as cur:
+        try:
+            cur.execute("update register set avator=%s where id=%s",
+                        (link_res,user_id_res[0]))
+        except (Exception, psycopg2.DatabaseError) as error:
+            print(error)
+    return redirect(url_for("profile"))
+
 @app.route('/callback')
 def callback_handling():
     # Handles response from token endpoint
@@ -218,11 +229,11 @@ def upload():
 
         # convert the flask object to a regular file object
         data = request.files['file'].read()
-        
+
     with db.get_db_cursor(commit=True) as cur:
         # we are storing the original filename for demo purposes
         # might be useful to also/instead save the file extension or mime type
-        
+
         cur.execute("SELECT * FROM register where user_id=%s;",
                     (session.get('profile').get('user_id'),))
         user_id_res = [record["id"] for record in cur]
@@ -242,7 +253,7 @@ def upload():
             is_designer=False
         cur.execute("update register set name=%s,phone=%s,isDesigner=%s where id=%s",
                     (name_res, phone_res, is_designer,user_id_res[0]))
-        
+
     return redirect(url_for("profile"))
 
 
@@ -257,7 +268,7 @@ def serve_img(img_id):
         stream = io.BytesIO(image_row["img"])
 
         return send_file(
-            stream, 
+            stream,
             attachment_filename="pic")
 
 @app.route('/search', methods=['POST', 'GET'])
@@ -387,7 +398,7 @@ def post_info(post_id):
         post_user_phone=[record["phone"] for record in cur]
         post_user_email=[record["email"] for record in cur]
         post_user_id=[record["user_id"] for record in cur]
-        
+
         cur.execute("SELECT * FROM picture where post_id=%s;",
                     (post_id,))
         post_pictures=[record["picture_id"] for record in cur]
@@ -424,12 +435,12 @@ def post_info_upload(post_id):
         cur.execute("SELECT * FROM register where id=%s;",
                     (user_id_res[0],))
         post_user_id=[record["user_id"] for record in cur]
-        
+
 
         post_views_res[0]=post_views_res[0]+1
         # cur.execute("insert into post (saved_times,closed,views) values (%s,%s, %s)",
         #             (post_saved_times_res[0], post_closed_res[0], post_views_res[0]))
-        
+
 
 
         if 'profile' not in session:
