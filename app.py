@@ -71,7 +71,7 @@ def update():
     user_id = request.form.get("id")
     with db.get_db_cursor(commit=True) as cur:
         try:
-            cur.execute("update register set avator='%s' where id=%s",
+            cur.execute("update register set avator=%s where id=%s",
                         (link_res,user_id))
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
