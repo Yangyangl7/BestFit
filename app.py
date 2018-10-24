@@ -249,7 +249,7 @@ def serve_img(img_id):
 
         return send_file(
             stream, 
-            attachment_filename=image_row["picture_id"])
+            attachment_filename="pic")
 
 @app.route('/search', methods=['POST', 'GET'])
 def search():
