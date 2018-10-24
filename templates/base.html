@@ -65,11 +65,11 @@
 
                                 <form method="post" action="/search">
                                     <input type="hidden" id="type" value="0">
-                                    <li><a type="submit" href="{{ url_for("search") }}">FIND TEAMS</a></li>
+                                    <li><a type="submit">FIND TEAMS</a></li>
                                 </form>
                                 <form method="post" action="/search">
                                     <input type="hidden" id="type" value="1">
-                                    <li><a type="submit" href="{{ url_for("search") }}">FIND CLIENTS</a></li>
+                                    <li><a type="submit">FIND CLIENTS</a></li>
                                 </form>                                            
 
                                 {% if session['profile'] is defined %}
