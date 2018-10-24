@@ -140,8 +140,8 @@
                         <div id="myDIV" style="display:none">
                         </div>
                         <div style="height:60px; text-align: center;margin-top:30px" class="contact-button">
-                            <button type="button" onclick = 'alert("email:"  + "{{email}}" + "         phone: "  + "{{phone}}")'
-                              class="btn btn-primary" style="border-radius: 50px; background-color: transparent;color:#eac71f;border: 1px solid #eac71f; outline:none;margin-right:20px;padding:10px 20px;">Contact
+                            <button type="button" onclick='alert("email:"  + "{{email}}" + "         phone: "  + "{{phone}}")'
+                                class="btn btn-primary" style="border-radius: 50px; background-color: transparent;color:#eac71f;border: 1px solid #eac71f; outline:none;margin-right:20px;padding:10px 20px;">Contact
                                 Me</button>
                             <button type="button" class="btn btn-primary" style="border-radius: 50px; background-color: transparent;color:#eac71f;border: 1px solid #eac71f; outline:none;margin-left:20px; padding:10px 18px;">Add
                                 To Saved</button>
@@ -192,10 +192,10 @@
       <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Placeat vel maiores asperiores sed vero, voluptates laborum officiis blanditiis neque, nulla sit ut cum! Nisi, dolor. Iure incidunt non exercitationem pariatur?</p>
       <hr> -->
             <span class="post-tags" style="padding:0 20px;">
-              {% for t in tagArray %}
+                {% for t in tagArray %}
                 <button type="button" class="btn btn-primary">{{t}}</button>
                 &nbsp;
-              {% endfor %}
+                {% endfor %}
 
             </span>
         </div>
@@ -229,64 +229,32 @@
             </div>
             <hr WIDTH=auto ALIGN="center">
             <p><img src="https://images.unsplash.com/photo-1519643225200-94e79e383724?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=57a962be8447ae8fbea351abe9262275&auto=format&fit=crop&w=1655&q=80"
-                    alt="default user" height="24" width="24" style="border-radius: 50px;"> djrubb &nbsp
-                &nbsp <span class="glyphicon glyphicon-star"></span>&nbsp &nbsp 5.0
+                    alt="default user" height="24" width="24" style="border-radius: 50px;"> &nbsp Hank &nbsp
+                &nbsp <span class="fa fa-star" style="color: #eac71f;font-size: 15px;"></span>&nbsp &nbsp 5.0
             </p>
-            <p style="margin-left: 3em;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse quisquam et
-                accusamus cupiditate quam a eius quibusdam, consequuntur sint, fugit eum hic voluptatibus doloribus id
-                repellat, voluptates eligendi dignissimos laudantium!</p>
+            <p style="margin-left: 3em;">Never having built a home, I needed lots of direction and advise. Everyone at
+                this team was helpful, knowledgable and professional. They made the building experience a
+                creative and rewarding one. Working with Divine was a delight. I highly recommend building a new home
+                with Divine Custom Homes!</p>
             <p style="margin-left: 3em;">Sep. 24th, 2018</p>
             <hr WIDTH=auto ALIGN="center">
             <p><img src="https://images.unsplash.com/profile-1504195942065-4f5b12cec31d?dpr=2&auto=format&fit=crop&w=128&h=128&q=60&crop=faces&bg=fff"
-                    alt="default user" height="24" width="24" style="border-radius: 50px;"> djrubb &nbsp
-                &nbsp <span class="glyphicon glyphicon-star"></span>&nbsp &nbsp 4.0
+                    alt="default user" height="24" width="24" style="border-radius: 50px;"> &nbsp djrubb &nbsp
+                &nbsp <span class="fa fa-star" style="color: #eac71f;font-size: 15px;"></span>&nbsp &nbsp 4.0
             </p>
-            <p style="margin-left: 3em;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse quisquam et
-                accusamus cupiditate quam a eius quibusdam, consequuntur sint, fugit eum hic voluptatibus doloribus id
-                repellat, voluptates eligendi dignissimos laudantium!</p>
+            <p style="margin-left: 3em;">The entire team did an exceptional job of customizing
+                our home, staying in tune to changes that we made a long the way, keeping a clean job site from start
+                to finish and meeting with us in a timely manner every time we requested it. </p>
             <p style="margin-left: 3em;">Sep. 24th, 2018</p>
             <br>
             <p style="margin-left: 6em;"><img src="https://images.unsplash.com/profile-1523574273386-b6f06440d3ef?dpr=2&auto=format&fit=crop&w=128&h=128&q=60&crop=faces&bg=fff"
-                    alt="default user" height="24" width="24" style="border-radius: 50px;"> Mandrew
+                    alt="default user" height="24" width="24" style="border-radius: 50px;"> &nbsp Mandrew
             </p>
-            <p style="margin-left: 9em;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse quisquam et
-                accusamus cupiditate quam a eius quibusdam, consequuntur sint, fugit eum hic voluptatibus doloribus id
-                repellat, voluptates eligendi dignissimos laudantium!</p>
+            <p style="margin-left: 9em;">Working with
+                Divine was an incredible experience. The owners of Divine really know how to add the right elements
+                that turn a house into a home. They build a house that has tons of character and is well balanced. The
+                structure is solid and level. The trim work is well crafted and not chintzy by any means.</p>
             <p style="margin-left: 9em;">Sep. 24th, 2018</p>
-
-            <!-- <div class="content">
-                <div class="comments">
-                    Total Comment: <span class="total-comment"></span>
-                    <div class="list-comments" style="margin-bottom:20px">
-                        <div>Hello!</div>
-                        <div>My name's Tuan Linh.</div>
-                    </div>
-
-                    <div class="editor">
-                        <div class="editor-header">
-                            <a href='#' data-role='bold'>B</a>
-                            <a href='#' data-role='italic'>I</a>
-                            <a href='#' data-role='underline'>U</a>
-                            <a href='#' data-role='justifyleft'><i class="menu-left"></i></a>
-                            <a href='#' data-role='justifycenter'><i class="menu-center"></i></a>
-                            <a href='#' data-role='justifyright'><i class="menu-right"></i></a>
-                        </div>
-                        <div id="text" class="editor-content" contenteditable>
-                            <p>Let's make a statement!</p>
-                            <p>This is an italicised sentence.</p>
-                            <p>Very important information.</p>
-                        </div>
-                    </div>
-                    <div class="insert-text">
-                        <span class="loading">Loading...</span>
-
-                        <p id="comment-button">
-                            <input action="/post_info_update/3" method="post" type="submit" value="Comment" />
-                        </p>
-                    </div>
-
-                </div>
-            </div> -->
 
         </div>
 

@@ -49,16 +49,14 @@
     <div class="container">
         <div class="row">
             <div class="col-md-2 col-sm-2" id="list-left" style="font-family: 'Raleway', sans-serif;padding-left:0">
-                <p style="font-size: 16px;font-weight: 700;letter-spacing: .04em;margin-bottom:10px; margin-top:8px">Team
+                <p style="font-size: 16px;font-weight: 700;letter-spacing: .04em;margin-bottom:10px; margin-top:8px">Tag
                     Categories</p>
                 <ul style="padding-left:0" id="cat-list">
                     {% for item in numberOfType %}
-                    <li class="list-item">{{item[0]}}<i class="fa fa-caret-up close-list1" aria-hidden="true"
-                            style="cursor: pointer;"></i><i class="fa fa-caret-down open-list1" aria-hidden="true"
-                            style="display: none; cursor: pointer;"></i><span>{{item[1]}}</span></li>
+                    <li class="list-item">{{item[0]}}<span>({{item[1]}})</span></li>
                     {% endfor %}
-                    
-<!-- 
+
+                    <!-- 
                     <li class="list-item">Home Builders<i class="fa fa-caret-up close-list2" aria-hidden="true" style="cursor: pointer;display: none"></i><i
                             class="fa fa-caret-down open-list2" aria-hidden="true" style="cursor: pointer;"></i><span>(12)</span></li>
                     <ul class="sub-list" id="home-builder-list" style="display: none;">
@@ -110,11 +108,9 @@
 
                 <p class="start-time" style="margin: 6px 10px 6px 0px; font-size:14px; font-weight: 600;">Start Time</p>
                 <ul class="filter-checkbox" style="padding-left:0; line-height: 2.2em; color: rgba(0, 0, 0, 0.5);">
-                    <li><input type="checkbox" name="start_time" value="">Timing Is Flexible<span>(12)</span></li>
-                    <li><input type="checkbox" name="start_time" value="">Within A Week<span>(12)</span></li>
-                    <li><input type="checkbox" name="start_time" value="">Within A Month<span>(12)</span></li>
-                    <li><input type="checkbox" name="start_time" value="">Within Six Months<span>(12)</span></li>
-                    <li><input type="checkbox" name="start_time" value="">Within A Year<span>(12)</span></li>
+                    {% for item in numberOfTime %}
+                    <li class="list-item">>{{numberOfTime[0]}}<span>{{numberOfTime[1]}}</span></li>
+                    {% endfor %}
                 </ul>
 
                 <hr style="width:60%;float: left;"><br><br>
@@ -122,12 +118,9 @@
                 <p class="project-size" style="margin: 6px 10px 6px 0px; font-size:14px; font-weight: 600;">Square
                     Footage Of Project</p>
                 <ul class="filter-checkbox" style="padding-left:0; line-height: 2.2em; color: rgba(0, 0, 0, 0.5);">
-                    <li><input type="checkbox" name="project_size" value="">Less than 500<span>(12)</span></li>
-                    <li><input type="checkbox" name="project_size" value="">500-1000<span>(12)</span></li>
-                    <li><input type="checkbox" name="project_size" value="">1000-2000<span>(12)</span></li>
-                    <li><input type="checkbox" name="project_size" value="">2000-3000<span>(12)</span></li>
-                    <li><input type="checkbox" name="project_size" value="">3000-4000<span>(12)</span></li>
-                    <li><input type="checkbox" name="project_size" value="">More than 4000<span>(12)</span></li>
+                    {% for item in numberOfTime %}
+                    <li class="list-item">>{{numberOfSize[0]}}<span>{{numberOfSize[1]}}</span></li>
+                    {% endfor %}
                 </ul>
 
                 <hr style="width:60%;float: left;"><br><br>
