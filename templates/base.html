@@ -63,10 +63,12 @@
                                 <li><a class="" href="{{ url_for("home") }}">HOME</a></li>
                                 <li><a class="smooth-scroll" href="#howItWorks">HOW IT WORKS</a></li>
 
+                                <input type="hidden" name="type" value="">
                                 <li><a onclick="$('#type').val('0');" class="" href="{{ url_for("search") }}">FIND
                                         TEAMS</a></li>
                                 <li><a onclick="$('#type').val('1');" class="" href="{{ url_for("search") }}">FIND
                                         CLIENTS</a></li>
+                                        
                                 {% if session['profile'] is defined %}
                                 <li><a class="" href="{{ url_for("logout") }}">LOGOUT</a></li>
                                 <li><a class="" href="{{ url_for("profile") }}">PROFILE</a></li>
