@@ -140,12 +140,12 @@
 
 
 <div class = "uploadPhoto" id="uploadpop">
-  <form class="pure-form pure-form-stacked" action="/upload?update=1" method="post" enctype="multipart/form-data" id = "subForm">
+  <form class="pure-form pure-form-stacked" action="/selfie" method="post" enctype="multipart/form-data" id = "subForm">
      <img class="removeImg" style="height: -15px; right:-15px;"
      src = "https://www.materialui.co/materialIcons/action/highlight_remove_grey_192x192.png"
      onclick="hideUpdate()">
   <input type="file" style="display:inline-block" name="file" accept=".png, .jpg, .jpeg">
-  <div class="button-success pure-button" onclick="">Submit</div>
+  <div class="button-success pure-button" type="submit">Submit</div>
   </form>
 </div>
 
@@ -189,14 +189,14 @@
       </div>
       <div class="subLink" style="height: 40px; padding-left: 183px; border-bottom: 1.5px solid lightgray">
         <div style="display:inline-block; margin:10px;cursor: pointer ">
-          Current Post
+          <a href="/profile">Current Post</a>
         </div>
         <div style="display:inline-block; margin:10px;cursor: pointer ">
-          Saved Post
+          <a href="/profile?action=save">Saved Post</a>
         </div>
 
         <div style="display:inline-block; margin:10px; cursor: pointer">
-          Past Post
+          <a href="/profile?action=past">Past Post</a>
         </div>
 
         <div style="display:inline-block; margin:10px; cursor: pointer">
@@ -230,7 +230,7 @@
       <!--  Start render user created post-->
   {% for post in postInfo %}
       <div class="col-sm-6 col-md-3" style="margin-top:5px;float: none;display:inline-block">
-          <a href="" style="text-decoration:none;" class="scrolling-post-content">
+          <a href="/post_info/{{post['post_id']}}" style="text-decoration:none;" class="scrolling-post-content">
               <div class="thumbnail">
                   <img src="/img/{{post['picture_id']}}"
                       alt="post1">
