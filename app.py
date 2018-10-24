@@ -22,17 +22,6 @@ app = Flask(__name__)
 # def id_generator(size=13, chars=string.ascii_uppercase + string.digits):
 #         return ''.join(random.SystemRandom().choice(chars) for _ in range(size))
 
-def countPost():
-    numberOfType = []
-
-    with db.get_db_cursor as cur:
-        cur.execute("SELECT tag.type, count(tag.type) as numberOfType from post_tag INNER JOIN tag ON post_tag.tag_id = tag.tag_id GROUP BY tag.type;")
-        for row in cur:
-            if row not in numberOfType:
-                numberOfType.append(row)
-
-    return numberOfType
-
 @app.before_first_request
 def initialize():
     db.setup()
@@ -40,9 +29,19 @@ def initialize():
     global auth0
     auth0 = auth.auth0
 
+#Used to count number of tags by type
+def countPost():
+    numberOfType = []
+
+    with db.get_db_cursor() as cur:
+        cur.execute("SELECT tag.type, count(tag.type) as numberOfType from post_tag INNER JOIN tag ON post_tag.tag_id = tag.tag_id GROUP BY tag.type;")
+        for row in cur:
+            if row not in numberOfType:
+                numberOfType.append(row)
+
+    return numberOfType
+
 # Protected Page. Only accessible after login
-
-
 def requires_auth(f):
     @wraps(f)
     def decorated(*args, **kwargs):
