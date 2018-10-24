@@ -1228,6 +1228,7 @@ a.scrolling-post-content {
   margin-bottom: 8px;
 }
 
+
 .sub-list li a {
   text-decoration: none;
   color: rgba(0, 0, 0, 0.5);
@@ -1245,6 +1246,7 @@ a.scrolling-post-content {
   font-weight: 600;
   padding-top: 5px;
   margin-bottom: -9px;
+  padding-bottom: 15px;
 }
 
 .list-item i {
